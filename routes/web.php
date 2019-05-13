@@ -10,7 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::resource('/api/stocks', 'StockController');
+Route::resource('/api/orders', 'OrderController');
+Route::resource('/api/itemrequests', 'ItemRequestController');
+Route::resource('/api/rights', 'RightController');
+Route::resource('/api/userrights', 'UserRightController');
+
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/{any}', 'SpaController@index')->where('any', '.*');
