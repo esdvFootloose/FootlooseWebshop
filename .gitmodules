@@ -1,0 +1,3 @@
+[submodule "resources/python"]
+	path = resources/python
+	url = https://github.com/esdvFootloose/ABNAMROTikkie
