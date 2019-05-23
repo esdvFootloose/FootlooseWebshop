@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::resource('/api/stocks', 'StockController');
 Route::resource('/api/orders', 'OrderController');
