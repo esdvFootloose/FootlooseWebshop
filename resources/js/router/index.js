@@ -12,42 +12,62 @@ import Stocks from '../views/Stocks';
 
 const index = new VueRouter({
     mode: 'history',
+    linkExactActiveClass: 'navbar__menu-item--active',
     routes: [
         {
             path: '/',
-            component: Home
+            component: Home,
+            name: 'items'
         },
         {
             path: '/checkout',
-            component: Checkout
+            component: Checkout,
+            name: 'checkout'
         },
         {
             path: '/dashboard',
-            component: Dashboard
+            component: Dashboard,
+            name: 'dashboard'
         },
         {
             path: '/item/:slug',
-            component: Item
+            component: Item,
+            name: 'item'
         },
         {
             path: '/item-requests',
-            component: ItemRequests
+            component: ItemRequests,
+            name: 'item-requests'
         },
         {
             path: '/order/:id',
-            component: Order
+            component: Order,
+            name: 'order'
         },
         {
             path: '/orders',
-            component: Orders
+            component: Orders,
+            name: 'orders'
         },
         {
             path: '/stock/:slug',
-            component: Stock
+            component: Stock,
+            name: 'stock'
         },
         {
             path: '/stocks',
-            component: Stocks
+            component: Stocks,
+            name: 'stocks'
+        },
+        {
+            path: '/stocks',
+            component: Stocks,
+            name: 'stocks'
+        },
+        {
+            path: '/cart',
+            component: Home,
+            name: 'cart'
         }
     ]
 });
