@@ -1805,6 +1805,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -1814,6 +1820,11 @@ __webpack_require__.r(__webpack_exports__);
     return {
       'showMenu': false
     };
+  },
+  methods: {
+    closeMenu: function closeMenu() {
+      this.showMenu = false;
+    }
   }
 });
 
@@ -6477,7 +6488,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "html[data-v-30e7b4f8] {\n  box-sizing: border-box;\n  font-family: \"myriad-pro\", sans-serif;\n}\n*[data-v-30e7b4f8] {\n  padding: 0;\n  margin: 0;\n  box-sizing: inherit;\n}\n*[data-v-30e7b4f8]::before, *[data-v-30e7b4f8]::after {\n  box-sizing: inherit;\n}\nbody[data-v-30e7b4f8] {\n  margin: 0;\n}\n.navigation-bar[data-v-30e7b4f8] {\n  color: white;\n  flex-direction: column;\n  position: relative;\n  display: flex;\n  width: 100%;\n}\n@media all and (min-width: 1280px) {\n.navigation-bar[data-v-30e7b4f8] {\n    align-items: center;\n    flex-direction: unset;\n}\n}\n.navigation-bar__container[data-v-30e7b4f8] {\n  display: flex;\n  align-content: center;\n  background: #363636;\n  position: fixed;\n  justify-content: center;\n  top: 0;\n  height: 60px;\n  width: 100%;\n}\n.navigation-bar__menu[data-v-30e7b4f8] {\n  background: #707070;\n  display: none;\n}\n.navigation-bar__menu--visible[data-v-30e7b4f8] {\n  display: initial;\n}\n@media all and (min-width: 1280px) {\n.navigation-bar__menu[data-v-30e7b4f8] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    position: fixed;\n    right: 0;\n    margin-right: 40px;\n    background: none;\n}\n}\n.navigation-bar__menu-item[data-v-30e7b4f8] {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  height: 60px;\n  padding: 0 25px;\n  color: white;\n  text-decoration: none;\n}\n.navigation-bar__menu-item[data-v-30e7b4f8]:hover, .navigation-bar__menu-item--active[data-v-30e7b4f8] {\n  background: #575757;\n}\n.navigation-bar__menu-toggle[data-v-30e7b4f8] {\n  position: absolute;\n  right: 10px;\n  top: 0;\n  height: 60px;\n  padding: 20px;\n}\n.navigation-bar__menu-toggle__icon[data-v-30e7b4f8] {\n  width: 24px;\n  height: 24px;\n  stroke: white;\n  stroke-width: 2;\n  stroke-linecap: round;\n  stroke-linejoin: round;\n}\n@media all and (min-width: 1280px) {\n.navigation-bar__menu-toggle[data-v-30e7b4f8] {\n    display: none;\n}\n}\n.logo[data-v-30e7b4f8] {\n  margin: 0 auto;\n  height: 60px;\n  padding: 10px 0;\n}\n.logo img[data-v-30e7b4f8] {\n  /*margin: 0 auto;*/\n  height: 40px;\n  width: auto;\n}\n@media all and (min-width: 1280px) {\n.logo[data-v-30e7b4f8] {\n    margin-left: 40px;\n}\n}", ""]);
+exports.push([module.i, "html[data-v-30e7b4f8] {\n  box-sizing: border-box;\n  font-family: \"myriad-pro\", sans-serif;\n}\n*[data-v-30e7b4f8] {\n  padding: 0;\n  margin: 0;\n  box-sizing: inherit;\n}\n*[data-v-30e7b4f8]::before, *[data-v-30e7b4f8]::after {\n  box-sizing: inherit;\n}\nbody[data-v-30e7b4f8] {\n  margin: 0;\n}\n.navigation-bar[data-v-30e7b4f8] {\n  color: white;\n  flex-direction: column;\n  position: relative;\n  display: flex;\n  width: 100%;\n}\n@media all and (min-width: 1280px) {\n.navigation-bar[data-v-30e7b4f8] {\n    align-items: center;\n    flex-direction: unset;\n}\n}\n.navigation-bar__container[data-v-30e7b4f8] {\n  display: flex;\n  align-content: center;\n  background: #363636;\n  position: fixed;\n  justify-content: center;\n  top: 0;\n  height: 60px;\n  width: 100%;\n}\n.navigation-bar__menu[data-v-30e7b4f8] {\n  background: #707070;\n  display: none;\n}\n.navigation-bar__menu--visible[data-v-30e7b4f8] {\n  display: initial;\n}\n@media all and (min-width: 1280px) {\n.navigation-bar__menu[data-v-30e7b4f8] {\n    display: flex;\n    flex-direction: row;\n    justify-content: center;\n    position: fixed;\n    right: 0;\n    margin-right: 40px;\n    background: none;\n}\n}\n.navigation-bar__menu-item[data-v-30e7b4f8] {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  height: 60px;\n  padding: 0 25px;\n  color: white;\n  text-decoration: none;\n}\n.navigation-bar__menu-item[data-v-30e7b4f8]:hover, .navigation-bar__menu-item--active[data-v-30e7b4f8] {\n  background: #575757;\n}\n.navigation-bar__menu-toggle[data-v-30e7b4f8] {\n  position: absolute;\n  right: 10px;\n  top: 0;\n  height: 60px;\n  padding: 20px;\n}\n.navigation-bar__menu-toggle__icon[data-v-30e7b4f8] {\n  width: 24px;\n  height: 24px;\n  stroke: white;\n  stroke-width: 2;\n  stroke-linecap: round;\n  stroke-linejoin: round;\n}\n@media all and (min-width: 1280px) {\n.navigation-bar__menu-toggle[data-v-30e7b4f8] {\n    display: none;\n}\n}\n.logo[data-v-30e7b4f8] {\n  margin: 0 auto;\n  height: 60px;\n  padding: 10px 0;\n}\n.logo img[data-v-30e7b4f8] {\n  height: 40px;\n  width: auto;\n}\n@media all and (min-width: 1280px) {\n.logo[data-v-30e7b4f8] {\n    margin-left: 40px;\n}\n}", ""]);
 
 // exports
 
@@ -64931,7 +64942,12 @@ var render = function() {
               "router-link",
               {
                 staticClass: "navigation-bar__menu-item",
-                attrs: { to: { name: "dashboard" }, tag: "div" }
+                attrs: { to: { name: "dashboard" }, tag: "div" },
+                nativeOn: {
+                  click: function($event) {
+                    return _vm.closeMenu($event)
+                  }
+                }
               },
               [_vm._v("Dashboard\n            ")]
             ),
@@ -64940,25 +64956,40 @@ var render = function() {
               "router-link",
               {
                 staticClass: "navigation-bar__menu-item",
-                attrs: { to: { name: "items" }, tag: "div" }
+                attrs: { to: { name: "items" }, tag: "div" },
+                nativeOn: {
+                  click: function($event) {
+                    return _vm.closeMenu($event)
+                  }
+                }
               },
-              [_vm._v("Home")]
+              [_vm._v("Home\n            ")]
             ),
             _vm._v(" "),
             _c(
               "router-link",
               {
                 staticClass: "navigation-bar__menu-item",
-                attrs: { to: { name: "orders" }, tag: "div" }
+                attrs: { to: { name: "orders" }, tag: "div" },
+                nativeOn: {
+                  click: function($event) {
+                    return _vm.closeMenu($event)
+                  }
+                }
               },
-              [_vm._v("Orders")]
+              [_vm._v("Orders\n            ")]
             ),
             _vm._v(" "),
             _c(
               "router-link",
               {
                 staticClass: "navigation-bar__menu-item",
-                attrs: { to: { name: "cart" }, tag: "div" }
+                attrs: { to: { name: "cart" }, tag: "div" },
+                nativeOn: {
+                  click: function($event) {
+                    return _vm.closeMenu($event)
+                  }
+                }
               },
               [_vm._v("Shopping cart\n            ")]
             )

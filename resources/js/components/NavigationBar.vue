@@ -8,11 +8,17 @@
                 <menu-bars class="navigation-bar__menu-toggle__icon"></menu-bars>
             </div>
             <div class="navigation-bar__menu" :class="{'navigation-bar__menu--visible' : showMenu}">
-                <router-link :to="{name: 'dashboard'}" class="navigation-bar__menu-item" tag="div">Dashboard
+                <router-link :to="{name: 'dashboard'}" class="navigation-bar__menu-item" tag="div"
+                             v-on:click.native=closeMenu>Dashboard
                 </router-link>
-                <router-link :to="{name: 'items'}" class="navigation-bar__menu-item" tag="div">Home</router-link>
-                <router-link :to="{name: 'orders'}" class="navigation-bar__menu-item" tag="div">Orders</router-link>
-                <router-link :to="{name: 'cart'}" class="navigation-bar__menu-item" tag="div">Shopping cart
+                <router-link :to="{name: 'items'}" class="navigation-bar__menu-item" tag="div"
+                             v-on:click.native=closeMenu>Home
+                </router-link>
+                <router-link :to="{name: 'orders'}" class="navigation-bar__menu-item" tag="div"
+                             v-on:click.native=closeMenu>Orders
+                </router-link>
+                <router-link :to="{name: 'cart'}" class="navigation-bar__menu-item" tag="div"
+                             v-on:click.native=closeMenu>Shopping cart
                 </router-link>
             </div>
         </nav>
@@ -29,6 +35,11 @@
         data: function () {
             return {
                 'showMenu': false,
+            }
+        },
+        methods: {
+            closeMenu: function () {
+                this.showMenu = false;
             }
         }
     }
@@ -123,7 +134,6 @@
         padding: 10px 0;
 
         img {
-            /*margin: 0 auto;*/
             height: 40px;
             width: auto;
         }
