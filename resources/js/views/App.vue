@@ -2,17 +2,14 @@
     <div>
         <navigation-bar></navigation-bar>
         <router-view></router-view>
-        <footer></footer>
+        <fl-footer></fl-footer>
     </div>
 </template>
 
 <script>
     import NavigationBar from "../components/NavigationBar";
-    import Footer from "../components/Footer";
+    import FlFooter from "../components/Footer";
     export default {
-        components: {Footer, NavigationBar}
+        components: {FlFooter, NavigationBar}
     }
 </script>
-
-<style scoped>
-</style>
