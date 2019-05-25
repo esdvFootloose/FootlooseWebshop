@@ -5,7 +5,8 @@
                 <img src="/images/Logo_red_notext.svg">
             </router-link>
             <div class="navigation-bar__menu-toggle" v-on:click="showMenu = !showMenu">
-                <menu-bars class="navigation-bar__menu-toggle__icon"></menu-bars>
+                <custom-icon name="menu" base-class="custom-icon"
+                             class="navigation-bar__menu-toggle__icon"></custom-icon>
             </div>
             <div class="navigation-bar__menu" :class="{'navigation-bar__menu--visible' : showMenu}">
                 <router-link :to="{name: 'dashboard'}" class="navigation-bar__menu-item" tag="div"
@@ -18,7 +19,9 @@
                              v-on:click.native=closeMenu>Orders
                 </router-link>
                 <router-link :to="{name: 'cart'}" class="navigation-bar__menu-item" tag="div"
-                             v-on:click.native=closeMenu>Shopping cart
+                             v-on:click.native=closeMenu>
+                    <custom-icon name="shopping-cart" base-class="custom-icon"
+                                 class="navigation-bar__menu-toggle__icon"></custom-icon>
                 </router-link>
             </div>
         </nav>
@@ -26,15 +29,16 @@
 </template>
 
 <script>
-    import {Menu} from 'vue-feather-icon'
+    import customIcon from 'vue-icon/lib/vue-feather.esm'
 
     export default {
         components: {
-            MenuBars: Menu.default,
+            customIcon,
         },
         data: function () {
             return {
-                'showMenu': false,
+                showMenu: false,
+                baseClass: 'v-icon',
             }
         },
         methods: {
@@ -66,7 +70,7 @@
             display: flex;
             align-content: center;
             background: $color--black;
-            position: fixed;
+            position: sticky;
             justify-content: center;
             top: 0;
             height: $height;
@@ -114,8 +118,8 @@
             padding: 20px;
 
             &__icon {
-                width: 24px;
-                height: 24px;
+                width: 20px;
+                height: 20px;
                 stroke: white;
                 stroke-width: 2;
                 stroke-linecap: round;
