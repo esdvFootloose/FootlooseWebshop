@@ -89,7 +89,7 @@
                 display: flex;
                 flex-direction: row;
                 justify-content: center;
-                position: fixed;
+                position: sticky;
                 right: 0;
                 margin-right: 40px;
                 background: none;
