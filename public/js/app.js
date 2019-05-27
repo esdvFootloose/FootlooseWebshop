@@ -38176,54 +38176,9 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("p", [_vm._v("footer")])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "footer footer__container" }, [
-      _c("div", { staticClass: "footer footer__logo" }, [
-        _c("img", { attrs: { src: "images/Logo_red_text.svg" } })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "footer footer__description footer__text" }, [
-        _vm._v(
-          "\n        Footloose is a student dance association in Eindhoven. This webshop is for members to buy Footloose\n        merchandise. For our regular site, click "
-        ),
-        _c("a", { attrs: { href: "https://esdvfootloose.nl" } }, [
-          _vm._v("here")
-        ]),
-        _vm._v(". For questions, please\n        mail to\n        "),
-        _c("a", { attrs: { href: "mailto:kleding@esdvfootloose.nl" } }, [
-          _vm._v("kleding@esdvfootloose.nl")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "footer footer__address footer__text" }, [
-        _c("p", [_vm._v("\n            E.S.D.V. Footloose\n        ")]),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("p", [_vm._v("\n            De lampendriessen 31\n        ")]),
-        _vm._v(" "),
-        _c("p", [_vm._v("\n            5612 AH Eindhoven\n        ")]),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c("p", [
-          _vm._v("\n            IBAN: NL85ABNA0593527771 "),
-          _c("br"),
-          _vm._v("\n            Account holder: ESDV Footloose "),
-          _c("br"),
-          _vm._v("\n            KVK-nummer:40239742 "),
-          _c("br")
-        ])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
