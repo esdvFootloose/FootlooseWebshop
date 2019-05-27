@@ -61,7 +61,7 @@
         display: flex;
         width: 100%;
 
-        @media all and (min-width: 1280px) {
+        @media all and (min-width: $breakpoint--web) {
             align-items: center;
             flex-direction: unset;
         }
@@ -85,7 +85,7 @@
                 display: initial;
             }
 
-            @media all and (min-width: 1280px) {
+            @media all and (min-width: $breakpoint--web) {
                 display: flex;
                 flex-direction: row;
                 justify-content: center;
@@ -126,7 +126,7 @@
                 stroke-linejoin: round;
             }
 
-            @media all and (min-width: 1280px) {
+            @media all and (min-width: $breakpoint--web) {
                 display: none;
             }
         }
@@ -142,7 +142,7 @@
             width: auto;
         }
 
-        @media all and (min-width: 1280px) {
+        @media all and (min-width: $breakpoint--web) {
             margin-left: 40px;
         }
     }
