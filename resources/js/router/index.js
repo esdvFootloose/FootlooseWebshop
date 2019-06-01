@@ -10,6 +10,7 @@ import Orders from '../views/Orders';
 import Stock from '../views/Stock';
 import Stocks from '../views/Stocks';
 import Ordered from "../views/Ordered";
+import Login from "../views/Login";
 
 const index = new VueRouter({
     mode: 'history',
@@ -61,11 +62,6 @@ const index = new VueRouter({
             name: 'stocks'
         },
         {
-            path: '/stocks',
-            component: Stocks,
-            name: 'stocks'
-        },
-        {
             path: '/cart',
             component: Checkout,
             name: 'cart'
@@ -74,6 +70,11 @@ const index = new VueRouter({
             path: '/ordered',
             component: Ordered,
             name: 'ordered'
+        },
+        {
+            path: '/login',
+            component: Login,
+            name: 'login'
         }
     ]
 });

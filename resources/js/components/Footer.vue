@@ -25,7 +25,7 @@
             <p>
                 IBAN: NL85ABNA0593527771 <br>
                 Account holder: ESDV Footloose <br>
-                KVK-nummer:40239742 <br>
+                KVK-nummer: 40239742 <br>
             </p>
         </div>
     </div>
@@ -43,15 +43,17 @@
     .footer {
         background: $color--black;
         color: white;
+        position: relative;
+        z-index: 0;
 
         &__container {
-            align-self: end;
             background: $color--black;
             width: 100%;
             position: absolute;
-            right: 0;
-            bottom: 0;
             left: 0;
+            bottom: 0;
+            z-index: 0;
+
 
             display: grid;
             grid-template-areas: 'logo' 'description' 'address ';

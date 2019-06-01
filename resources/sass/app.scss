@@ -4,6 +4,9 @@
 html {
   box-sizing: border-box;
   font-family: $font-family-sans-serif;
+  font-size: $font-size-base;
+  font-weight: $font-weight;
+  height: 100%;
 }
 
 * {
@@ -18,4 +21,6 @@ html {
 
 body {
   margin: 0;
+  position: relative;
+  min-height: 100%;
 }

@@ -58,6 +58,7 @@
         color: white;
         flex-direction: column;
         position: relative;
+        z-index: 1;
         display: flex;
         width: 100%;
 
@@ -75,6 +76,7 @@
             top: 0;
             height: $height;
             width: 100%;
+            z-index: 1;
         }
 
         &__menu {

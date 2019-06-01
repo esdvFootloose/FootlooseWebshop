@@ -4,8 +4,8 @@ $body-bg: #f8fafc;
 // Typography
 $font-family-sans-serif: 'myriad-pro', sans-serif;
 $font-style: normal;
-$font-weight: 300;
-$font-size-base: 0.9rem;
+$font-weight: 400;
+$font-size-base: 0.85rem;
 $line-height-base: 1.6;
 
 // Color Scheme
@@ -17,5 +17,9 @@ $color--red: #ed2024;
 $breakpoint--tablet: 750px;
 $breakpoint--web: 1280px;
 
+// Shadow
+$box-shadow--large: 5px 10px 5px 0px rgba(0, 0, 0, 0.16);
+$box-shadow--small: 3px 6px 3px 0px rgba(0, 0, 0, 0.16);
 
-
+// Border
+$border--grey: solid 1px rgb(112, 112, 112, 16%);
