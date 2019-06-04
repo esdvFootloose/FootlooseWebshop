@@ -1,54 +1,30 @@
 <template>
-    <Card>
-        <template v-slot:login>
-            <form method="POST" action="login">
-                <div class="card__fl-logo">
-                    <img src="images/Logo_red_text.svg">
-                </div>
-<!--                                <div class="card__login">-->
-<!--                                    <label for="email">Username </label>-->
-<!--                                    <input id="email" type="email" name="email" required autocomplete="email" autofocus>-->
-<!--                                    <label for="password">Password </label>-->
-<!--                                    <input id="password" type="password" name="password" required autocomplete="current-password">-->
-<!--                                </div>-->
-<!--                                <div class="card__cta-button">-->
-<!--                                    <Button text="Login"></Button>-->
-<!--                                </div>-->
-                <div class="form-group row">
-                    <label for="email" class="col-md-4 col-form-label text-md-right">email</label>
-
-                    <div class="col-md-6">
-                        <input id="email" type="email" class="form-control" name="email" required autocomplete="email" autofocus>
-
-                        <!--                        @error('email')-->
-                        <!--                        <span class="invalid-feedback" role="alert">-->
-                        <!--                                        <strong>{{ $message }}</strong>-->
-                        <!--                                    </span>-->
-                        <!--                        @enderror-->
+    <div class="content">
+        <Card>
+            <template v-slot:login>
+                <form autocomplete="off" method="post" action="login">
+                    <input type="hidden" name="_token" :value="csrf">
+                    <div class="card__fl-logo">
+                        <img src="images/Logo_red_text.svg">
                     </div>
-                </div>
-
-                <div class="form-group row">
-                    <label for="password" class="col-md-4 col-form-label text-md-right">password</label>
-
-                    <div class="col-md-6">
-                        <input id="password" type="password" class="form-control" name="password" required autocomplete="current-password">
-
-                        <!--                        @error('password')-->
-                        <!--                        <span class="invalid-feedback" role="alert">-->
-                        <!--                                        <strong>{{ $message }}</strong>-->
-                        <!--                                    </span>-->
-                        <!--                        @enderror-->
+                    <div class="card__login">
+                        <label for="email">Username </label>
+                        <input id="email" type="email" name="email" required>
+                        <label for="password">Password </label>
+                        <input id="password" type="password" name="password" required>
                     </div>
-                </div>
+                    <div class="card__cta-button">
+                        <Button text="Login"></Button>
+                    </div>
 
-                <button type="submit" class="btn btn-primary">
-                    Login
-                </button>
-            </form>
+                    <button type="submit" class="btn btn-primary">
+                        Login
+                    </button>
+                </form>
 
-        </template>
-    </Card>
+            </template>
+        </Card>
+    </div>
 </template>
 
 <script>
@@ -57,6 +33,13 @@
     export default {
         components: {
             Card
+        },
+
+        data() {
+            return {
+                csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+
+            }
         }
     }
 </script>

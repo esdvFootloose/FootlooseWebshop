@@ -18,8 +18,13 @@ const index = new VueRouter({
     routes: [
         {
             path: '/',
+            component: Login,
+            name: 'login'
+        },
+        {
+            path: '/home',
             component: Home,
-            name: 'items'
+            name: 'home'
         },
         {
             path: '/checkout',
@@ -70,11 +75,6 @@ const index = new VueRouter({
             path: '/ordered',
             component: Ordered,
             name: 'ordered'
-        },
-        {
-            path: '/login',
-            component: Login,
-            name: 'login'
         }
     ]
 });

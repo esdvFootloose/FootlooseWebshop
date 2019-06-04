@@ -18,5 +18,4 @@ Route::resource('/api/itemrequests', 'ItemRequestController');
 Route::resource('/api/rights', 'RightController');
 Route::resource('/api/userrights', 'UserRightController');
 
-Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/{any}', 'SpaController@index')->where('any', '.*');

@@ -1,7 +1,7 @@
 <template>
     <div class="navigation-bar__container">
         <nav class="navigation-bar">
-            <router-link :to="{name: 'items'}" class="logo">
+            <router-link :to="{name: 'home'}" class="logo">
                 <img src="/images/Logo_red_notext.svg">
             </router-link>
             <div class="navigation-bar__menu-toggle" v-on:click="showMenu = !showMenu">
@@ -12,7 +12,7 @@
                 <router-link :to="{name: 'dashboard'}" class="navigation-bar__menu-item" tag="div"
                              v-on:click.native=closeMenu>Dashboard
                 </router-link>
-                <router-link :to="{name: 'items'}" class="navigation-bar__menu-item" tag="div"
+                <router-link :to="{name: 'home'}" class="navigation-bar__menu-item" tag="div"
                              v-on:click.native=closeMenu>Home
                 </router-link>
                 <router-link :to="{name: 'orders'}" class="navigation-bar__menu-item" tag="div"
@@ -52,7 +52,6 @@
 <style lang="scss" scoped>
     @import "../../sass/app.scss";
 
-    $height: 60px;
 
     .navigation-bar {
         color: white;
@@ -74,7 +73,7 @@
             position: sticky;
             justify-content: center;
             top: 0;
-            height: $height;
+            height: $navigation-bar-height;
             width: 100%;
             z-index: 1;
         }
@@ -102,7 +101,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            height: $height;
+            height: $navigation-bar-height;
             padding: 0 25px;
             color: white;
             text-decoration: none;
@@ -116,7 +115,7 @@
             position: absolute;
             right: 10px;
             top: 0;
-            height: $height;
+            height: $navigation-bar-height;
             padding: 20px;
 
             &__icon {

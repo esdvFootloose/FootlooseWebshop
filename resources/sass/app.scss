@@ -24,3 +24,8 @@ body {
   position: relative;
   min-height: 100%;
 }
+
+.content {
+  margin-top: $navigation-bar-height;
+  padding: 0 20px;
+}
