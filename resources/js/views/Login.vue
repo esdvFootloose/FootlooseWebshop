@@ -1,44 +1,51 @@
 <template>
-    <div class="content">
-        <Card>
-            <template v-slot:login>
-                <form autocomplete="off" method="post" action="login">
-                    <input type="hidden" name="_token" :value="csrf">
-                    <div class="card__fl-logo">
-                        <img src="images/Logo_red_text.svg">
-                    </div>
-                    <div class="card__login">
-                        <label for="email">Username </label>
-                        <input id="email" type="email" name="email" required>
-                        <label for="password">Password </label>
-                        <input id="password" type="password" name="password" required>
-                    </div>
-                    <div class="card__cta-button">
-                        <Button text="Login"></Button>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">
-                        Login
-                    </button>
-                </form>
-
-            </template>
-        </Card>
-    </div>
+    <card>
+        <template v-slot:login>
+            <input type="hidden" name="_token" :value="csrf">
+            <div class="card__fl-logo">
+                <img src="images/Logo_red_text.svg">
+            </div>
+            <div class="card__login">
+                <label for="email">Username</label>
+                <input id="email" type="email" name="email" v-model="username" required>
+                <label for="password">Password </label>
+                <input id="password" type="password" name="password" v-model="password" required>
+            </div>
+            <div v-if="error" class="card__error">{{ error }}</div>
+            <div class="card__cta-button">
+                <Button text="Login" :action="login" is-primary></Button>
+            </div>
+        </template>
+    </card>
 </template>
 
 <script>
     import Card from "../components/Card";
+    import Button from "../components/Button"
 
     export default {
         components: {
-            Card
+            Card,
+            Button
         },
-
         data() {
             return {
                 csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-
+                username: '',
+                password: '',
+                error: ''
+            }
+        },
+        methods: {
+            login() {
+                let request = {
+                    _token: this.csrf,
+                    email: this.username,
+                    password: this.password
+                };
+                this.$store.dispatch('login', request).then(() => {
+                    this.$router.push({name: 'home'});
+                });
             }
         }
     }
@@ -73,6 +80,13 @@
                 margin-top: 5px;
                 margin-bottom: 15px;
             }
+
+        }
+
+        &__error {
+            width: 100%;
+            color: $color--red;
+            /*text-align: center;*/
 
         }
 

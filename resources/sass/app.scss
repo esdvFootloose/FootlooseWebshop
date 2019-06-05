@@ -26,6 +26,21 @@ body {
 }
 
 .content {
-  margin-top: $navigation-bar-height;
-  padding: 0 20px;
+  grid-area: main;
+  height:min-content;
+  padding: 20px 10px;
+  overflow: auto;
+  @media all and (min-width: $breakpoint--tablet) {
+    padding: 20px 40px;
+  }
+}
+
+#app {
+  display: grid;
+  grid-template-areas:
+          'navigation-bar'
+          'main'
+          'footer';
+  grid-template-rows: auto auto 1fr;
+  min-height: 100vh;
 }

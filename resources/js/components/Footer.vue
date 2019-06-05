@@ -45,19 +45,25 @@
         color: white;
         position: relative;
         z-index: 0;
+        height: 100%;
+
 
         &__container {
             background: $color--black;
             width: 100%;
-            position: absolute;
+            align-self: end;
+            grid-area: footer;
+            position: relative;
             left: 0;
             bottom: 0;
             z-index: 0;
+            height: max-content;
+            overflow: hidden;
+            border-top: 1px solid $color--red;
 
 
             display: grid;
             grid-template-areas: 'logo' 'description' 'address ';
-            row-gap: 5%;
             grid-template-columns: 1fr;
 
             @media all and (min-width: $breakpoint--tablet) {

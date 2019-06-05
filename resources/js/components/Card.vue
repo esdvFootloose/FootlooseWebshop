@@ -5,12 +5,7 @@
 </template>
 
 <script>
-    import Button from '../components/Button.vue';
-
     export default {
-        components: {
-            Button
-        }
     }
 </script>
 
@@ -23,9 +18,18 @@
         flex-wrap: wrap;
         align-content: center;
         justify-content: stretch;
-        width: 400px;
-        margin: 0 auto;
+        margin: 0 10px;
         border: $border--grey;
-        padding: 20px 50px;
+        height: max-content;
+        padding: 20px 25px;
+
+
+        @media all and (min-width: $breakpoint--tablet) {
+            width: 400px;
+            margin: 20px auto;
+            padding: 20px 50px;
+
+        }
     }
+
 </style>

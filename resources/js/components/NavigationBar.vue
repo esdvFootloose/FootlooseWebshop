@@ -67,6 +67,7 @@
         }
 
         &__container {
+            grid-area: navigation-bar;
             display: flex;
             align-content: center;
             background: $color--black;

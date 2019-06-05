@@ -3,8 +3,13 @@ require('./bootstrap');
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
+// Router
+import 'es6-promise/auto';
+import store from './store';
+
 import App from './views/App';
 import router from './router';
+
 
 import axios from 'axios';
 
@@ -23,5 +28,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 const app = new Vue({
     el: '#app',
     components: { App },
-    router
+    router,
+    store
 });
