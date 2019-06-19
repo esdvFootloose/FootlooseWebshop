@@ -3,6 +3,7 @@ import axios from 'axios';
 const state = {
     user: null,
     token: null,
+    isAdmin: true
 };
 
 const mutations = {
@@ -38,6 +39,9 @@ const getters = {
     },
     isLoggedIn(state) {
         return !!state.user;
+    },
+    isAdmin(state) {
+        return state.isAdmin;
     }
 };
 

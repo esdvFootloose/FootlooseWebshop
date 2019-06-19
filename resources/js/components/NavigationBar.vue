@@ -4,25 +4,25 @@
             <router-link :to="{name: 'home'}" class="logo">
                 <img src="/images/Logo_red_notext.svg">
             </router-link>
-            <div class="navigation-bar__menu-toggle" v-on:click="showMenu = !showMenu">
+            <div class="navigation-bar__menu-toggle" v-if="loggedIn" v-on:click="showMenu = !showMenu">
                 <custom-icon name="menu" base-class="custom-icon"
                              class="navigation-bar__menu-toggle__icon"></custom-icon>
             </div>
-            <div class="navigation-bar__menu" :class="{'navigation-bar__menu--visible' : showMenu}">
-                <router-link :to="{name: 'dashboard'}" class="navigation-bar__menu-item" tag="div"
-                             v-on:click.native=closeMenu>Dashboard
-                </router-link>
-                <router-link :to="{name: 'home'}" class="navigation-bar__menu-item" tag="div"
-                             v-on:click.native=closeMenu>Home
-                </router-link>
-                <router-link :to="{name: 'orders'}" class="navigation-bar__menu-item" tag="div"
-                             v-on:click.native=closeMenu>Orders
-                </router-link>
-                <router-link :to="{name: 'cart'}" class="navigation-bar__menu-item" tag="div"
-                             v-on:click.native=closeMenu>
-                    <custom-icon name="shopping-cart" base-class="custom-icon"
-                                 class="navigation-bar__menu-toggle__icon"></custom-icon>
-                </router-link>
+            <div class="navigation-bar__menu" v-if="loggedIn" :class="{'navigation-bar__menu--visible' : showMenu}">
+                    <router-link :to="{name: 'dashboard'}" v-if="isAdmin" class="navigation-bar__menu-item" tag="div"
+                                 v-on:click.native=closeMenu>Dashboard
+                    </router-link>
+                    <router-link :to="{name: 'home'}" class="navigation-bar__menu-item" tag="div"
+                                 v-on:click.native=closeMenu>Home
+                    </router-link>
+                    <router-link :to="{name: 'orders'}" class="navigation-bar__menu-item" tag="div"
+                                 v-on:click.native=closeMenu>Orders
+                    </router-link>
+                    <router-link :to="{name: 'cart'}" class="navigation-bar__menu-item" tag="div"
+                                 v-on:click.native=closeMenu>
+                        <custom-icon name="shopping-cart" base-class="custom-icon"
+                                     class="navigation-bar__menu-toggle__icon"></custom-icon>
+                    </router-link>
             </div>
         </nav>
     </div>
@@ -44,6 +44,14 @@
         methods: {
             closeMenu: function () {
                 this.showMenu = false;
+            }
+        },
+        computed: {
+            loggedIn: function () {
+                return this.$store.getters.isLoggedIn;
+            },
+            isAdmin: function() {
+                return this.$store.getters.isAdmin;
             }
         }
     }

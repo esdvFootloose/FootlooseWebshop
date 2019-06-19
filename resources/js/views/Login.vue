@@ -49,7 +49,7 @@
             }
         },
         mounted: function() {
-            if (this.$store.getters.isLoggedIn()) {
+            if (this.$store.getters.isLoggedIn) {
                 this.$router.push({name: 'home'});
             }
         }
