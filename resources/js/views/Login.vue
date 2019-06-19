@@ -47,6 +47,11 @@
                     this.$router.push({name: 'home'});
                 });
             }
+        },
+        mounted: function() {
+            if (this.$store.getters.isLoggedIn()) {
+                this.$router.push({name: 'home'});
+            }
         }
     }
 </script>
@@ -63,7 +68,8 @@
             img {
                 display: block;
                 margin: auto;
-                width: 200px;
+                width: 100%;
+                max-width: 200px;
                 height: auto;
             }
         }

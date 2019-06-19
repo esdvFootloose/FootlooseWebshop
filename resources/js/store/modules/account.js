@@ -35,6 +35,9 @@ const actions = {
 const getters = {
     getUser(state) {
         return state.user;
+    },
+    isLoggedIn(state) {
+        return !!state.user;
     }
 };
 

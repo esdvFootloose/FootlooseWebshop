@@ -51,15 +51,15 @@
         &__container {
             background: $color--black;
             width: 100%;
-            align-self: end;
             grid-area: footer;
+            align-self: end;
             position: relative;
             left: 0;
             bottom: 0;
             z-index: 0;
             height: max-content;
             overflow: hidden;
-            border-top: 1px solid $color--red;
+            /*border-top: 2px solid $color&#45;&#45;red;*/
 
 
             display: grid;
@@ -93,7 +93,7 @@
 
                 @media all and (min-width: $breakpoint--web) {
                     padding: 10% 0;
-                    max-width: 250px;
+                    max-width: 170px;
                 }
             }
         }

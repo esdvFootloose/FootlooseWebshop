@@ -120,8 +120,8 @@
             padding: 20px;
 
             &__icon {
-                width: 20px;
-                height: 20px;
+                width: 16px;
+                height: 16px;
                 stroke: white;
                 stroke-width: 2;
                 stroke-linecap: round;
