@@ -1,5 +1,7 @@
 import VueRouter from 'vue-router'
 
+import store from '../store/index'
+
 import Home from '../views/Home'
 import Checkout from '../views/Checkout';
 import Dashboard from '../views/Dashboard';
@@ -10,72 +12,117 @@ import Orders from '../views/Orders';
 import Stock from '../views/Stock';
 import Stocks from '../views/Stocks';
 import Ordered from "../views/Ordered";
+import Login from "../views/Login";
 
-const index = new VueRouter({
+const router = new VueRouter({
     mode: 'history',
     linkExactActiveClass: 'navbar__menu-item--active',
     routes: [
         {
+            path: '/login',
+            component: Login,
+            name: 'login'
+        },
+        {
             path: '/',
             component: Home,
-            name: 'items'
+            name: 'home',
+            meta: {
+                requiresAuth: true,
+            }
         },
         {
             path: '/checkout',
             component: Checkout,
-            name: 'checkout'
+            name: 'checkout',
+            meta: {
+                requiresAuth: true,
+            }
         },
         {
             path: '/dashboard',
             component: Dashboard,
-            name: 'dashboard'
+            name: 'dashboard',
+            meta: {
+                requiresAuth: true,
+            }
         },
         {
             path: '/item/:slug',
             component: Item,
-            name: 'item'
+            name: 'item',
+            meta: {
+                requiresAuth: true,
+            }
         },
         {
             path: '/item-requests',
             component: ItemRequests,
-            name: 'item-requests'
+            name: 'item-requests',
+            meta: {
+                requiresAuth: true,
+            }
         },
         {
             path: '/order/:id',
             component: Order,
-            name: 'order'
+            name: 'order',
+            meta: {
+                requiresAuth: true,
+            }
         },
         {
             path: '/orders',
             component: Orders,
-            name: 'orders'
+            name: 'orders',
+            meta: {
+                requiresAuth: true,
+            }
         },
         {
             path: '/stock/:slug',
             component: Stock,
-            name: 'stock'
+            name: 'stock',
+            meta: {
+                requiresAuth: true,
+            }
         },
         {
             path: '/stocks',
             component: Stocks,
-            name: 'stocks'
-        },
-        {
-            path: '/stocks',
-            component: Stocks,
-            name: 'stocks'
+            name: 'stocks',
+            meta: {
+                requiresAuth: true,
+            }
         },
         {
             path: '/cart',
             component: Checkout,
-            name: 'cart'
+            name: 'cart',
+            meta: {
+                requiresAuth: true,
+            }
         },
         {
             path: '/ordered',
             component: Ordered,
-            name: 'ordered'
+            name: 'ordered',
+            meta: {
+                requiresAuth: true,
+            }
         }
     ]
 });
 
-export default index;
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (!store.getters.isLoggedIn) {
+            next({ name: 'login' });
+            return;
+        }
+    }
+    window.scrollTo(0, 0);
+    next();
+});
+
+export default router;
