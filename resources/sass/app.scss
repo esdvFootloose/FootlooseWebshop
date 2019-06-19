@@ -4,6 +4,9 @@
 html {
   box-sizing: border-box;
   font-family: $font-family-sans-serif;
+  font-size: $font-size-base;
+  font-weight: $font-weight;
+  height: 100%;
 }
 
 * {
@@ -18,4 +21,26 @@ html {
 
 body {
   margin: 0;
+  position: relative;
+  min-height: 100%;
+}
+
+.content {
+  grid-area: main;
+  height:min-content;
+  padding: 20px 10px;
+  overflow: auto;
+  @media all and (min-width: $breakpoint--tablet) {
+    padding: 20px 40px;
+  }
+}
+
+#app {
+  display: grid;
+  grid-template-areas:
+          'navigation-bar'
+          'main'
+          'footer';
+  grid-template-rows: auto auto 1fr;
+  min-height: 100vh;
 }
