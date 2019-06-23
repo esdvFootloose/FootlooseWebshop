@@ -20,7 +20,7 @@ Route::group(['middleware' => ['json.response']], function () {
     });
 
     // Public routes
-    Route::post('/login', 'API\AuthController@login')->name('login');
+    Route::post('/login', 'Api\AuthController@login')->name('login');
 
 
     // Private routes
