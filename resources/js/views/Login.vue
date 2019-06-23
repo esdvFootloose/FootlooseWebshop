@@ -39,12 +39,12 @@
         methods: {
             login() {
                 let request = {
-                    _token: this.csrf,
+                    // _token: this.csrf,
                     email: this.username,
                     password: this.password
                 };
                 this.$store.dispatch('login', request).then(() => {
-                    this.$router.push({name: 'home'});
+                    this.$router.push({ name: 'home' });
                 });
             }
         },

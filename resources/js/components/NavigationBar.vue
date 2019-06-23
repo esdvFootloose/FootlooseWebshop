@@ -9,20 +9,21 @@
                              class="navigation-bar__menu-toggle__icon"></custom-icon>
             </div>
             <div class="navigation-bar__menu" v-if="loggedIn" :class="{'navigation-bar__menu--visible' : showMenu}">
-                    <router-link :to="{name: 'dashboard'}" v-if="isAdmin" class="navigation-bar__menu-item" tag="div"
-                                 v-on:click.native=closeMenu>Dashboard
-                    </router-link>
-                    <router-link :to="{name: 'home'}" class="navigation-bar__menu-item" tag="div"
-                                 v-on:click.native=closeMenu>Home
-                    </router-link>
-                    <router-link :to="{name: 'orders'}" class="navigation-bar__menu-item" tag="div"
-                                 v-on:click.native=closeMenu>Orders
-                    </router-link>
-                    <router-link :to="{name: 'cart'}" class="navigation-bar__menu-item" tag="div"
-                                 v-on:click.native=closeMenu>
-                        <custom-icon name="shopping-cart" base-class="custom-icon"
-                                     class="navigation-bar__menu-toggle__icon"></custom-icon>
-                    </router-link>
+                <router-link :to="{name: 'dashboard'}" v-if="isAdmin" class="navigation-bar__menu-item" tag="div"
+                             v-on:click.native=closeMenu>Dashboard
+                </router-link>
+                <router-link :to="{name: 'home'}" class="navigation-bar__menu-item" tag="div"
+                             v-on:click.native=closeMenu>Home
+                </router-link>
+                <router-link :to="{name: 'orders'}" class="navigation-bar__menu-item" tag="div"
+                             v-on:click.native=closeMenu>Orders
+                </router-link>
+                <router-link :to="{name: 'cart'}" class="navigation-bar__menu-item" tag="div"
+                             v-on:click.native=closeMenu>
+                    <custom-icon name="shopping-cart" base-class="custom-icon"
+                                 class="navigation-bar__menu-toggle__icon"></custom-icon>
+                </router-link>
+                <div v-on:click="logout" class="navigation-bar__menu-item">Log out</div>
             </div>
         </nav>
     </div>
@@ -44,13 +45,18 @@
         methods: {
             closeMenu: function () {
                 this.showMenu = false;
-            }
+            },
+            logout: function () {
+                this.$store
+                    .dispatch('logout')
+                    .then(() => this.$router.push({name: 'login'}));
+            },
         },
         computed: {
             loggedIn: function () {
                 return this.$store.getters.isLoggedIn;
             },
-            isAdmin: function() {
+            isAdmin: function () {
                 return this.$store.getters.isAdmin;
             }
         }
