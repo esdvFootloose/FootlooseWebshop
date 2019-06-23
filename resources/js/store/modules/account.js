@@ -1,8 +1,19 @@
 import axios from 'axios';
 
+const token = localStorage.getItem('token');
+let user = false;
+
+if (token) {
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+    axios.get('/api/user').then(result => {
+        user = result.data.user;
+    });
+}
+
 const state = {
-    user: null,
-    token: null,
+    user: user || {},
+    token: token || '',
+    isAdmin: true
 };
 
 const mutations = {
@@ -11,7 +22,6 @@ const mutations = {
     },
     SET_TOKEN(state, token) {
         state.token = token;
-
     },
     REMOVE_USER(state) {
         state.user = null;
@@ -22,23 +32,39 @@ const mutations = {
 };
 
 const actions = {
-    login({ commit }, user) {
-        axios.post('/login', user)
+    login({commit}, user) {
+        axios.post('/api/login', user)
             .then(result => {
-                commit('SET_USER', result.data)
+                const token = result.data.token;
+                commit('SET_USER', result.data.user);
+                commit('SET_TOKEN', token);
+                localStorage.setItem('token', token);
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+                window.location = '/';
             }).catch(error => {
-                console.log(error)
+            console.log(error);
+            localStorage.removeItem('token');
         });
+    },
+    logout({commit}) {
+        localStorage.removeItem('token');
+        axios.post('/api/logout')
+            .then(result => {
+                commit('REMOVE_USER');
+                commit('REMOVE_TOKEN');
+                delete axios.defaults.headers.common['Authorization'];
+                window.location = '/login'
+            }).catch(error => {
+            console.log(error);
+        });
+
     }
 };
 
 const getters = {
-    getUser(state) {
-        return state.user;
-    },
-    isLoggedIn(state) {
-        return !!state.user;
-    }
+    getUser: state => state.user,
+    isLoggedIn: state => !!state.token,
+    isAdmin: state => state.isAdmin,
 };
 
 
