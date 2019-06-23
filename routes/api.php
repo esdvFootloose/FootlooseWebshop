@@ -13,6 +13,20 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+
+Route::group(['middleware' => ['json.response']], function () {
+    Route::middleware('auth:api')->get('/user', function (Request $request) {
+        return response()->json(['user' => $request->user(), 'status' => 200]);
+    });
+
+    // Public routes
+    Route::post('/login', 'API\AuthController@login')->name('login');
+
+
+    // Private routes
+    Route::middleware('auth:api')->group(function () {
+        Route::post('/logout', 'Api\AuthController@logout')->name('logout');
+    });
 });
+
+
