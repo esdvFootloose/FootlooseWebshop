@@ -4,12 +4,14 @@ input {
   margin: 8px 0;
   display: inline-block;
   border: none;
+  border-radius: 0;
   border-bottom: 1px solid $border-color--grey;
   box-sizing: border-box;
 
   &:focus {
     outline: none;
     border:none;
+    border-radius: 0;
     border-bottom: 1px solid $color--grey;
     padding: 8px 15px;
     font-size: $font-size-base + .25rem;
