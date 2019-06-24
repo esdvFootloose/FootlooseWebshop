@@ -1,6 +1,9 @@
 // Variables
 @import 'variables';
 
+// Form input
+@import 'form-input.scss';
+
 html {
   box-sizing: border-box;
   font-family: $font-family-sans-serif;
