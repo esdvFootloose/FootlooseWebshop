@@ -3,7 +3,16 @@ input {
   padding: 4px 15px;
   margin: 8px 0;
   display: inline-block;
-  border: 1px solid $border-color--grey;
+  border: none;
+  border-bottom: 1px solid $border-color--grey;
   box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+    border:none;
+    border-bottom: 1px solid $color--grey;
+    padding: 8px 15px;
+    font-size: $font-size-base + .25rem;
+  }
 }
 
