@@ -53,10 +53,10 @@ const actions = {
                 commit('REMOVE_USER');
                 commit('REMOVE_TOKEN');
                 delete axios.defaults.headers.common['Authorization'];
-                window.location = '/login'
             }).catch(error => {
             console.log(error);
         });
+        window.location = '/login'
 
     }
 };
