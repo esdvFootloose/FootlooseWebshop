@@ -1,6 +1,7 @@
 <template>
     <div class="card">
         <slot name="login"></slot>
+        <slot></slot>
     </div>
 </template>
 
@@ -25,7 +26,7 @@
 
 
         @media all and (min-width: $breakpoint--tablet) {
-            width: 400px;
+            /*width: 400px;*/
             margin: 20px auto;
             padding: 20px 50px;
 

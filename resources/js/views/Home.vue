@@ -1,10 +1,54 @@
 <template>
-<p>Home</p>
+    <div>
+        <p>Home</p>
+        <card-grid>
+            <card v-for="item in items" :key="item.id">
+                <template>
+                    <div>
+                        <img src="https://via.placeholder.com/150">
+                    </div>
+                    <div>
+                        {{item.name + " " + (item.gender === 'M'? 'male' : (item.gender === 'F'? 'female': 'unisex'))}}
+                        <div v-if="item.sizes[0].size !== null">
+                            <p>In sizes:</p>
+                            <span v-for="size in item.sizes">{{ size.size }} </span>
+                        </div>
+                    </div>
+                    <div class="card__cta-button">
+                        <Button text="More" :action="loadItem" is-primary></Button>
+                    </div>
+                </template>
+            </card>
+        </card-grid>
+
+    </div>
 </template>
 
 <script>
-    export default {
+    import CardGrid from "../components/CardGrid";
+    import Card from "../components/Card";
+    import Button from "../components/Button"
 
+    export default {
+        components: {
+            CardGrid,
+            Card,
+            Button
+        },
+        computed: {
+            items: function () {
+                return this.$store.getters.getItems;
+            }
+        },
+        methods: {
+            loadItem: function (id) {
+            }
+        },
+        mounted() {
+            if (this.$store.getters.getItems.length === 0) {
+                this.$store.dispatch('fetchItems');
+            }
+        }
     }
 </script>
 
