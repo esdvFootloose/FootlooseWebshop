@@ -23,7 +23,7 @@ function parseData(data) {
             console.log('add sizes to existing item');
             parsedItems[index].sizes.push({
                 size: item.size,
-                inStock: item.stock > 0
+                inStock: item.stock
             });
             console.log(parsedItems);
         } else {

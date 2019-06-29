@@ -19,6 +19,15 @@ class StockController extends Controller
     public function index()
     {
         $stocks = Stock::all();
+        foreach($stocks as $stock) {
+            $stock->stock = $stock->stock > 0;
+        }
+        return response()->json(['data' => $stocks], 200);
+    }
+
+    public function indexDashboard()
+    {
+        $stocks = Stock::all();
         return response()->json(['data' => $stocks], 200);
     }
 
@@ -96,4 +105,6 @@ class StockController extends Controller
         $stock->delete();
         return response()->json(['data' => ''], 200);
     }
+
+
 }
