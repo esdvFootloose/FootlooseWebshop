@@ -1,16 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Order;
+use App\ItemRequest;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class OrderController extends Controller
+class ItemRequestController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     /**
      * Display a listing of the resource.
@@ -19,8 +16,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::all();
-        return response()->json(['data' => $orders], 200);
+        $item_requests = ItemRequest::all();
+        return response()->json(['data' => $item_requests], 200);
     }
 
     /**
@@ -44,57 +41,57 @@ class OrderController extends Controller
         $validated = request()->validate([
             //TODO Add validation
         ]);
-        $order = Order::create($validated);
-        return response()->json(['data' => $order], 200);
+        $item_request = ItemRequest::create($validated);
+        return response()->json(['data' => $item_request], 200);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Order  $order
+     * @param  \App\ItemRequest  $itemRequest
      * @return \Illuminate\Http\Response
      */
-    public function show(Order $order)
+    public function show(ItemRequest $itemRequest)
     {
-        return response()->json(['data' => $order], 200);
+        return response()->json(['data' => $itemRequest], 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Order  $order
+     * @param  \App\ItemRequest  $itemRequest
      * @return \Illuminate\Http\Response
      */
-    public function edit(Order $order)
+    public function edit(ItemRequest $itemRequest)
     {
-        return response()->json(['data' => $order], 200);
+        return response()->json(['data' => $itemRequest], 200);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Order  $order
+     * @param  \App\ItemRequest  $itemRequest
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, ItemRequest $itemRequest)
     {
         $validated = request()->validate([
-            //TODO validate
+            //TODO Add validation
         ]);
-        $savedOrder = Order::update($validated);
-        return response()->json(['data' => $savedOrder], 200);
+        $savedRequest = ItemRequest::create($validated);
+        return response()->json(['data' => $savedRequest], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Order  $order
+     * @param  \App\ItemRequest  $itemRequest
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy(ItemRequest $itemRequest)
     {
-        $order->delete();
-        return response()->json(['data' => ''], 200);
+        $itemRequest->delete();
+        return response()->json(['data' => '']);
     }
 }

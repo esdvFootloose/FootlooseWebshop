@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Stock;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class StockController extends Controller
 {
-    public function __construct()
-    {
-    }
 
     /**
      * Display a listing of the resource.
