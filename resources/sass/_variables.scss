@@ -4,8 +4,10 @@ $body-bg: #f8fafc;
 // Typography
 $font-family-sans-serif: 'myriad-pro', sans-serif;
 $font-style: normal;
-$font-weight: 400;
+$font-weight: 300;
 $font-size-base: 0.75rem;
+$font-size-focused: $font-size-base + .25rem;
+$font-size-heading: $font-size-base + .85rem;
 $line-height-base: 1.6;
 
 // Color Scheme

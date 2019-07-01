@@ -1,50 +1,62 @@
 <template>
-<p>Home</p>
+    <div class="content">
+        <card-grid>
+            <card
+                v-for="item in items"
+                :key="item.id"
+                text-button="More"
+                route-name="item"
+                :route-params='{slug: item.slug}'
+                :is-primary-button="true"
+                image="https://via.placeholder.com/175"
+                :text-heading="item.name + (item.gender === 'M' ? ' male' : item.gender === 'F' ? ' female': '')"
+                :text-subheading="getSizesAsText(item.sizes)"
+            >
+            </card>
+        </card-grid>
+    </div>
 </template>
 
 <script>
-    export default {
+import CardGrid from "../components/CardGrid";
+import Card from "../components/Card";
+import Button from "../components/Button";
 
+export default {
+    components: {
+        CardGrid,
+        Card,
+        Button
+    },
+    computed: {
+        items: function() {
+            return this.$store.getters.getItems;
+        }
+    },
+    methods: {
+        getSizesAsText: function(sizes) {
+            let sizesString = "";
+            for (let i = 0; i < sizes.length; i++) {
+                if (sizes[i].size !== null) {
+                    sizesString += sizes[i].size;
+                    if (i !== sizes.length - 1) {
+                        sizesString += ", ";
+                    }
+                }
+            }
+            return sizesString !== ""
+                ? "Available sizes: " + sizesString
+                : "One size for all";
+        },
+
+    },
+    mounted() {
+        if (this.$store.getters.getItems.length === 0) {
+            this.$store.dispatch("fetchItems");
+        }
     }
+};
 </script>
 
 <style lang="scss" scoped>
-    @import "../../sass/app.scss";
-
-    .card {
-
-        &__fl-logo {
-            width: 100%;
-            margin-bottom: 20px;
-
-            img {
-                display: block;
-                margin: auto;
-                width: 200px;
-                height: auto;
-            }
-        }
-
-        &__login {
-            width: 100%;
-
-            label {
-                color: $color--grey;
-            }
-
-            input {
-                width: 100%;
-                margin-top: 5px;
-                margin-bottom: 15px;
-            }
-
-        }
-
-        &__cta-button {
-            width: 100%;
-            position: relative;
-            left: 50%;
-            margin-left: -70px;
-        }
-    }
 </style>

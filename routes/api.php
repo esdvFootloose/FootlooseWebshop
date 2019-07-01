@@ -26,6 +26,12 @@ Route::group(['middleware' => ['json.response']], function () {
     // Private routes
     Route::middleware('auth:api')->group(function () {
         Route::post('/logout', 'Api\AuthController@logout')->name('logout');
+
+        Route::resource('/stocks', 'Api\StockController');
+        Route::resource('/orders', 'Api\OrderController');
+        Route::resource('/itemrequests', 'Api\ItemRequestController');
+        Route::resource('/rights', 'Api\RightController');
+        Route::resource('/userrights', 'Api\UserRightController');
     });
 });
 
