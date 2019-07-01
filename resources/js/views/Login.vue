@@ -1,22 +1,23 @@
 <template>
-    <card>
-        <template v-slot:login>
-            <input type="hidden" name="_token" :value="csrf">
-            <div class="card__fl-logo">
-                <img src="images/Logo_red_text.svg">
-            </div>
-            <div class="card__login">
-                <label for="email">Username</label>
-                <input id="email" type="email" name="email" v-model="username" required>
-                <label for="password">Password </label>
-                <input id="password" type="password" name="password" v-model="password" required>
-            </div>
-            <div v-if="error" class="card__error">{{ error }}</div>
-            <div class="card__cta-button">
-                <Button text="Login" :action="login" is-primary></Button>
-            </div>
-        </template>
-    </card>
+    <div class="content content--login">
+        <card
+                text-button="Login"
+                :action-button="login"
+                :is-primary-button=true
+                image="images/Logo_red_text.svg"
+        >
+            <template v-slot:login>
+                <input type="hidden" name="_token" :value="csrf">
+                <div class="card__login">
+                    <label for="email">Username</label>
+                    <input id="email" type="email" name="email" v-model="username" required>
+                    <label for="password">Password </label>
+                    <input id="password" type="password" name="password" v-model="password" @keyup.enter="login" required>
+                </div>
+                <div v-if="error" class="card__error">{{ error }}</div>
+            </template>
+        </card>
+    </div>
 </template>
 
 <script>
@@ -38,14 +39,13 @@
         },
         methods: {
             login() {
+                console.log('test');
                 let request = {
                     // _token: this.csrf,
                     email: this.username,
                     password: this.password
                 };
-                this.$store.dispatch('login', request).then(() => {
-                    this.$router.push({ name: 'home' });
-                });
+                this.$store.dispatch('login', request);
             }
         },
         mounted: function() {
@@ -59,23 +59,19 @@
 <style lang="scss" scoped>
     @import "../../sass/app.scss";
 
-    .card {
-
-        &__fl-logo {
-            width: 100%;
-            margin-bottom: 20px;
-
-            img {
-                display: block;
-                margin: auto;
-                width: 100%;
-                max-width: 200px;
-                height: auto;
-            }
+    .content {
+        &--login {
+            margin: auto;
+            max-width: 500px;
         }
+    }
+
+    .card {
 
         &__login {
             width: 100%;
+            margin: 25px 20px 0;
+
 
             label {
                 color: $color--grey;
@@ -93,14 +89,6 @@
             width: 100%;
             color: $color--red;
             /*text-align: center;*/
-
-        }
-
-        &__cta-button {
-            width: 100%;
-            position: relative;
-            left: 50%;
-            margin-left: -70px;
         }
     }
 </style>

@@ -6,7 +6,12 @@ let user = false;
 if (token) {
     axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
     axios.get('/api/user').then(result => {
-        user = result.data.user;
+        if (result.data.status === 200) {
+            user = result.data.user;
+        } else {
+            delete axios.defaults.headers.common['Authorization'];
+            localStorage.removeItem('token');
+        }
     });
 }
 
@@ -35,15 +40,16 @@ const actions = {
     login({commit}, user) {
         axios.post('/api/login', user)
             .then(result => {
-                const token = result.data.token;
-                commit('SET_USER', result.data.user);
-                commit('SET_TOKEN', token);
-                localStorage.setItem('token', token);
-                axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-                window.location = '/';
+                if (result.data.status === 200) {
+                    const token = result.data.token;
+                    commit('SET_USER', result.data.user);
+                    commit('SET_TOKEN', token);
+                    localStorage.setItem('token', token);
+                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+                    window.location = '/';
+                }
             }).catch(error => {
             console.log(error);
-            localStorage.removeItem('token');
         });
     },
     logout({commit}) {

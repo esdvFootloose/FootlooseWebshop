@@ -4,9 +4,9 @@
             <router-link :to="{name: 'home'}" class="logo">
                 <img src="/images/Logo_red_notext.svg">
             </router-link>
-            <div class="navigation-bar__menu-toggle" v-if="loggedIn" v-on:click="showMenu = !showMenu">
+            <div class="navigation-bar__menu-toggle navigation-bar__menu-toggle--menu-bars" v-if="loggedIn" v-on:click="showMenu = !showMenu">
                 <custom-icon name="menu" base-class="custom-icon"
-                             class="navigation-bar__menu-toggle__icon"></custom-icon>
+                             class="navigation-bar__menu-toggle__icon navigation-bar__menu-toggle__icon--menu-bars"></custom-icon>
             </div>
             <div class="navigation-bar__menu" v-if="loggedIn" :class="{'navigation-bar__menu--visible' : showMenu}">
                 <router-link :to="{name: 'dashboard'}" v-if="isAdmin" class="navigation-bar__menu-item" tag="div"
@@ -131,7 +131,7 @@
             right: 10px;
             top: 0;
             height: $navigation-bar-height;
-            padding: 20px;
+            padding: 22px;
 
             &__icon {
                 width: 16px;
@@ -140,6 +140,15 @@
                 stroke-width: 2;
                 stroke-linecap: round;
                 stroke-linejoin: round;
+
+                &--menu-bars {
+                    width: 24px;
+                    height: 24px;
+                }
+            }
+
+            &--menu-bars {
+                padding: 18px;
             }
 
             @media all and (min-width: $breakpoint--web) {
