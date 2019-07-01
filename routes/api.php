@@ -27,11 +27,11 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::middleware('auth:api')->group(function () {
         Route::post('/logout', 'Api\AuthController@logout')->name('logout');
 
-        Route::apiResource('/stocks', 'Api\StockController');
-        Route::apiResource('/orders', 'Api\OrderController');
-        Route::apiResource('/itemrequests', 'Api\ItemRequestController');
-        Route::apiResource('/rights', 'Api\RightController');
-        Route::apiResource('/userrights', 'Api\UserRightController');
+        Route::resource('/stocks', 'Api\StockController');
+        Route::resource('/orders', 'Api\OrderController');
+        Route::resource('/itemrequests', 'Api\ItemRequestController');
+        Route::resource('/rights', 'Api\RightController');
+        Route::resource('/userrights', 'Api\UserRightController');
     });
 });
 
