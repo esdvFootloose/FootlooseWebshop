@@ -1,17 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Stock;
+use App\Right;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class StockController extends Controller
+class RightController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -19,8 +15,8 @@ class StockController extends Controller
      */
     public function index()
     {
-        $stocks = Stock::all();
-        return response()->json(['data' => $stocks], 200);
+        $rights = Right::all();
+        return response()->json(['data' => $rights], 200);
     }
 
     /**
@@ -42,59 +38,59 @@ class StockController extends Controller
     public function store(Request $request)
     {
         $validated = request()->validate([
-            //TODO validate
+            //TODO Add validation
         ]);
-        $createdStock = Stock::create($validated);
-        return response()->json(['data' => $createdStock], 200);
+        $right = Right::create($validated);
+        return response()->json(['data' => $right], 200);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Stock  $stock
+     * @param  \App\Right  $right
      * @return \Illuminate\Http\Response
      */
-    public function show(Stock $stock)
+    public function show(Right $right)
     {
-        return response()->json(['data' => $stock], 200);
+        return response()->json(['data' => $right], 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Stock  $stock
+     * @param  \App\Right  $right
      * @return \Illuminate\Http\Response
      */
-    public function edit(Stock $stock)
+    public function edit(Right $right)
     {
-        return response()->json(['data' => $stock], 200);
+        return response()->json(['data' => $right], 200);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Stock  $stock
+     * @param  \App\Right  $right
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Stock $stock)
+    public function update(Request $request, Right $right)
     {
         $validated = request()->validate([
-            //TODO validate
+            //TODO Add validation
         ]);
-        $createdStock = Stock::update($validated);
-        return response()->json(['data' => $createdStock], 200);
+        $savedRight = Right::update($validated);
+        return response()->json(['data' => $savedRight], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Stock  $stock
+     * @param  \App\Right  $right
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Stock $stock)
+    public function destroy(Right $right)
     {
-        $stock->delete();
+        $right->delete();
         return response()->json(['data' => ''], 200);
     }
 }

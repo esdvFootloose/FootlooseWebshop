@@ -11,11 +11,5 @@
 |
 */
 
-Route::resource('/api/stocks', 'StockController');
-Route::resource('/api/orders', 'OrderController');
-Route::resource('/api/itemrequests', 'ItemRequestController');
-Route::resource('/api/rights', 'RightController');
-Route::resource('/api/userrights', 'UserRightController');
-
 Route::get('/{any}', 'SpaController@index')->where('any', '.*')->name('spa');
 
