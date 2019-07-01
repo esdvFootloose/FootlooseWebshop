@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="content">
         <p>Home</p>
         <card-grid>
             <card v-for="item in items" :key="item.id">
@@ -11,7 +11,7 @@
                         {{item.name + " " + (item.gender === 'M'? 'male' : (item.gender === 'F'? 'female': 'unisex'))}}
                         <div v-if="item.sizes[0].size !== null">
                             <p>In sizes:</p>
-                            <span v-for="size in item.sizes">{{ size.size }} </span>
+                            <span v-for="(value, index) in item.sizes">{{ value.size + (index < item.sizes.length -1 ? ', ' : '') }} </span>
                         </div>
                     </div>
                     <div class="card__cta-button">

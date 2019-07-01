@@ -15,15 +15,16 @@
 
     .card-grid {
         display: grid;
-        grid-template-columns: repeat(1, 1fr);
-        justify-items: center;
+        gap: 14px 14px;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 
         @media all and (min-width: $breakpoint--tablet) {
-            grid-template-columns: repeat(2, 1fr);
+            gap: 16px 16px;
+
         }
 
         @media all and (min-width: $breakpoint--web) {
-            grid-template-columns: repeat(5, 1fr);
+            gap: 18px 18px;
         }
     }
 

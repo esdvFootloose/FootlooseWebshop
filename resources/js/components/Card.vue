@@ -21,12 +21,10 @@
         justify-content: stretch;
         margin: 0 10px;
         border: $border--grey;
-        height: max-content;
         padding: 20px 25px;
 
 
         @media all and (min-width: $breakpoint--tablet) {
-            /*width: 400px;*/
             margin: 20px auto;
             padding: 20px 50px;
 

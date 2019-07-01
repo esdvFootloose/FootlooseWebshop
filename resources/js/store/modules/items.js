@@ -16,18 +16,13 @@ function parseData(data) {
     console.log(data);
     for (let item in data) {
         item = data[item];
-        console.log("item: " + item);
         let index = parsedItems.findIndex(object => object.name === item.name && object.gender === item.gender);
-        console.log("index:" + index);
         if (index !== -1) {
-            console.log('add sizes to existing item');
             parsedItems[index].sizes.push({
                 size: item.size,
                 inStock: item.stock
             });
-            console.log(parsedItems);
         } else {
-            console.log('add new item');
             parsedItems.push({
                 id: parsedItems.length,
                 name: item.name,
@@ -41,7 +36,6 @@ function parseData(data) {
                 price: item.price,
                 description: item.description
             });
-            console.log(parsedItems);
         }
     }
     return parsedItems;
@@ -54,7 +48,7 @@ const actions = {
         }).catch(error => {
             console.log(error);
         })
-    }
+    },
 };
 
 const getters = {
