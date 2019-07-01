@@ -34,8 +34,9 @@ body {
   padding: 20px 10px;
   overflow-x: hidden;
   overflow-y: auto;
+
   @media all and (min-width: $breakpoint--tablet) {
-    padding: 20px 40px;
+    padding: 10px 40px;
   }
 }
 

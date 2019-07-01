@@ -13,7 +13,6 @@ const mutations = {
 
 function parseData(data) {
     let parsedItems = [];
-    console.log(data);
     for (let item in data) {
         item = data[item];
         let index = parsedItems.findIndex(object => object.name === item.name && object.gender === item.gender);
@@ -34,7 +33,8 @@ function parseData(data) {
                     }
                 ],
                 price: item.price,
-                description: item.description
+                description: item.description,
+                slug: (item.name + '-' + item.gender).toLowerCase()
             });
         }
     }

@@ -14,7 +14,30 @@ input {
     border-radius: 0;
     border-bottom: 1px solid $color--grey;
     padding: 8px 15px;
-    font-size: $font-size-base + .25rem;
+    font-size: $font-size-focused;
+  }
+}
+
+.button {
+  box-shadow: $box-shadow--small;
+  color: white;
+  text-align: center;
+  background: $color--grey;
+  width: 150px;
+  height: 35px;
+  padding: 10px 20px;
+  margin: 10px 0;
+
+  &:hover, &:active {
+    background: darken($color--grey, 10%);
+  }
+
+  &--primary {
+    background: $color--red;
+
+    &:hover, &:active {
+      background: darken($color--red, 10%);
+    }
   }
 }
 
