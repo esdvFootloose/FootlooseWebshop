@@ -4,7 +4,7 @@
             <card
                 v-for="item in items"
                 :key="item.id"
-                text-button="More"
+                text-button="Details"
                 route-name="item"
                 :route-params='{slug: item.slug}'
                 :is-primary-button="true"

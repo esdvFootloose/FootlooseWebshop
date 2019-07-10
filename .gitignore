@@ -18,3 +18,5 @@ yarn-error.log
 public/js/app\.js
 
 public/mix-manifest\.json
+
+\.vscode/settings\.json

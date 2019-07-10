@@ -23,7 +23,7 @@
                 tag="div"
                 class="button button--primary"
                 :to="{ name: routeName, params: routeParams}"
-                >More</router-link
+                >{{ textButton }}</router-link
             >
         </div>
     </div>
