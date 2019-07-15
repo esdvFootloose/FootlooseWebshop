@@ -1,9 +1,7 @@
 <template>
     <div>
         <navigation-bar></navigation-bar>
-        <div class="content">
             <router-view></router-view>
-        </div>
         <fl-footer></fl-footer>
     </div>
 </template>

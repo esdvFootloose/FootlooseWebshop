@@ -26,7 +26,7 @@ input {
   width: 150px;
   height: 35px;
   padding: 10px 20px;
-  margin: 10px 0;
+  margin: 10px;
 
   &:hover, &:active {
     background: darken($color--grey, 10%);
@@ -37,6 +37,14 @@ input {
 
     &:hover, &:active {
       background: darken($color--red, 10%);
+    }
+  }
+
+  &--disabled {
+    background: lighten($color--red, 30%);
+
+    &:hover, &:active {
+      background: lighten($color--red, 30%);
     }
   }
 }
