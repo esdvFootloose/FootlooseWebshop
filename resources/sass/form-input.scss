@@ -16,6 +16,11 @@ input {
     padding: 8px 15px;
     font-size: $font-size-focused;
   }
+
+  &[type=number] {
+    padding: 5px 0 5px 13px;
+    margin: 4px 10px;
+  }
 }
 
 .button {
