@@ -1,7 +1,7 @@
 <template>
     <div class="footer footer__container">
         <div class="footer footer__logo">
-            <img src="images/Logo_red_text.svg">
+            <img src="/images/Logo_red_text.svg">
         </div>
         <div class="footer footer__description footer__text">
             Footloose is a student dance association in Eindhoven. This webshop is for members to buy Footloose

@@ -16,8 +16,9 @@ $color--grey: #707070;
 $color--red: #ed2024;
 
 // Mobile breakpoints
-$breakpoint--tablet: 750px;
-$breakpoint--web: 780px;
+$breakpoint--tablet: 768px;
+$breakpoint--web: 1025px;
+$breakpoint--web-large: 1920px;
 
 // Shadow
 $box-shadow--large: 5px 10px 5px 0px rgba(0, 0, 0, 0.16);

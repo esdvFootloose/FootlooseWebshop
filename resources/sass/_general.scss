@@ -2,4 +2,19 @@
   &--full {
     width: 100%;
   }
+
+  &--mobile-full {
+    width: 100%;
+
+    @media all and (min-width: $breakpoint--tablet) {
+      width: auto;
+    }
+  }
+  &--tablet-full {
+    width: 100%;
+
+    @media all and (min-width: $breakpoint--web) {
+      width: auto;
+    }
+  }
 }

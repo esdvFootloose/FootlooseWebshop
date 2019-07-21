@@ -20,7 +20,6 @@
 
         @media all and (min-width: $breakpoint--tablet) {
             gap: 16px 16px;
-
         }
 
         @media all and (min-width: $breakpoint--web) {

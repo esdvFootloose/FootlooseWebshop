@@ -1,6 +1,6 @@
 // Variables
-@import 'general';
 @import 'variables';
+@import 'general';
 
 // Form input
 @import 'form-input.scss';
@@ -35,6 +35,8 @@ body {
   padding: 40px 30px;
   overflow-x: hidden;
   overflow-y: auto;
+  width: 100%;
+  margin: auto;
 
   @media all and (min-width: $breakpoint--tablet) {
     padding: 30px 80px;
@@ -42,6 +44,13 @@ body {
 
   @media all and (min-width: $breakpoint--web) {
     padding: 30px 120px;
+  }
+
+  &__main {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: $breakpoint--web-large;
   }
 }
 

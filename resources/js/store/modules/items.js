@@ -55,7 +55,7 @@ const getters = {
     getItems: state => state.items,
     getItem(state) {
         return slug => state.items.find(item => {
-            return item.slug === slug
+            return item.slug === slug;
         })
     },
 };
