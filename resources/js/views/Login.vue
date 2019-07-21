@@ -6,7 +6,7 @@
                 :is-primary-button=true
                 image="images/Logo_red_text.svg"
         >
-            <template v-slot:login>
+            <template v-slot:underneathImage>
                 <input type="hidden" name="_token" :value="csrf">
                 <div class="card__login">
                     <label for="email">Username</label>
@@ -39,7 +39,6 @@
         },
         methods: {
             login() {
-                console.log('test');
                 let request = {
                     // _token: this.csrf,
                     email: this.username,
@@ -62,7 +61,7 @@
     .content {
         &--login {
             margin: auto;
-            max-width: 500px;
+            max-width: 650px;
         }
     }
 
@@ -70,8 +69,7 @@
 
         &__login {
             width: 100%;
-            margin: 25px 20px 0;
-
+            padding: 25px 10px 0;
 
             label {
                 color: $color--grey;
@@ -82,13 +80,11 @@
                 margin-top: 5px;
                 margin-bottom: 15px;
             }
-
         }
 
         &__error {
             width: 100%;
             color: $color--red;
-            /*text-align: center;*/
         }
     }
 </style>

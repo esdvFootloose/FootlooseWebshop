@@ -18,7 +18,10 @@ class StockSeeder extends Seeder
             ->first()) {
             Stock::create([
                 'name' => 'T-Shirt',
-                'gender' => 'M',
+                'description' => <<<EOT
+                A basic black Footloose T-shirt with a regular fit, printed both front and back with the Footloose logo
+EOT
+                ,'gender' => 'M',
                 'size' => 'S',
                 'price' => 15,
                 'stock' => 5
@@ -30,7 +33,10 @@ class StockSeeder extends Seeder
             ->first()) {
             Stock::create([
                 'name' => 'T-Shirt',
-                'gender' => 'M',
+                'description' => <<<EOT
+                A basic black Footloose T-shirt with a regular fit, printed both front and back with the Footloose logo
+EOT
+                ,'gender' => 'M',
                 'size' => 'M',
                 'price' => 15,
                 'stock' => 10
@@ -42,7 +48,10 @@ class StockSeeder extends Seeder
             ->first()) {
             Stock::create([
                 'name' => 'T-Shirt',
-                'gender' => 'M',
+                'description' => <<<EOT
+                A basic black Footloose T-shirt with a regular fit, printed both front and back with the Footloose logo
+EOT
+                ,'gender' => 'M',
                 'size' => 'L',
                 'price' => 15,
                 'stock' => 4
@@ -54,7 +63,10 @@ class StockSeeder extends Seeder
             ->first()) {
             Stock::create([
                 'name' => 'T-Shirt',
-                'gender' => 'M',
+                'description' => <<<EOT
+                A basic black Footloose T-shirt with a regular fit, printed both front and back with the Footloose logo
+EOT
+                ,'gender' => 'M',
                 'size' => 'XL',
                 'price' => 15,
                 'stock' => 3
@@ -66,7 +78,10 @@ class StockSeeder extends Seeder
             ->first()) {
             Stock::create([
                 'name' => 'T-Shirt',
-                'gender' => 'M',
+                'description' => <<<EOT
+                A basic black Footloose T-shirt with a regular fit, printed both front and back with the Footloose logo
+EOT
+                ,'gender' => 'M',
                 'size' => 'XXL',
                 'price' => 15,
                 'stock' => 2
@@ -78,7 +93,10 @@ class StockSeeder extends Seeder
             ->first()) {
             Stock::create([
                 'name' => 'T-Shirt',
-                'gender' => 'F',
+                'description' => <<<EOT
+                A basic black Footloose T-shirt with a slim fit, printed both front and back with the Footloose logo
+EOT
+                ,'gender' => 'F',
                 'size' => 'S',
                 'price' => 15,
                 'stock' => 4
@@ -90,7 +108,10 @@ class StockSeeder extends Seeder
             ->first()) {
             Stock::create([
                 'name' => 'T-Shirt',
-                'gender' => 'F',
+                'description' => <<<EOT
+                A basic black Footloose T-shirt with a slim fit, printed both front and back with the Footloose logo
+EOT
+                ,'gender' => 'F',
                 'size' => 'M',
                 'price' => 15,
                 'stock' => 9
@@ -102,7 +123,10 @@ class StockSeeder extends Seeder
             ->first()) {
             Stock::create([
                 'name' => 'T-Shirt',
-                'gender' => 'F',
+                'description' => <<<EOT
+                A basic black Footloose T-shirt with a slim fit, printed both front and back with the Footloose logo
+EOT
+                ,'gender' => 'F',
                 'size' => 'L',
                 'price' => 15,
                 'stock' => 7
@@ -114,7 +138,10 @@ class StockSeeder extends Seeder
             ->first()) {
             Stock::create([
                 'name' => 'T-Shirt',
-                'gender' => 'F',
+                'description' => <<<EOT
+                A basic black Footloose T-shirt with a slim fit, printed both front and back with the Footloose logo
+EOT
+                ,'gender' => 'F',
                 'size' => 'XL',
                 'price' => 15,
                 'stock' => 4
@@ -126,7 +153,10 @@ class StockSeeder extends Seeder
             ->first()) {
             Stock::create([
                 'name' => 'T-Shirt',
-                'gender' => 'F',
+                'description' => <<<EOT
+                A basic black Footloose T-shirt with a slim fit, printed both front and back with the Footloose logo
+EOT
+                ,'gender' => 'F',
                 'size' => 'XL',
                 'price' => 15,
                 'stock' => 2

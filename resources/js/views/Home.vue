@@ -25,8 +25,7 @@ import Button from "../components/Button";
 export default {
     components: {
         CardGrid,
-        Card,
-        Button
+        Card
     },
     computed: {
         items: function() {

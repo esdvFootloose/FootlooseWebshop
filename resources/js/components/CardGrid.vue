@@ -1,5 +1,5 @@
 <template>
-    <div class="content card-grid">
+    <div class="card-grid">
         <slot></slot>
     </div>
 </template>
@@ -20,7 +20,6 @@
 
         @media all and (min-width: $breakpoint--tablet) {
             gap: 16px 16px;
-
         }
 
         @media all and (min-width: $breakpoint--web) {
