@@ -15,7 +15,7 @@
                         <label for="itemSize">Size</label>
                         <select v-model="selectedSize" id="itemSize">
                             <option disabled value="">Select a size</option>
-                            <option v-for="size in item.sizes">
+                            <option v-for="(size) in item.sizes">
                                 {{size.size}}
                             </option>
                         </select>
@@ -30,16 +30,16 @@
                             text="Add to cart"
                             :action="addToCart"
                             :is-primary="true"
-                            :is-disabled="true"
+                            :is-disabled="!canAddItem"
                     >
                     </Button>
-                    <Button v-if="true"
+                    <Button v-if="!itemInStock"
                             text="Request item"
                             :action="addToRequests"
                             :is-primary="false">
                     </Button>
-                    <div class="item__buttons__oof-text" v-if="true">
-                        This article is out of stock, request the item and we’ll keep you up-to-date on new stock
+                    <div class="item__buttons__oof-text" v-if=!itemInStock>
+                        This article for this amount is out of stock, request the item and we’ll keep you up-to-date on new stock
                         with your size.
                     </div>
                 </div>
@@ -60,13 +60,29 @@
         computed: {
             item: function () {
                 return this.$store.getters.getItem(this.$route.params.slug)
+            },
+            canAddItem: function() {
+                // Initial case: assure no item can be added or requested
+                if (this.selectedSize === '') {
+                    return false;
+                } else {
+                    return this.item.sizes.filter(size => size.size === this.selectedSize)[0].inStock >= this.selectedAmount;
+                }
+            },
+            itemInStock: function() {
+                // Initial case: assure no item can be added or requested
+                if (this.selectedSize === '') {
+                    return true
+                } else {
+                    return this.item.sizes.filter(size => size.size === this.selectedSize)[0].inStock >= this.selectedAmount;
+                }
             }
 
         },
         data: function () {
             return {
                 selectedSize: '',
-                selectedAmount: 1
+                selectedAmount: 1,
             }
         },
         methods: {
@@ -75,12 +91,17 @@
             },
             addToRequests: function () {
 
+            },
+            updateStockInfo: function() {
+                this.canAddItem;
+                this.itemInStock;
             }
         },
         mounted() {
             if (this.$store.getters.getItems.length === 0) {
                 this.$store.dispatch("fetchItems");
             }
+            // this.selectedAmount = this.item.name;
         }
     }
 </script>

@@ -17,9 +17,6 @@ class StockController extends Controller
     public function index()
     {
         $stocks = Stock::all();
-        foreach($stocks as $stock) {
-            $stock->stock = $stock->stock > 0;
-        }
         return response()->json(['data' => $stocks], 200);
     }
 
