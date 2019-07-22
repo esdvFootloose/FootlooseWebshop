@@ -29,7 +29,7 @@ function parseData(data) {
                 sizes: [
                     {
                         size: item.size,
-                        inStock: item.stock > 0
+                        inStock: item.stock
                     }
                 ],
                 price: item.price,
