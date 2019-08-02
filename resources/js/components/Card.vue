@@ -1,5 +1,5 @@
 <template>
-    <div class="card" v-bind:class="{'card--description' : isDetailed}">
+    <div class="card" v-bind:class="{'card--description' : isDetailed, 'card--no-spacing' : fullFillable}">
         <div v-bind:class="{'width--full' : !isDetailed, 'width--tablet-full' : isDetailed}">
             <div class="card__image"
                  v-bind:class="{'card__image--large' : largeImage, 'width--full' : centerImage, 'card__image--description': isDetailed}"
@@ -70,6 +70,10 @@
                 type: Boolean,
                 default: false
             },
+            fullFillable: {
+                type: Boolean,
+                default: false
+            },
             title: String
         }
     };
@@ -88,6 +92,11 @@
         border: $border--grey;
         padding: 20px 25px;
         position: relative;
+
+        &--no-spacing {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
 
         &__image {
             margin-bottom: 5px;
