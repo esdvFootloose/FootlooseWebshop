@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRequestTable extends Migration
+class CreateStocksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateRequestTable extends Migration
      */
     public function up()
     {
-        Schema::create('requests', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id');
+        Schema::create('stocks', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('item_id');
+            $table->enum('size', ['XS', 'S', 'M', 'L', 'XL', 'XXL']);
+            $table->integer('stock');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateRequestTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('requests');
+        Schema::dropIfExists('stocks');
     }
 }

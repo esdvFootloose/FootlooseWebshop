@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    protected $fillable = ['user_id', 'item_id', 'amount', 'is_picked_up'];
+    protected $fillable = ['user_id', 'is_picked_up'];
 
-    public function users()
+    public function OrderedItem()
     {
-        return $this->hasOne(User::class);
+        return $this->hasMany(OrderedItem::class);
     }
 }
