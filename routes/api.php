@@ -27,11 +27,31 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::middleware('auth:api')->group(function () {
         Route::post('/logout', 'Api\AuthController@logout')->name('logout');
 
-        Route::resource('/stocks', 'Api\StockController');
-        Route::resource('/orders', 'Api\OrderController');
-        Route::resource('/itemrequests', 'Api\ItemRequestController');
-        Route::resource('/rights', 'Api\RightController');
-        Route::resource('/userrights', 'Api\UserRightController');
+        Route::get('/items', 'Api\ItemController@index');
+        Route::get('/itemsDashboard', 'Api\ItemController@indexDashboard');
+        Route::post('/items', 'Api\ItemController@store');
+        Route::patch('/items/{item}', 'Api\ItemController@update');
+        Route::delete('/items/{item}', 'Api\ItemController@destroy');
+
+        Route::get('/orders', 'Api\OrderController@index');
+        Route::post('/orders', 'Api\OrderController@store');
+        Route::patch('/orders/{order}', 'Api\OrderController@update');
+        Route::delete('/orders/{order}', 'Api\OrderController@destroy');
+
+        Route::get('/itemrequests', 'Api\ItemRequestController@index');
+        Route::post('/itemrequests', 'Api\ItemRequestController@store');
+        Route::patch('/itemrequests/{itemrequest}', 'Api\ItemRequestController@update');
+        Route::delete('/itemrequests/{itemrequest}', 'Api\ItemRequestController@destroy');
+
+        Route::get('/rights', 'Api\RightController@index');
+        Route::post('/rights', 'Api\RightController@store');
+        Route::patch('/rights/{right}', 'Api\RightController@update');
+        Route::delete('/rights/{right}', 'Api\RightController@destroy');
+
+        Route::get('/userrights', 'Api\UserRightController@index');
+        Route::post('/userrights', 'Api\UserRightController@store');
+        Route::patch('/userrights/{userright}', 'Api\UserRightController@update');
+        Route::delete('/userrights/{userright}', 'Api\UserRightController@destroy');
     });
 });
 

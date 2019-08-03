@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStockTable extends Migration
+class CreateItemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,15 @@ class CreateStockTable extends Migration
      */
     public function up()
     {
-        Schema::create('stocks', function (Blueprint $table) {
+        Schema::create('items', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->enum('size', ['XS', 'S', 'M', 'L', 'XL', 'XXL'])->nullable();
             $table->double('price');
-            $table->integer('stock');
-            $table->text('description')->nullable();
-            $table->enum('gender', ['M', 'F', 'U']);
+            $table->text('description');
             $table->string('slug');
-            $table->date('available_till')->nullable();
-            $table->date('available_from')->nullable();
+            $table->enum('gender', ['Male', 'Female', 'Unisex']);
+            $table->dateTime('available_from')->nullable();
+            $table->dateTime('available_to')->nullable();
             $table->timestamps();
         });
     }
@@ -35,6 +33,6 @@ class CreateStockTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stocks');
+        Schema::dropIfExists('items');
     }
 }

@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Right;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
 
 class RightController extends Controller
 {
@@ -20,16 +21,6 @@ class RightController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -38,32 +29,10 @@ class RightController extends Controller
     public function store(Request $request)
     {
         $validated = request()->validate([
-            //TODO Add validation
+            // TODO validate
         ]);
-        $right = Right::create($validated);
-        return response()->json(['data' => $right], 200);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Right  $right
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Right $right)
-    {
-        return response()->json(['data' => $right], 200);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Right  $right
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Right $right)
-    {
-        return response()->json(['data' => $right], 200);
+        $created_right = Right::create($validated);
+        return response()->json(['data' => $created_right], 200);
     }
 
     /**
@@ -76,10 +45,10 @@ class RightController extends Controller
     public function update(Request $request, Right $right)
     {
         $validated = request()->validate([
-            //TODO Add validation
+            // TODO validate
         ]);
-        $savedRight = Right::update($validated);
-        return response()->json(['data' => $savedRight], 200);
+        $updated_right = Right::create($validated);
+        return response()->json(['data' => $updated_right], 200);
     }
 
     /**
