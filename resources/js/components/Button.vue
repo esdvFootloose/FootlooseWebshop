@@ -16,7 +16,7 @@
             isDisabled: {
                 type: Boolean,
                 default: false
-            }
+            },
         },
         computed: {
         }

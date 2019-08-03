@@ -22,6 +22,7 @@
                         :text="textButton"
                         :action="actionButton"
                         :is-primary="isPrimaryButton"
+                        :fixed-width="true"
                 ></Button>
             </div>
             <div class="card__cta-button" v-if="routeName">
@@ -74,7 +75,8 @@
                 type: Boolean,
                 default: false
             },
-            title: String
+            title: String,
+            fixedWidth: Boolean
         }
     };
 </script>
@@ -140,7 +142,7 @@
         }
 
         &__cta-button {
-            width: fit-content;
+            width: 150px;
             position: relative;
             display: block;
             margin: 0 auto;
