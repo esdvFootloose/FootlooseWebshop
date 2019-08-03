@@ -1,20 +1,39 @@
 .width {
-  &--full {
-    width: 100%;
-  }
-
-  &--mobile-full {
-    width: 100%;
-
-    @media all and (min-width: $breakpoint--tablet) {
-      width: auto;
+    &--full {
+        width: 100%;
     }
-  }
-  &--tablet-full {
-    width: 100%;
 
-    @media all and (min-width: $breakpoint--web) {
-      width: auto;
+    &--mobile-full {
+        width: 100%;
+
+        @media all and (min-width: $breakpoint--tablet) {
+            width: auto;
+        }
     }
-  }
+
+    &--tablet-full {
+        width: 100%;
+
+        @media all and (min-width: $breakpoint--web) {
+            width: auto;
+        }
+    }
+}
+
+.hidden {
+    &--mobile {
+        display: none;
+
+        @media all and (min-width: $breakpoint--tablet) {
+            display: table-cell;
+        }
+    }
+
+    &--tablet {
+        display: none;
+
+        @media all and (min-width: $breakpoint--web) {
+            display: table-cell;
+        }
+    }
 }
