@@ -17,8 +17,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call(StockSeeder::class);
 
-        $this->call(StockSeeder::class);
-
         $this->call(UserSeeder::class);
 
         $this->call(RightSeeder::class);
