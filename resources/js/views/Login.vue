@@ -10,9 +10,9 @@
                 <input type="hidden" name="_token" :value="csrf">
                 <div class="card__login">
                     <label for="email">Username</label>
-                    <input id="email" type="email" name="email" v-model="username" required>
+                    <input class="input-focus" id="email" type="email" name="email" v-model="username" required>
                     <label for="password">Password </label>
-                    <input id="password" type="password" name="password" v-model="password" @keyup.enter="login" required>
+                    <input class="input-focus" id="password" type="password" name="password" v-model="password" @keyup.enter="login" required>
                 </div>
                 <div v-if="error" class="card__error">{{ error }}</div>
             </template>

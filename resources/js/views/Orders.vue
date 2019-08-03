@@ -1,5 +1,12 @@
 <template>
     <div class="content">
+        <div class="heading">
+            <h1>Orders</h1>
+            <div class="heading__search">
+                <label class="heading__search-label">Search</label>
+                <input type="text" v-model="orderSearch">
+            </div>
+        </div>
         <table>
             <tr>
                 <th v-for="header in tableHeaders"
@@ -12,7 +19,7 @@
                     :class="{'hidden--mobile' : tableHeaders[index].hideMobile, 'hidden--tablet' : tableHeaders[index].hideTablet}">
                     {{ (value === 0 || value === 1) && index > 0 ? (value === 0 ? 'false' : 'true') : value }}
                 </td>
-                <td >
+                <td>
                     <Button text="Edit"></Button>
                 </td>
             </tr>
@@ -27,7 +34,6 @@
         components: {Button},
         data: function () {
             return {
-                tableHeader: ['Order ID', 'Name', 'Date ordered', 'Total (€)', 'Paid', 'Picked up', 'Time picked up', ''],
                 tableHeaders: [
                     {
                         header: 'Order ID',
@@ -143,7 +149,8 @@
                         'picked_up': 0,
                         'Time picked up': '30-11-2019 10:31'
                     }
-                ]
+                ],
+                orderSearch: ''
             }
         },
         computed: {
@@ -156,5 +163,20 @@
 
 
 <style lang="scss" scoped>
+    .heading {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
 
+        &__search {
+            display: flex;
+            align-items: center;
+            max-width: 150px;
+        }
+
+        &__search-label {
+            margin-right: 10px;
+        }
+    }
 </style>
