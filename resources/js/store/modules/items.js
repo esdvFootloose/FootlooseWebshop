@@ -31,8 +31,8 @@ const mutations = {
 
 const actions = {
     fetchItems({commit}) {
-        axios.get('/api/stocks').then(result => {
-            commit('SET_ITEMS', parseData(result.data.data));
+        axios.get('/api/items').then(result => {
+            commit('SET_ITEMS', result.data.data);
         }).catch(error => {
             console.log(error);
         })
@@ -74,35 +74,4 @@ export default {
     mutations,
     actions,
     getters,
-}
-
-
-function parseData(data) {
-    let parsedItems = [];
-    for (let item in data) {
-        item = data[item];
-        let index = parsedItems.findIndex(object => object.name === item.name && object.gender === item.gender);
-        if (index !== -1) {
-            parsedItems[index].sizes.push({
-                size: item.size,
-                inStock: item.stock
-            });
-        } else {
-            parsedItems.push({
-                id: parsedItems.length,
-                name: item.name,
-                gender: item.gender,
-                sizes: [
-                    {
-                        size: item.size,
-                        inStock: item.stock
-                    }
-                ],
-                price: item.price,
-                description: item.description,
-                slug: (item.name + '-' + item.gender).toLowerCase()
-            });
-        }
-    }
-    return parsedItems;
 }

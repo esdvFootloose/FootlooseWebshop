@@ -2,24 +2,28 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
-use Illuminate\Database\Eloquent\Model;
+
+
 class Stock extends Model
 {
-    protected $fillable = ['name', 'size', 'price', 'stock', 'gender', 'available_till', 'available_from'];
 
-    use HasSlug;
+    protected $fillable = ['item_id', 'size_id', 'amount'];
 
-    public function getSlugOptions() : SlugOptions
+    public function Item()
     {
-        return SlugOptions::create()
-            ->generateSlugsFrom(['name', 'size', 'gender'])
-            ->saveSlugsTo('slug');
+        return $this->belongsTo(Item::class);
     }
 
-    public function getRouteKeyName()
+    public function OrderedItem()
     {
-        return 'slug';
+        return $this->hasMany(OrderedItem::class);
+    }
+
+    public function ItemRequest()
+    {
+        return $this->hasMany(ItemRequest::class);
     }
 }
