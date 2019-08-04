@@ -14,7 +14,7 @@
                     header.header }}
                 </th>
             </tr>
-            <tr v-for="order in mockupTableData">
+            <tr v-for="order in filteredOrders">
                 <td v-for="(value, key, index) in order"
                     :class="{'hidden--mobile' : tableHeaders[index].hideMobile, 'hidden--tablet' : tableHeaders[index].hideTablet}">
                     {{ (value === 0 || value === 1) && index > 0 ? (value === 0 ? 'false' : 'true') : value }}
@@ -88,7 +88,7 @@
                     },
                     {
                         'order_id': 2,
-                        'name': 'John Doe',
+                        'name': 'John Dee',
                         'data_ordered': '29-11-2019',
                         'total': 65,
                         'paid': 0,
@@ -156,6 +156,11 @@
         computed: {
             orders: function () {
                 return this.$store.getters.orders;
+            },
+            filteredOrders: function() {
+                return this.mockupTableData.filter(order => {
+                    return order.name.toLowerCase().includes(this.orderSearch.toLowerCase())
+                });
             }
         }
     }

@@ -158,6 +158,11 @@
         computed: {
             stocks: function () {
                 return this.$store.getters.getItemsDashboard;
+            },
+            filteredStocks: function() {
+                return this.mockupTableData.filter(stock => {
+                    return stock.name.toLowerCase().includes(this.stocksSearch.toLowerCase())
+                });
             }
         },
         mounted() {
