@@ -48,7 +48,7 @@ const router = new VueRouter({
             }
         },
         {
-            path: '/item/:slug',
+            path: '/item/:slug/:size?',
             component: Item,
             name: 'item',
             meta: {
@@ -119,6 +119,9 @@ router.beforeEach((to, from, next) => {
         if (!store.getters.isLoggedIn) {
             next({ name: 'login' });
             return;
+        }
+        if (!store.getters.isUserLoaded) {
+            store.dispatch('getUser')
         }
     }
     window.scrollTo(0, 0);
