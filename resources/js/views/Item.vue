@@ -31,12 +31,15 @@
                             :action="addToCart"
                             :is-primary="true"
                             :is-disabled="!canAddItem"
+                            :fixed-width="true"
                     >
                     </Button>
                     <Button v-if="!itemInStock"
                             text="Request item"
                             :action="addToRequests"
-                            :is-primary="false">
+                            :is-primary="false"
+                    :fixed-width="true"
+                    >
                     </Button>
                     <div class="item__buttons__oof-text" v-if=!itemInStock>
                         This article for this amount is out of stock, request the item and we’ll keep you up-to-date on new stock
