@@ -4,7 +4,7 @@
                 :is-detailed="true"
                 image="https://via.placeholder.com/450"
                 :large-image="true"
-                :title="item.name + (item.gender === 'M' ? ' male' : item.gender === 'F' ? ' female': '')"
+                :title="item.name + ' ' +(item.gender === 'Unisex' ? '' : item.gender.toLowerCase())"
         >
             <template v-slot:description>
                 <div class="item__description">
@@ -31,12 +31,15 @@
                             :action="addToCart"
                             :is-primary="true"
                             :is-disabled="!canAddItem"
+                            :fixed-width="true"
                     >
                     </Button>
                     <Button v-if="!itemInStock"
                             text="Request item"
                             :action="addToRequests"
-                            :is-primary="false">
+                            :is-primary="false"
+                    :fixed-width="true"
+                    >
                     </Button>
                     <div class="item__buttons__oof-text" v-if=!itemInStock>
                         This article for this amount is out of stock, request the item and we’ll keep you up-to-date on new stock
@@ -59,14 +62,17 @@
         },
         computed: {
             item: function () {
-                return this.$store.getters.getItem(this.$route.params.slug)
+                return this.$store.getters.getItem(this.$route.params.slug);
+            },
+            cart: function() {
+                return this.$store.getters.getCart;
             },
             canAddItem: function() {
                 // Initial case: assure no item can be added or requested
                 if (this.selectedSize === '') {
                     return false;
                 } else {
-                    return this.item.stock.filter(size => size.size === this.selectedSize)[0].stock >= this.selectedAmount;
+                    return this.item.stock.filter(size => size.size === this.selectedSize)[0].stock >= this.selectedAmount && this.selectedAmount > 0;
                 }
             },
             itemInStock: function() {
@@ -87,19 +93,40 @@
         },
         methods: {
             addToCart: function () {
-
+                let size = this.item.stock.filter(size => size.size === this.selectedSize)[0];
+                console.log('size:', size.id);
+                let currentCartItem = this.cart.filter(item => item.item_id === this.item.id && item.size_id === size.id);
+                let cartItem = {
+                    item_id: this.item.id,
+                    size_id: size.id,
+                    amount: Number(this.selectedAmount)
+                };
+                if (currentCartItem.length === 0) {
+                    this.$store.dispatch("addItemToCart", cartItem);
+                } else {
+                    this.$store.dispatch("adjustCartItem", cartItem);
+                }
             },
             addToRequests: function () {
-
+                let size = this.item.stock.filter(size => size.size === this.selectedSize)[0];
+                let requestedItem = {
+                    user_id: this.$store.getters.getUser.id,
+                    item_id: this.item.id,
+                    size_id: size.id,
+                };
+                this.$store.dispatch('requestItem', requestedItem);
             },
             updateStockInfo: function() {
-                this.canAddItem;
-                this.itemInStock;
+                this.canAddItem();
+                this.itemInStock();
             }
         },
         mounted() {
             if (this.$store.getters.getItems.length === 0) {
                 this.$store.dispatch("fetchItems");
+            }
+            if (this.$route.params.size) {
+                this.selectedSize = this.$route.params.size;
             }
         }
     }
@@ -147,7 +174,6 @@
                 flex-wrap: wrap;
                 margin-left: -10px;
                 justify-content: flex-start;
-
             }
         }
 

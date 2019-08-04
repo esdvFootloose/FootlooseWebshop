@@ -1,7 +1,8 @@
 import axios from 'axios';
+import rootState from 'vuex'
 
 
-const cartCookie = localStorage.getItem('cart');
+const cartCookie = JSON.parse(localStorage.getItem('cart'));
 
 const state = {
     items: [],
@@ -21,53 +22,55 @@ const mutations = {
         state.cart.push(item);
     },
     REMOVE_FROM_CART(state, item) {
-        let indexItem = state.cart.indexOf(state.cart.filter(cartItem => cartItem.item === item)[0]);
+        let indexItem = state.cart.indexOf((state.cart.filter(filterItem => filterItem.item_id === item.item_id && filterItem.size_id === item.size_id))[0]);
         if (indexItem !== -1) state.cart.splice(indexItem, 1);
     },
-    ADJUST_ITEM(state, item, amount) {
-        let indexItem = state.cart.indexOf(state.cart.filter(cartItem => cartItem.item === item)[0]);
-        state.cart[indexItem].amount = amount;
+    ADJUST_ITEM(state, item) {
+        let indexItem = state.cart.indexOf((state.cart.filter(filterItem => filterItem.item_id === item.item_id && filterItem.size_id === item.size_id))[0]);
+        state.cart[indexItem].amount = item.amount;
     },
     CLEAR_CART(state) {
         state.cart = [];
-    }
+    },
 };
 
 const actions = {
     fetchItems({commit}) {
-        axios.get('/api/items').then(result => {
+        axios.get('/api/itemsDashboard').then(result => {
             commit('SET_ITEMS', result.data.data);
         }).catch(error => {
             console.log(error);
         })
     },
     fetchItemsDashboard({commit}) {
-        axios.get('/api/itemsDashboard').then(result => {
+        axios.get('/api/items').then(result => {
             commit('SET_ITEMS_DASHBOARD', result.data.data);
         }).catch(error => {
             console.log(error);
         })
     },
-    addItemToCart({commit}, item, amount) {
-        let cartItem = {
-            item: item,
-            amount: amount
-        };
-        commit('ADD_TO_CART', cartItem);
-        localStorage.setItem('cart', state.cart);
+    addItemToCart({commit}, item) {
+        commit('ADD_TO_CART', item);
+        setCookie();
     },
-adjustCartItem({commit}, item, amount) {
-    commit('ADJUST_ITEM', item, amount);
-    localStorage.setItem('cart', state.cart);
-},
-removeItemFromCart({commit}, item) {
-    commit('REMOVE_FROM_CART', item);
-    localStorage.setItem('cart', state.cart);
-},
-clearCart({commit}) {
-    commit('CLEAR_CART');
-    localStorage.removeItem('cart');
-}
+    adjustCartItem({commit}, item) {
+        console.log('adjust item:', item);
+        commit('ADJUST_ITEM', item);
+        setCookie()
+    },
+    removeItemFromCart({commit}, item) {
+        commit('REMOVE_FROM_CART', item);
+        setCookie()
+    },
+    clearCart({commit}) {
+        commit('CLEAR_CART');
+        localStorage.removeItem('cart');
+    },
+    requestItem({commit}, requestedItem) {
+        axios.post('/api/itemrequests', requestedItem).then(result => {
+            console.log(result)
+        });
+    }
 };
 const getters = {
     getItems: state => state.items,
@@ -86,4 +89,9 @@ export default {
     mutations,
     actions,
     getters,
+}
+
+function setCookie() {
+    let cartItemsString = JSON.stringify(state.cart);
+    localStorage.setItem('cart', cartItemsString);
 }
