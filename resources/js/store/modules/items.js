@@ -17,7 +17,7 @@ const mutations = {
     ADD_TO_CART(state, item) {
         state.cart.push(item);
     },
-    REMOVE_FROM_CART(state, itemID, sizeID) {
+    REMOVE_FROM_CART(state, item) {
         let indexItem = state.cart.indexOf((state.cart.filter(filterItem => filterItem.item_id === item.item_id && filterItem.size_id === item.size_id))[0]);
         if (indexItem !== -1) state.cart.splice(indexItem, 1);
     },
@@ -48,7 +48,7 @@ const actions = {
         setCookie()
     },
     removeItemFromCart({commit}, item) {
-        commit('REMOVE_FROM_CART', item.item_id, item.size_id);
+        commit('REMOVE_FROM_CART', item);
         setCookie()
     },
     clearCart({commit}) {
