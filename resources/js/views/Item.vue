@@ -15,7 +15,7 @@
                         <label for="itemSize">Size</label>
                         <select v-model="selectedSize" id="itemSize">
                             <option disabled value="">Select a size</option>
-                            <option v-for="(size) in item.sizes">
+                            <option v-for="size in item.stock">
                                 {{size.size}}
                             </option>
                         </select>
@@ -31,12 +31,15 @@
                             :action="addToCart"
                             :is-primary="true"
                             :is-disabled="!canAddItem"
+                            :fixed-width="true"
                     >
                     </Button>
                     <Button v-if="!itemInStock"
                             text="Request item"
                             :action="addToRequests"
-                            :is-primary="false">
+                            :is-primary="false"
+                    :fixed-width="true"
+                    >
                     </Button>
                     <div class="item__buttons__oof-text" v-if=!itemInStock>
                         This article for this amount is out of stock, request the item and we’ll keep you up-to-date on new stock
@@ -66,7 +69,7 @@
                 if (this.selectedSize === '') {
                     return false;
                 } else {
-                    return this.item.sizes.filter(size => size.size === this.selectedSize)[0].inStock >= this.selectedAmount;
+                    return this.item.stock.filter(size => size.size === this.selectedSize)[0].stock >= this.selectedAmount;
                 }
             },
             itemInStock: function() {
@@ -74,7 +77,7 @@
                 if (this.selectedSize === '') {
                     return true
                 } else {
-                    return this.item.sizes.filter(size => size.size === this.selectedSize)[0].inStock >= this.selectedAmount;
+                    return this.item.stock.filter(size => size.size === this.selectedSize)[0].stock >= this.selectedAmount;
                 }
             }
 
@@ -101,7 +104,6 @@
             if (this.$store.getters.getItems.length === 0) {
                 this.$store.dispatch("fetchItems");
             }
-            // this.selectedAmount = this.item.name;
         }
     }
 </script>

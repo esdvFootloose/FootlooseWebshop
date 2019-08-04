@@ -6,11 +6,11 @@
                 :key="item.id"
                 text-button="Details"
                 route-name="item"
-                :route-params='{slug: item.slug}'
+                :route-params="{'slug' :item.slug}"
                 :is-primary-button="true"
                 image="https://via.placeholder.com/175"
-                :text-heading="item.name + (item.gender === 'M' ? ' male' : item.gender === 'F' ? ' female': '')"
-                :text-subheading="getSizesAsText(item.sizes)"
+                :text-heading="item.name + ' ' +(item.gender === 'Unisex' ? '' : item.gender.toLowerCase())"
+                :text-subheading="getSizesAsText(item.stock)"
             >
             </card>
         </card-grid>

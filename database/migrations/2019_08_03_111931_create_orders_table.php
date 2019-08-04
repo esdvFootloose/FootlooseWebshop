@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRightTable extends Migration
+class CreateOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateRightTable extends Migration
      */
     public function up()
     {
-        Schema::create('rights', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->boolean('can_manage_items');
-            $table->boolean('can_manage_orders');
-            $table->boolean('can_set_orders_paid');
+            $table->unsignedBigInteger('user_id');
+            $table->boolean('is_picked_up')->default(false);
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateRightTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rights');
+        Schema::dropIfExists('orders');
     }
 }

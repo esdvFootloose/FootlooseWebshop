@@ -1,5 +1,5 @@
 <template>
-    <div class="card" v-bind:class="{'card--description' : isDetailed}">
+    <div class="card" v-bind:class="{'card--description' : isDetailed, 'card--no-spacing' : fullFillable}">
         <div v-bind:class="{'width--full' : !isDetailed, 'width--tablet-full' : isDetailed}">
             <div class="card__image"
                  v-bind:class="{'card__image--large' : largeImage, 'width--full' : centerImage, 'card__image--description': isDetailed}"
@@ -22,6 +22,7 @@
                         :text="textButton"
                         :action="actionButton"
                         :is-primary="isPrimaryButton"
+                        :fixed-width="true"
                 ></Button>
             </div>
             <div class="card__cta-button" v-if="routeName">
@@ -70,7 +71,12 @@
                 type: Boolean,
                 default: false
             },
-            title: String
+            fullFillable: {
+                type: Boolean,
+                default: false
+            },
+            title: String,
+            fixedWidth: Boolean
         }
     };
 </script>
@@ -88,6 +94,11 @@
         border: $border--grey;
         padding: 20px 25px;
         position: relative;
+
+        &--no-spacing {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
 
         &__image {
             margin-bottom: 5px;
@@ -131,7 +142,7 @@
         }
 
         &__cta-button {
-            width: fit-content;
+            width: 150px;
             position: relative;
             display: block;
             margin: 0 auto;

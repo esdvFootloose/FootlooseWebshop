@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserRightTable extends Migration
+class CreateRightsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateUserRightTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_rights', function (Blueprint $table) {
-            $table->bigIncrements('role_id');
-            $table->unsignedInteger('user_id');
+        Schema::create('rights', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->boolean('can_manage_items');
+            $table->boolean('can_manage_orders');
+//            $table->boolean('can_set_orders_paid');
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ class CreateUserRightTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_rights');
+        Schema::dropIfExists('rights');
     }
 }

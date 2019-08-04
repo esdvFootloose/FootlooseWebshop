@@ -72,7 +72,7 @@ const router = new VueRouter({
             }
         },
         {
-            path: '/orders',
+            path: '/orders/:query?',
             component: Orders,
             name: 'orders',
             meta: {
@@ -88,7 +88,7 @@ const router = new VueRouter({
             }
         },
         {
-            path: '/stocks',
+            path: '/stocks/:query?',
             component: Stocks,
             name: 'stocks',
             meta: {
