@@ -31,15 +31,13 @@ input {
     max-width: 150px;
     height: 35px;
     padding: 10px 0;
-    margin: 10px 0;
+    margin: 10px;
 
     @media all and (min-width: $breakpoint--tablet){
         padding: 10px 10px;
-        margin: 10px;
     }
     @media all and (min-width: $breakpoint--web){
         padding: 10px 20px;
-        margin: 10px;
     }
 
 
