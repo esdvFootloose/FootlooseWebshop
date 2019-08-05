@@ -6,6 +6,7 @@ const cartCookie = JSON.parse(localStorage.getItem('cart'));
 
 const state = {
     items: [],
+    itemsDashboard: [],
     cart: cartCookie || [],
     nrItemsOutOfStock: 0,
 };
@@ -13,6 +14,9 @@ const state = {
 const mutations = {
     SET_ITEMS(state, items) {
         state.items = items;
+    },
+    SET_ITEMS_DASHBOARD(state, items) {
+        state.itemsDashboard = items;
     },
     ADD_TO_CART(state, item) {
         state.cart.push(item);
@@ -32,14 +36,21 @@ const mutations = {
 
 const actions = {
     fetchItems({commit}) {
-        axios.get('/api/items').then(result => {
+        axios.get('/api/itemsDashboard').then(result => {
             commit('SET_ITEMS', result.data.data);
         }).catch(error => {
             console.log(error);
         })
     },
-    addItemToCart({commit}, cartItem) {
-        commit('ADD_TO_CART', cartItem);
+    fetchItemsDashboard({commit}) {
+        axios.get('/api/items').then(result => {
+            commit('SET_ITEMS_DASHBOARD', result.data.data);
+        }).catch(error => {
+            console.log(error);
+        })
+    },
+    addItemToCart({commit}, item) {
+        commit('ADD_TO_CART', item);
         setCookie();
     },
     adjustCartItem({commit}, item) {
@@ -63,6 +74,7 @@ const actions = {
 };
 const getters = {
     getItems: state => state.items,
+    getItemsDashboard: state => state.itemsDashboard,
     getItem(state) {
         return slug => state.items.find(item => {
             return item.slug === slug;

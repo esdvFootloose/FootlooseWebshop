@@ -13,13 +13,22 @@ input {
         border: none;
         border-radius: 0;
         border-bottom: 1px solid $color--grey;
-        padding: 8px 15px;
-        font-size: $font-size-focused;
     }
 
     &[type=number] {
         padding: 5px 0 5px 13px;
         margin: 4px 10px;
+    }
+}
+
+.input-focus {
+    &:focus {
+        outline: none;
+        border: none;
+        border-radius: 0;
+        border-bottom: 1px solid $color--grey;
+        padding: 8px 15px !important;
+        font-size: $font-size-focused !important;
     }
 }
 
@@ -30,11 +39,11 @@ input {
     background: $color--grey;
     max-width: 150px;
     height: 35px;
-    padding: 10px 0;
+    padding: 10px;
     margin: 10px;
 
     @media all and (min-width: $breakpoint--tablet){
-        padding: 10px 10px;
+        padding: 10px ;
     }
     @media all and (min-width: $breakpoint--web){
         padding: 10px 20px;
