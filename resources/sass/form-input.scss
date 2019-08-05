@@ -1,56 +1,78 @@
 input {
-  width: 100%;
-  padding: 4px 15px;
-  margin: 8px 0;
-  display: inline-block;
-  border: none;
-  border-radius: 0;
-  border-bottom: 1px solid $border-color--grey;
-  box-sizing: border-box;
-
-  &:focus {
-    outline: none;
-    border:none;
+    width: 100%;
+    padding: 4px 15px;
+    margin: 8px 0;
+    display: inline-block;
+    border: none;
     border-radius: 0;
-    border-bottom: 1px solid $color--grey;
-    padding: 8px 15px;
-    font-size: $font-size-focused;
-  }
+    border-bottom: 1px solid $border-color--grey;
+    box-sizing: border-box;
 
-  &[type=number] {
-    padding: 5px 0 5px 13px;
-    margin: 4px 10px;
-  }
+    &:focus {
+        outline: none;
+        border: none;
+        border-radius: 0;
+        border-bottom: 1px solid $color--grey;
+    }
+
+    &[type=number] {
+        padding: 5px 0 5px 13px;
+        margin: 4px 10px;
+    }
+}
+
+.input-focus {
+    &:focus {
+        outline: none;
+        border: none;
+        border-radius: 0;
+        border-bottom: 1px solid $color--grey;
+        padding: 8px 15px !important;
+        font-size: $font-size-focused !important;
+    }
 }
 
 .button {
-  box-shadow: $box-shadow--small;
-  color: white;
-  text-align: center;
-  background: $color--grey;
-  width: 150px;
-  height: 35px;
-  padding: 10px 20px;
-  margin: 10px;
+    box-shadow: $box-shadow--small;
+    color: white;
+    text-align: center;
+    background: $color--grey;
+    max-width: 150px;
+    height: 35px;
+    padding: 10px;
+    margin: 10px;
 
-  &:hover, &:active {
-    background: darken($color--grey, 10%);
-  }
+    @media all and (min-width: $breakpoint--tablet){
+        padding: 10px ;
+    }
+    @media all and (min-width: $breakpoint--web){
+        padding: 10px 20px;
+    }
 
-  &--primary {
-    background: $color--red;
+
 
     &:hover, &:active {
-      background: darken($color--red, 10%);
+        background: darken($color--grey, 10%);
     }
-  }
 
-  &--disabled {
-    background: lighten($color--red, 30%);
+    &--primary {
+        background: $color--red;
 
-    &:hover, &:active {
-      background: lighten($color--red, 30%);
+        &:hover, &:active {
+            background: darken($color--red, 10%);
+        }
     }
-  }
+
+    &--fixed-width {
+        width: 150px !important;
+    }
+
+    &--disabled {
+        background: lighten($color--red, 30%);
+
+        &:hover, &:active {
+            background: lighten($color--red, 30%);
+        }
+    }
 }
 

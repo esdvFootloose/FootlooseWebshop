@@ -1,5 +1,7 @@
 <template>
-    <div class="button" v-bind:class="{'button--primary' : isPrimary, 'button--disabled' : isDisabled}" v-on="{ click : !isDisabled ? action : null}">
+    <div class="button"
+         v-bind:class="{'button--primary' : isPrimary, 'button--disabled' : isDisabled, 'button--fixed-width' : fixedWidth}"
+         v-on="buttonFunction">
         {{ text }}
     </div>
 </template>
@@ -13,12 +15,18 @@
                 type: Boolean,
                 default: false
             },
-            isDisabled: {
-                type: Boolean,
-                default: false
-            }
+            isDisabled: Boolean,
+            fixedWidth: Boolean,
+            actionObject: Object,
         },
         computed: {
+            buttonFunction: function () {
+                if (this.actionObject){
+                    return this.actionObject.action;
+                } else {
+                    return this.isDisabled ? null : this.action;
+                }
+            }
         }
     }
 </script>
