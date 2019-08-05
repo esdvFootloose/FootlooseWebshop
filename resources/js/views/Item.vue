@@ -28,7 +28,7 @@
                 <div class="item__buttons width--full">
                     <Button
                             text="Add to cart"
-                            :action="addToCart"
+                            :action="{click: addToCart}"
                             :is-primary="true"
                             :is-disabled="!canAddItem"
                             :fixed-width="true"
@@ -36,7 +36,7 @@
                     </Button>
                     <Button v-if="!itemInStock"
                             text="Request item"
-                            :action="addToRequests"
+                            :action="{click: addToRequests}"
                             :is-primary="false"
                     :fixed-width="true"
                     >

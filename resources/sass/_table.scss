@@ -2,19 +2,15 @@ table {
     width: 100%;
     text-align: left;
     border-collapse: collapse;
+    margin-bottom: 30px;
 
 }
 
-tr {
-    &:hover :not(th) {
-        background: darken(#ffffff, 10%);
-    }
-
-}
 
 th {
     font-weight: bold;
     padding: 5px 0;
+    border-bottom: 1px solid $color--light-grey;
 
     &:nth-child(1) {
         padding-left: 20px;
@@ -28,14 +24,15 @@ th {
     }
 }
 
-th, td {
-    border-bottom: 1px solid $color--light-grey;
+tr {
+    height: 56px;
 }
 
 td {
+    padding: 5px 0;
 
     &:nth-child(1) {
-        font-weight: bold;
+        //font-weight: bold;
         padding-left: 20px;
         //text-align: center;
     }
@@ -46,6 +43,17 @@ td {
             padding: initial;
         }
     }
+}
+
+.row {
+    height: 56px;
+    & > td {
+        border-top: 1px solid $color--light-grey;
+        &:nth-child(1) {
+            font-weight: bold;
+        }
+    }
+
 }
 
 

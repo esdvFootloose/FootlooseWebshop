@@ -15,7 +15,7 @@
                     header.header }}
                 </th>
             </tr>
-            <tr v-for="order in mockupTableData">
+            <tr class="row" v-for="order in mockupTableData">
                 <td v-for="(value, key, index) in order"
                     :class="{'hidden--mobile' : tableHeaders[index].hideMobile, 'hidden--tablet' : tableHeaders[index].hideTablet}"
                 >
