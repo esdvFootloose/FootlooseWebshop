@@ -20,7 +20,7 @@
         v-if="loggedIn"
         :class="{'navigation-bar__menu--visible' : showMenu}"
       >
-        <a href="https://www.esdvfootloose.nl" class="navigation-bar__menu-item">Website</a>
+        <a href="https://www.esdvfootloose.nl" class="navigation-bar__menu-item">Association</a>
         <router-link
           :to="{name: 'dashboard'}"
           v-if="isAdmin"
@@ -33,7 +33,7 @@
           class="navigation-bar__menu-item"
           tag="div"
           v-on:click.native="closeMenu"
-        >Home</router-link>
+        >Store</router-link>
         <router-link
           :to="{name: 'orders'}"
           class="navigation-bar__menu-item"
