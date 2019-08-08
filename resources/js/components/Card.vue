@@ -122,8 +122,6 @@
                 width: 100%;
 
                 @media all and (min-width: $breakpoint--web) {
-                    padding-top: 40px;
-                    padding-bottom: 40px;
                     width: auto;
                 }
             }
@@ -131,7 +129,7 @@
 
         &__item-heading {
             width: 100%;
-            font-size: $font-size-heading;
+            font-size: $font-size--subheading;
             margin-bottom: 10px;
         }
 
@@ -139,6 +137,7 @@
             width: 100%;
             color: $color--grey;
             margin-bottom: 15px;
+            font-size: $font-size--small
         }
 
         &__cta-button {
@@ -173,6 +172,8 @@
 
         &--description {
             padding: 20px 25px;
+            margin: auto;
+            max-width: 1200px;
 
             @media all and (min-width: $breakpoint--web) {
                 padding: 40px 60px !important;
@@ -183,9 +184,5 @@
             margin: 20px auto;
             padding: 20px 20px;
         }
-
-
-
-
     }
 </style>

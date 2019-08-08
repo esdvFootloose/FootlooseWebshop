@@ -5,9 +5,11 @@ $body-bg: #f8fafc;
 $font-family-sans-serif: 'myriad-pro', sans-serif;
 $font-style: normal;
 $font-weight: 300;
-$font-size-base: 0.75rem;
-$font-size-focused: $font-size-base + .25rem;
-$font-size-heading: $font-size-base + .85rem;
+$font-size--base: 11pt;
+$font-size--small: 9pt;
+$font-size--heading: 18pt;
+$font-size--subheading: 14pt;
+$font-size-focused: 12pt;
 $line-height-base: 1.6;
 
 // Color Scheme

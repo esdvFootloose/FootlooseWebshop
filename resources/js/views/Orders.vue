@@ -184,7 +184,7 @@
                         hideTablet: false
                     },
                     {
-                        header: 'Sex',
+                        header: 'Type',
                         hideMobile: true,
                         hideTablet: false
                     },
