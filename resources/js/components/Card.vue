@@ -18,12 +18,7 @@
                 {{ textSubheading }}
             </div>
             <div class="card__cta-button" v-if="actionButton">
-                <Button
-                        :text="textButton"
-                        :action="actionButton"
-                        :is-primary="isPrimaryButton"
-                        :fixed-width="true"
-                ></Button>
+                <div class="button button--fixed-width" :class="{'button--primary' : isPrimaryButton}" @click="actionButton">{{ textButton }}</div>
             </div>
             <div class="card__cta-button" v-if="routeName">
                 <router-link
@@ -39,12 +34,8 @@
 </template>
 
 <script>
-    import Button from "./Button";
 
     export default {
-        components: {
-            Button
-        },
         props: {
             // Button props
             textButton: String,
