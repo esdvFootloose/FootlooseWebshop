@@ -26,21 +26,12 @@
                     </div>
                 </div>
                 <div class="item__buttons width--full">
-                    <Button
-                            text="Add to cart"
-                            :action="{click: addToCart}"
-                            :is-primary="true"
-                            :is-disabled="!canAddItem"
-                            :fixed-width="true"
-                    >
-                    </Button>
-                    <Button v-if="!itemInStock"
-                            text="Request item"
-                            :action="{click: addToRequests}"
-                            :is-primary="false"
-                    :fixed-width="true"
-                    >
-                    </Button>
+                    <div class="button button--primary button--fixed-width" :class="{'button--disabled' : !canAddItem}" v-on:click="canAddItem ? addToCart : null">
+                        Add to cart
+                    </div>
+                    <div class="button button--fixed-width" @click="addToRequests" v-if="!itemInStock">
+                        Request item
+                    </div>
                     <div class="item__buttons__oof-text" v-if=!itemInStock>
                         This article for this amount is out of stock, request the item and we’ll keep you up-to-date on new stock
                         with your size.
@@ -53,12 +44,10 @@
 
 <script>
     import Card from "../components/Card";
-    import Button from "../components/Button"
 
     export default {
         components: {
-            Card,
-            Button
+            Card
         },
         computed: {
             item: function () {

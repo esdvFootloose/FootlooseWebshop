@@ -34,12 +34,13 @@ input {
 }
 
 .button {
+    appearance: none;
     box-shadow: $box-shadow--small;
     color: white;
     text-align: center;
     background: $color--grey;
     max-width: 150px;
-    height: 35px;
+    height: fit-content;
     padding: 10px;
     margin: 10px;
 

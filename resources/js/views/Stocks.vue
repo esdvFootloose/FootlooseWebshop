@@ -22,7 +22,7 @@
                     {{ value }}
                 </td>
                 <td>
-                    <Button text="Edit"></Button>
+                    <div class="button">Edit</div>
                 </td>
             </tr>
         </table>
@@ -30,10 +30,7 @@
 </template>
 
 <script>
-    import Button from "../components/Button";
-
     export default {
-        components: {Button},
         data: function () {
             return {
                 tableHeaders: [

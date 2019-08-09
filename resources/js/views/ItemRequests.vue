@@ -16,7 +16,7 @@
                     {{ value }}
                 </td>
                 <td>
-                    <Button text="Remove"></Button>
+                    <div class="button">Remove</div>
                 </td>
             </tr>
         </table>
@@ -24,10 +24,7 @@
 </template>
 
 <script>
-    import Button from "../components/Button";
-
     export default {
-        components: {Button},
         data: function () {
             return {
                 tableHeaders: [
