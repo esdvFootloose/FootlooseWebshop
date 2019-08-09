@@ -70,6 +70,15 @@ const actions = {
         axios.post('/api/itemrequests', requestedItem).then(result => {
             console.log(result)
         });
+    },
+    orderCartItems({commit}) {
+        axios.post('/api/orders', state.cart).then(result => {
+            commit('CLEAR_CART');
+            return true;
+        }).catch(error => {
+            console.log(error);
+            return false;
+        })
     }
 };
 const getters = {
@@ -84,7 +93,12 @@ const getters = {
         return state.items.find(item => item.id === id)
     },
     getCart: state => state.cart,
-    getNrItemsOutOfStock: state => state.nrItemsOutOfStock
+    getNrItemsOutOfStock: state => state.nrItemsOutOfStock,
+    itemInCart: state => item => {
+        let selectedItem = state.items.find(stockItem => stockItem.slug === item.slug);
+        let selectedSize = selectedItem.stock.find(size => size.size === item.size).id;
+        return state.cart.find(cartItem => cartItem.item_id === selectedItem.id && cartItem.size_id === selectedSize);
+    }
 };
 
 export default {

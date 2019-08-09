@@ -116,7 +116,14 @@
             }
             if (this.$route.params.size) {
                 this.selectedSize = this.$route.params.size;
+                this.selectedAmount = this.$store.getters.itemInCart(
+                    {
+                        slug: this.$route.params.slug,
+                        size: this.$route.params.size,
+                    }
+                ).amount;
             }
+
         }
     }
 </script>

@@ -33,27 +33,33 @@ td {
 
     &:nth-child(1) {
         //font-weight: bold;
-        padding-left: 20px;
-        //text-align: center;
-    }
-
-    &:nth-child(2) {
         padding-left: 10px;
+        //text-align: center;
+
         @media all and (min-width: $breakpoint--tablet) {
-            padding: initial;
+            padding-left: 20px;
         }
     }
 }
 
 .row {
     height: 56px;
+
     & > td {
         border-top: 1px solid $color--light-grey;
+
         &:nth-child(1) {
             font-weight: bold;
         }
-    }
 
+        &:nth-child(2) {
+            padding-left: 10px;
+            @media all and (min-width: $breakpoint--tablet) {
+                padding: initial;
+
+            }
+        }
+    }
 }
 
 
