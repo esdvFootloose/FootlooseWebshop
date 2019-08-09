@@ -78,7 +78,10 @@ const getters = {
     getItem(state) {
         return slug => state.items.find(item => {
             return item.slug === slug;
-        })
+        });
+    },
+    getItemById: (state) => (id) => {
+        return state.items.find(item => item.id === id)
     },
     getCart: state => state.cart,
     getNrItemsOutOfStock: state => state.nrItemsOutOfStock
