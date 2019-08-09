@@ -11,14 +11,17 @@
                             <img src="https://via.placeholder.com/100" alt="item image">
                         </td>
                         <td>{{ item(cartItem.item_id).name }}</td>
-                        <td>Size: {{ item(cartItem.item_id).stock.find(size => size.id === cartItem.size_id).size }}</td>
+                        <td>Size: {{ item(cartItem.item_id).stock.find(size => size.id === cartItem.size_id).size }}
+                        </td>
                         <td>{{ cartItem.amount }}x €{{ item(cartItem.item_id).price }}</td>
                         <td>€ {{ cartItem.amount * item(cartItem.item_id).price }}</td>
-                        <td v-if="!purchased">X</td>
+                        <td v-if="!purchased" @click="removeItem(cartItem)">X</td>
                     </tr>
                     <tr class="row">
                         <td colspan="4">Total</td>
-                        <td colspan="2">€ {{totalPrice}}</td>
+                        <td colspan="2">
+                            € {{totalPrice}}
+                        </td>
                     </tr>
                 </table>
                 <div style="float: right;" v-if="!purchased && cart.length > 0">
@@ -26,7 +29,7 @@
                 </div>
             </template>
         </Card>
-        </div>
+    </div>
 </template>
 
 <script>
@@ -60,6 +63,10 @@
                 this.title = 'Order placed';
                 this.purchased = true;
                 this.$store.dispatch('clearCart');
+            },
+            removeItem: function (item) {
+                this.$store.dispatch('removeItemFromCart', item);
+                this.cart = this.$store.getters.getCart;
             }
         },
         mounted: function () {
@@ -79,6 +86,7 @@
     .checkout-item {
         &__image {
             padding: 10px 0;
+
             img {
                 height: 75px;
                 width: auto;
