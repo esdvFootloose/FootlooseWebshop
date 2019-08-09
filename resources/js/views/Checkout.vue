@@ -1,5 +1,5 @@
 <template>
-    <div class="content">
+    <div class="content content__checkout">
         <Card>
             <template v-slot:description>
                 <h1>{{ title }}</h1>
@@ -67,6 +67,11 @@
 
 <style lang="scss" scoped>
     @import "../../sass/app";
+
+    .content__checkout {
+        max-width: 1200px;
+        margin: auto;
+    }
 
     .checkout-item {
         &__image {
