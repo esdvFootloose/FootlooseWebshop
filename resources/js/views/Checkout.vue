@@ -4,7 +4,8 @@
             <template v-slot:description>
                 <h1>{{ title }}</h1>
                 <p v-if="purchased">Thank you for your order. Please check your mail for payment details</p>
-                <table>
+                <p v-if="cart.length === 0"> You have nothing in your cart, please add first an item to your cart</p>
+                <table v-if="cart.length > 0 ">
                     <tr v-for="cartItem in cart" class="row">
                         <td class="checkout-item__image">
                             <img src="https://via.placeholder.com/100" alt="item image">
@@ -20,7 +21,7 @@
                         <td colspan="2">€ {{totalPrice}}</td>
                     </tr>
                 </table>
-                <div style="float: right;" v-if="!purchased">
+                <div style="float: right;" v-if="!purchased && cart.length > 0">
                     <div class="button button--primary" @click="purchase">Purchase</div>
                 </div>
             </template>
@@ -36,9 +37,6 @@
             Card
         },
         computed: {
-            cart: function () {
-                return this.$store.getters.getCart;
-            },
             item: function () {
                 return id => this.$store.getters.getItemById(id);
             },
@@ -53,14 +51,19 @@
         data: function () {
             return {
                 title: 'Checkout',
-                purchased: false
+                purchased: false,
+                cart: {}
             }
         },
         methods: {
             purchase: function () {
                 this.title = 'Order placed';
                 this.purchased = true;
+                this.$store.dispatch('clearCart');
             }
+        },
+        mounted: function () {
+            this.cart = this.$store.getters.getCart;
         }
     }
 </script>
