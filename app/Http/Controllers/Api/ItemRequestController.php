@@ -27,10 +27,10 @@ class ItemRequestController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = request()->validate([
-            // TODO validate
+        $created_item_request = ItemRequest::create([
+            'user_id' => $request->user_id,
+            'stock_id' => $request->size_id
         ]);
-        $created_item_request = ItemRequest::create($validated);
         return response()->json(['data' => $created_item_request], 200);
     }
 

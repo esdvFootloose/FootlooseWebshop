@@ -67,12 +67,17 @@ const actions = {
         localStorage.removeItem('cart');
     },
     requestItem({commit}, requestedItem) {
+        console.log('requesting item');
         axios.post('/api/itemrequests', requestedItem).then(result => {
             console.log(result)
         });
     },
-    orderCartItems({commit}) {
-        axios.post('/api/orders', state.cart).then(result => {
+    orderCartItems({commit}, userId) {
+        let order = {
+            user_id: userId,
+            cart: JSON.stringify(state.cart)
+        };
+        axios.post('/api/orders', order).then(result => {
             commit('CLEAR_CART');
             return true;
         }).catch(error => {
