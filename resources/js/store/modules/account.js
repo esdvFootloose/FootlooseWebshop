@@ -59,7 +59,7 @@ const actions = {
     getUser({ commit }) {
         axios.get('/api/user').then(result => {
             if (result.data.status === 200) {
-                commit('SET_USER', result.data.user)
+                commit('SET_USER', result.data.user);
             } else {
                 delete axios.defaults.headers.common['Authorization'];
                 localStorage.removeItem('token');

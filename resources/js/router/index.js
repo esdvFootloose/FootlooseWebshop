@@ -117,11 +117,14 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
         if (!store.getters.isLoggedIn) {
-            next({ name: 'login' });
+            next({name: 'login'});
             return;
         }
         if (!store.getters.isUserLoaded) {
-            store.dispatch('getUser')
+            store.dispatch('getUser');
+        }
+        if (store.getters.getItems.length === 0) {
+            store.dispatch('fetchItems');
         }
     }
     window.scrollTo(0, 0);
