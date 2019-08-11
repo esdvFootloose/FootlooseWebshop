@@ -57,7 +57,7 @@
                         >
                         </custom-icon>
                     </div>
-                    <div class="navigation-bar__dropdown-content">
+                    <div class="navigation-bar__dropdown-content" v-if="cartItems.length > 0">
                         <template v-for="cartItem in cartItems">
                             <router-link
                                 :to="{name: 'item', params: {slug: item(cartItem.item_id).slug, size: item(cartItem.item_id).stock.find(size => size.id === cartItem.size_id).size}}"
