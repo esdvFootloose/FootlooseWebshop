@@ -16,6 +16,7 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
+            $table->boolean('is_paid')->default(false);
             $table->boolean('is_picked_up')->default(false);
             $table->timestamps();
         });

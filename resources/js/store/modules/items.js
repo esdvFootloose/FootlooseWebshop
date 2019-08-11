@@ -67,7 +67,6 @@ const actions = {
         localStorage.removeItem('cart');
     },
     requestItem({commit}, requestedItem) {
-        console.log('requesting item');
         axios.post('/api/itemrequests', requestedItem).then(result => {
             console.log(result)
         });
