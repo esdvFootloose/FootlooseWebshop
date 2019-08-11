@@ -16,6 +16,7 @@ class CreateOrderedItemsTable extends Migration
         Schema::create('ordered_items', function (Blueprint $table) {
             $table->unsignedInteger('order_id');
             $table->unsignedInteger('stock_id');
+            $table->boolean('is_picked_up')->default(false);
             $table->integer('amount');
 //            $table->unsignedBigInteger('item_id');
             $table->timestamps();

@@ -84,7 +84,16 @@
             },
             nrReadyForPickup: function () {
                 return this.$store.getters.getNrReadyforPickup;
+            },
+            getOrders: function () {
+                return this.$store.getters.getOrders;
+            },
+            getRequests: function (){
+                return this.$store.getters.getRequests;
             }
+        },
+        mounted() {
+            this.$store.dispatch('fetchAllDashboard');
         }
     }
 </script>
