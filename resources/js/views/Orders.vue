@@ -133,29 +133,6 @@
                     },
 
                 ],
-                mockupTableDataItems: [
-                    {
-                        item: 'T-Shirt',
-                        sex: 'Male',
-                        size: 'M',
-                        amount: '1',
-                        picked_up: false
-                    },
-                    {
-                        item: 'Sweater',
-                        sex: 'Female',
-                        size: 'S',
-                        amount: '1',
-                        picked_up: false
-                    },
-                    {
-                        item: 'Shoebag',
-                        sex: 'Unisex',
-                        size: 'M',
-                        amount: '2',
-                        picked_up: true
-                    },
-                ],
                 orderSearch: '',
                 collapsedData: {},
                 showDetails: false,
