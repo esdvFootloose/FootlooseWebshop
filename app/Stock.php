@@ -10,7 +10,7 @@ use Spatie\Sluggable\SlugOptions;
 class Stock extends Model
 {
 
-    protected $fillable = ['item_id', 'size_id', 'amount'];
+    protected $fillable = ['item_id', 'size', 'amount'];
 
     public function Item()
     {

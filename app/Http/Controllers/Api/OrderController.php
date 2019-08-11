@@ -18,6 +18,14 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::all();
+        foreach($orders as $order)
+        {
+            foreach($order->OrderedItem as $item) {
+                $item->Stock;
+                $item->Stock->Item;
+            }
+            $order->User;
+        }
         return response()->json(['data' => $orders], 200);
     }
 

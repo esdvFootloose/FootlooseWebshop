@@ -29,9 +29,4 @@ class Item extends Model
              ->saveSlugsTo('slug');
     }
 
-    // TODO Check if necessary
-//    public function ItemRequest()
-//    {
-//        return $this->hasMany(ItemRequest::class);
-//    }
 }

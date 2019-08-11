@@ -14,31 +14,35 @@
                     header.header }}
                 </th>
             </tr>
-            <template v-for="(filterValue, key, keyIndex) in filteredOrders">
+            <template v-for="order in orders">
                 <tr class="row">
-                    <td v-for="(value, key, index) in filterValue"
-                        :class="{'hidden--mobile' : tableHeaders[index].hideMobile, 'hidden--tablet' : tableHeaders[index].hideTablet}">
-                        {{ (value === 0 || value === 1) && index > 0 ? (value === 0 ? 'false' : 'true') : value }}
-                    </td>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.user.name }}</td>
+                    <td>{{ order.created_at }}</td>
+                    <td>€ {{ orderValue(order.ordered_item) }}</td>
+                    <td>{{ order.is_paid ? 'Yes' : 'No'}}</td>
+                    <td>{{ order.is_picked_up ? 'Yes' : 'No' }}</td>
+                    <td>{{ order.is_picked_up? order.updated_at : '' }}</td>
                     <td>
-                        <div class="button" @click="toggle(filterValue.order_id)"
-                             v-if="opened !== filterValue.order_id">Edit
+                        <div class="button" @click="toggle(order.order_id)"
+                             v-if="opened !== order.order_id">Edit
                         </div>
                     </td>
                 </tr>
-                <tr v-if="opened === filterValue.order_id">
+                <tr v-if="opened === order.order_id">
                     <td :colspan="(windowSize >= 768) ? (windowSize >= 1025 ? 8 : 5 ) : 3">
                         <div class="orders__details">
                             <table>
                                 <tr>
                                     <th v-for="header in itemTableHeaders"> {{ header.header }}</th>
                                 </tr>
-                                <tr v-for="(item, index) in mockupTableDataItems">
-                                    <td v-for="attribute in item">
-                                        <div class="button" v-if=" attribute === false" @click="setPickedUp(item, index)">Picked up</div>
-                                        <template v-if="attribute !== false && attribute !== true">
-                                            {{ attribute }}
-                                        </template>
+                                <tr v-for="item in order.ordered_item">
+                                    <td>{{ item.stock.item.name }}</td>
+                                    <td>{{ item.stock.item.gender }}</td>
+                                    <td>{{ item.stock.size }}</td>
+                                    <td>{{ item.amount }}x</td>
+                                    <td>
+                                        <div class="button" v-if="!item.is_picked_up" @click="setPickedUp(order.order_id, order.stock_id)">Picked up</div>
                                     </td>
                                 </tr>
                             </table>
@@ -99,80 +103,6 @@
                         header: '',
                         hideMobile: false,
                         hideTablet: false
-                    }
-                ],
-                mockupTableData: [
-                    {
-                        'order_id': 1,
-                        'name': 'John Doe',
-                        'data_ordered': '29-11-2019',
-                        'total': 65,
-                        'paid': 0,
-                        'picked_up': 0,
-                        'Time picked up': '30-11-2019 10:31'
-                    },
-                    {
-                        'order_id': 2,
-                        'name': 'John Dee',
-                        'data_ordered': '29-11-2019',
-                        'total': 65,
-                        'paid': 0,
-                        'picked_up': 0,
-                        'Time picked up': '30-11-2019 10:31'
-                    },
-                    {
-                        'order_id': 3,
-                        'name': 'John Doe',
-                        'data_ordered': '29-11-2019',
-                        'total': 65,
-                        'paid': 0,
-                        'picked_up': 0,
-                        'Time picked up': '30-11-2019 10:31'
-                    },
-                    {
-                        'order_id': 4,
-                        'name': 'John Doe',
-                        'data_ordered': '29-11-2019',
-                        'total': 65,
-                        'paid': 0,
-                        'picked_up': 0,
-                        'Time picked up': '30-11-2019 10:31'
-                    },
-                    {
-                        'order_id': 5,
-                        'name': 'John Doe',
-                        'data_ordered': '29-11-2019',
-                        'total': 65,
-                        'paid': 0,
-                        'picked_up': 0,
-                        'Time picked up': '30-11-2019 10:31'
-                    },
-                    {
-                        'order_id': 6,
-                        'name': 'John Doe',
-                        'data_ordered': '29-11-2019',
-                        'total': 65,
-                        'paid': 0,
-                        'picked_up': 0,
-                        'Time picked up': '30-11-2019 10:31'
-                    },
-                    {
-                        'order_id': 7,
-                        'name': 'John Doe',
-                        'data_ordered': '29-11-2019',
-                        'total': 65,
-                        'paid': 0,
-                        'picked_up': 0,
-                        'Time picked up': '30-11-2019 10:31'
-                    },
-                    {
-                        'order_id': 8,
-                        'name': 'John Doe',
-                        'data_ordered': '29-11-2019',
-                        'total': 65,
-                        'paid': 0,
-                        'picked_up': 0,
-                        'Time picked up': '30-11-2019 10:31'
                     }
                 ],
                 itemTableHeaders: [
@@ -237,9 +167,18 @@
                 return this.$store.getters.getOrders;
             },
             filteredOrders: function () {
-                return this.mockupTableData.filter(order => {
-                    return order.name.toLowerCase().includes(this.orderSearch.toLowerCase())
+                return this.orders.filter(order => {
+                    return this.order.name.toLowerCase().includes(this.orderSearch.toLowerCase())
                 });
+            },
+            orderValue: function () {
+                return items => {
+                    let value = 0;
+                    for (let i = 0; i < items.length; i++) {
+                        value += items[i].amount * items[i].stock.item.price;
+                    }
+                    return value;
+                }
             },
             windowSize: function () {
                 return window.innerWidth;
@@ -256,11 +195,11 @@
                 };
                 // TODO implement this function in store
                 // this.$store.dispatch("setItemPicketUp", pickedUpItem);
-                console.log(index);
-                console.log(this.mockupTableDataItems);
                 this.mockupTableDataItems[index].picked_up = true;
             }
-
+        },
+        mounted() {
+            if (this.$store.getters.getOrders.length === 0) this.$store.dispatch('fetchOrders');
         }
     }
 </script>
