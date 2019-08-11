@@ -1,11 +1,8 @@
 import axios from 'axios';
 
 const state = {
-    requests: [],
     orders: [],
-    nrPlacedOrders: 0,
-    nrRequests: 0,
-    nrReadyForPickup: 0
+    requests: [],
 };
 
 const mutations = {
@@ -15,32 +12,38 @@ const mutations = {
     SET_ORDERS(state, orders) {
         state.orders = orders;
     }
-
 };
 
 const actions = {
     fetchRequests({commit}) {
         axios.get('/api/itemrequests').then(result => {
-            commit('SET_REQUESTS', result.data);
+            commit('SET_REQUESTS', result.data.data);
         }).catch(error => {
             console.log(error);
         });
     },
     fetchOrders({commit}) {
         axios.get('api/orders').then(result => {
-            commit('SET_ORDERS', result.data)
+            commit('SET_ORDERS', result.data.data);
         }).catch(error => {
             console.log(error);
         });
+    },
+    fetchAllDashboard({dispatch}) {
+        dispatch('fetchRequests');
+        dispatch('fetchOrders');
+    },
+    pickedUpItem({commit}, item) {
+
     }
 };
 
 const getters = {
     getRequests: state => state.requests,
     getOrders: state => state.orders,
-    getNrPlacedOrders: state => state.nrPlacedOrders,
-    getNrRequests: state => state.nrRequests,
-    getNrReadyforPickup: state => state.nrReadyForPickup
+    getNrPlacedOrders: state => state.orders.filter(order => !order.is_picked_up).length,
+    getNrRequests: state => state.requests.length,
+    getNrReadyforPickup: state => state.orders.filter(order => order.is_paid && !order.is_picked_up).length,
 };
 
 export default {
