@@ -88,8 +88,8 @@
             getOrders: function () {
                 return this.$store.getters.getOrders;
             },
-            getRequests: function (){
-                return this.$store.getters.getRequests;
+            getItemRequests: function (){
+                return this.$store.getters.getItemRequests;
             }
         },
         mounted() {

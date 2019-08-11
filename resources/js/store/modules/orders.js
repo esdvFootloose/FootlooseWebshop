@@ -35,11 +35,18 @@ const actions = {
     },
     pickedUpItem({commit}, item) {
 
+    },
+    removeItemRequest({commit, dispatch}, itemRequestId) {
+        axios.delete('/api/itemrequests/' + itemRequestId).then(result => {
+            dispatch('fetchRequests');
+        }).catch(error => {
+            console.log(error);
+        })
     }
 };
 
 const getters = {
-    getRequests: state => state.requests,
+    getItemRequests: state => state.requests,
     getOrders: state => state.orders,
     getNrPlacedOrders: state => state.orders.filter(order => !order.is_picked_up).length,
     getNrRequests: state => state.requests.length,

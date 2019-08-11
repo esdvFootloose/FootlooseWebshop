@@ -6,7 +6,6 @@ use App\Order;
 use App\OrderedItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use function MongoDB\BSON\fromJSON;
 
 
 class OrderController extends Controller

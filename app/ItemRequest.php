@@ -18,4 +18,10 @@ class ItemRequest extends Model
     {
         return $this->belongsTo(Stock::class);
     }
+
+    public function User()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
+
