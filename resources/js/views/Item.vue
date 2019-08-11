@@ -1,10 +1,10 @@
 <template>
     <div class="content content--item">
         <card
-                :is-detailed="true"
-                image="https://via.placeholder.com/450"
-                :large-image="true"
-                :title="item.name + ' ' +(item.gender === 'Unisex' ? '' : item.gender.toLowerCase())"
+            :is-detailed="true"
+            image="https://via.placeholder.com/450"
+            :large-image="true"
+            :title="item.name + ' ' +(item.gender === 'Unisex' ? '' : item.gender.toLowerCase())"
         >
             <template v-slot:description>
                 <div class="item__description">
@@ -26,14 +26,16 @@
                     </div>
                 </div>
                 <div class="item__buttons width--full">
-                    <div class="button button--primary button--fixed-width" :class="{'button--disabled' : !canAddItem}" v-on:click="canAddItem ? addToCart : null">
+                    <div class="button button--primary button--fixed-width" :class="{'button--disabled' : !canAddItem}"
+                         @click="addToCart">
                         Add to cart
                     </div>
                     <div class="button button--fixed-width" @click="addToRequests" v-if="!itemInStock">
                         Request item
                     </div>
                     <div class="item__buttons__oof-text" v-if=!itemInStock>
-                        This article for this amount is out of stock, request the item and we’ll keep you up-to-date on new stock
+                        This article for this amount is out of stock, request the item and we’ll keep you up-to-date on
+                        new stock
                         with your size.
                     </div>
                 </div>
@@ -53,10 +55,10 @@
             item: function () {
                 return this.$store.getters.getItem(this.$route.params.slug);
             },
-            cart: function() {
+            cart: function () {
                 return this.$store.getters.getCart;
             },
-            canAddItem: function() {
+            canAddItem: function () {
                 // Initial case: assure no item can be added or requested
                 if (this.selectedSize === '') {
                     return false;
@@ -64,7 +66,7 @@
                     return this.item.stock.filter(size => size.size === this.selectedSize)[0].stock >= this.selectedAmount && this.selectedAmount > 0;
                 }
             },
-            itemInStock: function() {
+            itemInStock: function () {
                 // Initial case: assure no item can be added or requested
                 if (this.selectedSize === '') {
                     return true
@@ -82,8 +84,10 @@
         },
         methods: {
             addToCart: function () {
+                if (!this.canAddItem) {
+                    return;
+                }
                 let size = this.item.stock.filter(size => size.size === this.selectedSize)[0];
-                console.log('size:', size.id);
                 let currentCartItem = this.cart.filter(item => item.item_id === this.item.id && item.size_id === size.id);
                 let cartItem = {
                     item_id: this.item.id,
@@ -105,7 +109,7 @@
                 };
                 this.$store.dispatch('requestItem', requestedItem);
             },
-            updateStockInfo: function() {
+            updateStockInfo: function () {
                 this.canAddItem();
                 this.itemInStock();
             }
