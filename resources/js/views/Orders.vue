@@ -14,22 +14,22 @@
                     header.header }}
                 </th>
             </tr>
-            <template v-for="order in orders">
+            <template v-for="order in filteredOrders">
                 <tr class="row">
                     <td>{{ order.id }}</td>
                     <td>{{ order.user.name }}</td>
-                    <td>{{ order.created_at }}</td>
+                    <td class="hidden--mobile hidden--tablet">{{ order.created_at }}</td>
                     <td>€ {{ orderValue(order.ordered_item) }}</td>
-                    <td>{{ order.is_paid ? 'Yes' : 'No'}}</td>
-                    <td>{{ order.is_picked_up ? 'Yes' : 'No' }}</td>
-                    <td>{{ order.is_picked_up? order.updated_at : '' }}</td>
+                    <td class="hidden--mobile">{{ order.is_paid ? 'Yes' : 'No'}}</td>
+                    <td class="hidden--mobile">{{ order.is_picked_up ? 'Yes' : 'No' }}</td>
+                    <td class="hidden--mobile hidden--tablet">{{ order.is_picked_up? order.updated_at : '' }}</td>
                     <td>
-                        <div class="button" @click="toggle(order.order_id)"
-                             v-if="opened !== order.order_id">Edit
+                        <div class="button" @click="toggle(order.id)"
+                             v-if="opened !== order.id">Edit
                         </div>
                     </td>
                 </tr>
-                <tr v-if="opened === order.order_id">
+                <tr v-if="opened === order.id">
                     <td :colspan="(windowSize >= 768) ? (windowSize >= 1025 ? 8 : 5 ) : 3">
                         <div class="orders__details">
                             <table>
@@ -42,7 +42,7 @@
                                     <td>{{ item.stock.size }}</td>
                                     <td>{{ item.amount }}x</td>
                                     <td>
-                                        <div class="button" v-if="!item.is_picked_up" @click="setPickedUp(order.order_id, order.stock_id)">Picked up</div>
+                                        <div class="button" v-if="!item.is_picked_up" @click="setPickedUp(order.id, order.stock_id)">Picked up</div>
                                     </td>
                                 </tr>
                             </table>
@@ -77,7 +77,7 @@
                     {
                         header: 'Date ordered',
                         hideMobile: true,
-                        hideTablet: false
+                        hideTablet: true,
                     },
                     {
                         header: 'Total (€)',
@@ -87,12 +87,12 @@
                     {
                         header: 'Paid',
                         hideMobile: true,
-                        hideTablet: true
+                        hideTablet: false
                     },
                     {
                         header: 'Picked up',
                         hideMobile: true,
-                        hideTablet: true
+                        hideTablet: false
                     },
                     {
                         header: 'Time picked up',
@@ -145,7 +145,7 @@
             },
             filteredOrders: function () {
                 return this.orders.filter(order => {
-                    return this.order.name.toLowerCase().includes(this.orderSearch.toLowerCase())
+                    return order.user.name.toLowerCase().includes(this.orderSearch.toLowerCase())
                 });
             },
             orderValue: function () {
