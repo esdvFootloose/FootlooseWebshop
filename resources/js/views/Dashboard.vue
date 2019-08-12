@@ -88,12 +88,20 @@
             getOrders: function () {
                 return this.$store.getters.getOrders;
             },
-            getItemRequests: function (){
+            getItemRequests: function () {
                 return this.$store.getters.getItemRequests;
             }
         },
         mounted() {
-            this.$store.dispatch('fetchAllDashboard');
+            let nrOrders = this.$store.getters.getNrOrders;
+            let nrRequests = this.$store.getters.getNrRequests;
+            if (nrOrders === 0 && nrRequests === 0) {
+                this.$store.dispatch('fetchAllDashboard');
+            } else if (nrOrders === 0) {
+                this.$store.dispatch('fetchOrders');
+            } else if (nrRequests === 0) {
+                this.$store.dispatch('fetchRequests')
+            }
         }
     }
 </script>

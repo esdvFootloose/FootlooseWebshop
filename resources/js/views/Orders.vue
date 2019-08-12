@@ -42,7 +42,9 @@
                                     <td>{{ item.stock.size }}</td>
                                     <td>{{ item.amount }}x</td>
                                     <td>
-                                        <div class="button" v-if="!item.is_picked_up" @click="setPickedUp(order.id, order.stock_id)">Picked up</div>
+                                        <div class="button" v-if="!item.is_picked_up && order.is_paid"
+                                             @click="setPickedUp(order.id, order.stock_id)">Picked up
+                                        </div>
                                     </td>
                                 </tr>
                             </table>
@@ -136,7 +138,7 @@
                 orderSearch: '',
                 collapsedData: {},
                 showDetails: false,
-                opened: null
+                opened: null,
             }
         },
         computed: {
@@ -144,9 +146,24 @@
                 return this.$store.getters.getOrders;
             },
             filteredOrders: function () {
-                return this.orders.filter(order => {
-                    return order.user.name.toLowerCase().includes(this.orderSearch.toLowerCase())
-                });
+                switch (this.$route.params.query) {
+                    case ('ready'):
+                        return this.orders.filter(order => {
+                            return order.user.name.toLowerCase().includes(this.orderSearch.toLowerCase()) && order.is_paid && !order.is_picked_up;
+                        });
+                        break;
+                    case('new'):
+                        return this.orders.filter(order => {
+                            return order.user.name.toLowerCase().includes(this.orderSearch.toLowerCase()) && !order.is_picked_up;
+                        });
+                        break;
+                    default:
+                        return this.orders.filter(order => {
+                            return order.user.name.toLowerCase().includes(this.orderSearch.toLowerCase())
+                        });
+                        break;
+                }
+
             },
             orderValue: function () {
                 return items => {
@@ -166,17 +183,14 @@
             toggle(id) {
                 this.opened = id;
             },
-            setPickedUp: function(item, index) {
-                let pickedUpItem = {
-
-                };
+            setPickedUp: function (item, index) {
+                let pickedUpItem = {};
                 // TODO implement this function in store
                 // this.$store.dispatch("setItemPicketUp", pickedUpItem);
-                this.mockupTableDataItems[index].picked_up = true;
             }
         },
         mounted() {
-            if (this.$store.getters.getOrders.length === 0) this.$store.dispatch('fetchOrders');
+            if (this.$store.getters.getNrOrders === 0) this.$store.dispatch('fetchOrders');
         }
     }
 </script>

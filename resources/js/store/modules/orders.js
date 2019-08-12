@@ -48,6 +48,7 @@ const actions = {
 const getters = {
     getItemRequests: state => state.requests,
     getOrders: state => state.orders,
+    getNrOrders: state => state.orders.length,
     getNrPlacedOrders: state => state.orders.filter(order => !order.is_picked_up).length,
     getNrRequests: state => state.requests.length,
     getNrReadyforPickup: state => state.orders.filter(order => order.is_paid && !order.is_picked_up).length,
