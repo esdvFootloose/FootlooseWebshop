@@ -14,7 +14,7 @@
                     header.header }}
                 </th>
             </tr>
-            <template v-for="order in orders">
+            <template v-for="order in filteredOrders">
                 <tr class="row">
                     <td>{{ order.id }}</td>
                     <td>{{ order.user.name }}</td>
@@ -172,6 +172,8 @@
             },
 
             filteredOrders: function () {
+                this.changedData = [];
+                this.opened = '';
                 switch (this.$route.params.query) {
                     case ('ready'):
                         return this.orders.filter(order => {
@@ -203,7 +205,6 @@
             windowSize: function () {
                 return window.innerWidth;
             }
-
         },
         methods: {
             toggle(id) {
@@ -276,9 +277,9 @@
         }
 
         &__details {
-           td:nth-child(even) {
-               padding: 0 10px;
-           }
+            td:nth-child(even) {
+                padding: 0 10px;
+            }
         }
     }
 </style>
