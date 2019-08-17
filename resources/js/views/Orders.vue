@@ -30,8 +30,29 @@
                     </td>
                 </tr>
                 <tr v-if="opened === order.id">
-                    <td :colspan="(windowSize >= 768) ? (windowSize >= 1025 ? 8 : 5 ) : 3">
+                    <td :colspan="(windowSize < 768) ? 3 :(windowSize >= 1025 ? 8 : 5 )">
                         <div class="orders__details">
+                            <table>
+                                <tr v-if="windowSize < 768">
+                                    <td><b>Paid</b></td>
+                                    <td>{{ order.is_paid ? 'Yes' : 'No'}}</td>
+                                    <td><b>Picked up</b></td>
+                                    <td>{{ order.is_picked_up ? 'Yes' : 'No' }}</td>
+                                </tr>
+                                <tr v-if="windowSize < 1025">
+                                    <td><b>Created at</b></td>
+                                    <td>{{ order.created_at }}</td>
+                                    <td><b>Picked up at</b></td>
+                                    <td>{{ order.is_picked_up? order.updated_at : '' }}</td>
+                                </tr>
+                            </table>
+
+                        </div>
+                    </td>
+                </tr>
+                <tr v-if="opened === order.id">
+                    <td :colspan="(windowSize < 768) ? 3 :(windowSize >= 1025 ? 8 : 5 )">
+                        <div class="orders__items">
                             <table>
                                 <tr>
                                     <th v-for="header in itemTableHeaders"> {{ header.header }}</th>
@@ -48,8 +69,10 @@
                                     </td>
                                 </tr>
                             </table>
-                            <div class="orders__details__buttons">
-                                <div class="button button--primary" @click="saveChanges(order.id)" v-if="!order.is_picked_up">Save</div>
+                            <div class="orders__items__buttons">
+                                <div class="button button--primary" @click="saveChanges(order.id)"
+                                     v-if="!order.is_picked_up">Save
+                                </div>
                                 <div class="button" @click="clearChanges">Cancel</div>
                             </div>
                         </div>
@@ -241,7 +264,7 @@
     }
 
     .orders {
-        &__details {
+        &__items {
             font-weight: $font-weight;
             margin-bottom: 30px;
 
@@ -250,6 +273,12 @@
                 margin-left: auto;
                 width: fit-content;
             }
+        }
+
+        &__details {
+           td:nth-child(even) {
+               padding: 0 10px;
+           }
         }
     }
 </style>
