@@ -54,7 +54,6 @@ const actions = {
         setCookie();
     },
     adjustCartItem({commit}, item) {
-        console.log('adjust item:', item);
         commit('ADJUST_ITEM', item);
         setCookie()
     },
