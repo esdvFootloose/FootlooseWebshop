@@ -8,21 +8,50 @@
             </div>
         </div>
 
-        <table>
+        <table class="stock-table">
             <tr>
                 <th v-for="header in tableHeaders"
                     :class="{'hidden--mobile' : header.hideMobile, 'hidden--tablet' : header.hideTablet}">{{
                     header.header }}
                 </th>
             </tr>
-            <tr class="row" v-for="order in mockupTableData">
-                <td v-for="(value, key, index) in order"
-                    :class="{'hidden--mobile' : tableHeaders[index].hideMobile, 'hidden--tablet' : tableHeaders[index].hideTablet}"
-                >
-                    {{ value }}
+            <tr class="row" v-for="item in filteredStocks">
+                <td>{{ item.id }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.gender }}</td>
+                <td>€ {{ item.price }}</td>
+                <td>
+                    <table class="stock-table__stocks">
+                        <tr v-for="size in item.stock" class="stock-table__stocks__row">
+                            <td>
+                                {{ size.size }}
+                            </td>
+                        </tr>
+                    </table>
                 </td>
                 <td>
-                    <div class="button">Edit</div>
+                    <table class="stock-table__stocks">
+                        <tr v-for="size in item.stock" class="stock-table__stocks__row">
+                            <td>
+                                {{ size.stock }}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table class="stock-table__stocks">
+                        <tr v-for="size in item.stock" class="stock-table__stocks__row">
+                            <td>
+                                {{ size.stock }}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+
+
+
+                <td class="stock-table--centered">
+                    <router-link :to="{name: 'stock', params: {id: item.id}}" tag="div" class="button">Edit</router-link>
                 </td>
             </tr>
         </table>
@@ -45,7 +74,7 @@
                         hideTablet: false
                     },
                     {
-                        header: 'Sex',
+                        header: 'Gender',
                         hideMobile: false,
                         hideTablet: false
                     },
@@ -75,80 +104,6 @@
                         hideTablet: false
                     }
                 ],
-                mockupTableData: [
-                    {
-                        'item_id': 1,
-                        'name': 'T-Shirt',
-                        'sex': 'M',
-                        'price': 15,
-                        'sizes': 'S',
-                        'available': 5,
-                        'total': 10
-                    },
-                    {
-                        'item_id': 2,
-                        'name': 'T-Shirt',
-                        'sex': 'M',
-                        'price': 15,
-                        'sizes': 'S',
-                        'available': 5,
-                        'total': 10
-                    },
-                    {
-                        'item_id': 3,
-                        'name': 'T-Shirt',
-                        'sex': 'M',
-                        'price': 15,
-                        'sizes': 'S',
-                        'available': 5,
-                        'total': 10
-                    },
-                    {
-                        'item_id': 4,
-                        'name': 'T-Shirt',
-                        'sex': 'M',
-                        'price': 15,
-                        'sizes': 'S',
-                        'available': 5,
-                        'total': 10
-                    },
-                    {
-                        'item_id': 5,
-                        'name': 'T-Shirt',
-                        'sex': 'M',
-                        'price': 15,
-                        'sizes': 'S',
-                        'available': 5,
-                        'total': 10
-                    },
-                    {
-                        'item_id': 6,
-                        'name': 'T-Shirt',
-                        'sex': 'M',
-                        'price': 15,
-                        'sizes': 'S',
-                        'available': 5,
-                        'total': 10
-                    },
-                    {
-                        'item_id': 7,
-                        'name': 'T-Shirt',
-                        'sex': 'M',
-                        'price': 15,
-                        'sizes': 'S',
-                        'available': 5,
-                        'total': 10
-                    },
-                    {
-                        'item_id': 8,
-                        'name': 'T-Shirt',
-                        'sex': 'M',
-                        'price': 15,
-                        'sizes': 'S',
-                        'available': 5,
-                        'total': 10
-                    }
-                ],
                 stocksSearch: ''
             }
         },
@@ -156,8 +111,8 @@
             stocks: function () {
                 return this.$store.getters.getItemsDashboard;
             },
-            filteredStocks: function() {
-                return this.mockupTableData.filter(stock => {
+            filteredStocks: function () {
+                return this.stocks.filter(stock => {
                     return stock.name.toLowerCase().includes(this.stocksSearch.toLowerCase())
                 });
             }
@@ -188,5 +143,34 @@
         &__search-label {
             margin-right: 10px;
         }
+    }
+
+    .stock-table {
+
+        td {
+            vertical-align: top;
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+
+        &--centered {
+            padding: auto;
+            margin: auto;
+        }
+
+
+        &__stocks {
+            margin-top: -5px;
+            margin-bottom: 0;
+
+            td {
+                padding: 5px;
+            }
+
+            &__row {
+                height: initial;
+            }
+        }
+
     }
 </style>
