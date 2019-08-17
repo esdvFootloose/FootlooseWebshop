@@ -23,18 +23,15 @@ const actions = {
         });
     },
     fetchOrders({commit}) {
-        axios.get('api/orders').then(result => {
+        axios.get('/api/orders').then(result => {
             commit('SET_ORDERS', result.data.data);
         }).catch(error => {
             console.log(error);
         });
     },
     fetchAllDashboard({dispatch}) {
-        dispatch('fetchRequests');
         dispatch('fetchOrders');
-    },
-    pickedUpItem({commit}, item) {
-
+        dispatch('fetchRequests');
     },
     removeItemRequest({commit, dispatch}, itemRequestId) {
         axios.delete('/api/itemrequests/' + itemRequestId).then(result => {

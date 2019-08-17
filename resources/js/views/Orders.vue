@@ -14,7 +14,7 @@
                     header.header }}
                 </th>
             </tr>
-            <template v-for="order in filteredOrders">
+            <template v-for="order in orders">
                 <tr class="row">
                     <td>{{ order.id }}</td>
                     <td>{{ order.user.name }}</td>
@@ -43,14 +43,14 @@
                                     <td>{{ item.amount }}x</td>
                                     <td>
                                         <div class="button" v-if="!item.is_picked_up && order.is_paid"
-                                             @click="setPickedUp(order.id, order.stock_id)">Picked up
+                                             @click="setChangedItem(item.stock.id, order.id)">Picked up
                                         </div>
                                     </td>
                                 </tr>
                             </table>
                             <div class="orders__details__buttons">
-                                <div class="button button--primary">Save</div>
-                                <div class="button" @click="opened = ''">Cancel</div>
+                                <div class="button button--primary" @click="saveChanges(order.id)" v-if="!order.is_picked_up">Save</div>
+                                <div class="button" @click="clearChanges">Cancel</div>
                             </div>
                         </div>
                     </td>
@@ -61,6 +61,7 @@
 </template>
 
 <script>
+    import axios from 'axios';
 
     export default {
         data: function () {
@@ -139,12 +140,14 @@
                 collapsedData: {},
                 showDetails: false,
                 opened: null,
+                changedData: []
             }
         },
         computed: {
             orders: function () {
                 return this.$store.getters.getOrders;
             },
+
             filteredOrders: function () {
                 switch (this.$route.params.query) {
                     case ('ready'):
@@ -183,10 +186,31 @@
             toggle(id) {
                 this.opened = id;
             },
-            setPickedUp: function (item, index) {
-                let pickedUpItem = {};
-                // TODO implement this function in store
-                // this.$store.dispatch("setItemPicketUp", pickedUpItem);
+            setChangedItem(stockID, orderID) {
+                let changedItem = {
+                    stock_id: stockID,
+                    order_id: orderID
+                };
+                this.changedData.push(changedItem);
+                let item = this.orders.find(order => order.id === orderID).ordered_item.find(item => item.stock.id === stockID);
+                item.is_picked_up = true;
+            },
+            saveChanges(orderID) {
+                axios.patch('/api/orders/' + orderID, {
+                    data: JSON.stringify(this.changedData)
+                }).then(result => {
+                    this.changedData = [];
+                    this.opened = '';
+                    this.$store.dispatch('fetchOrders');
+                });
+            },
+            clearChanges() {
+                for (let i = 0; i < this.changedData.length; i++) {
+                    let item = this.orders.find(order => order.id === this.changedData[i].order_id).ordered_item.find(item => item.stock.id === this.changedData[i].stock_id);
+                    item.is_picked_up = false
+                }
+                this.opened = '';
+                this.changedData = [];
             }
         },
         mounted() {

@@ -18,9 +18,8 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::all();
-        foreach($orders as $order)
-        {
-            foreach($order->OrderedItem as $item) {
+        foreach ($orders as $order) {
+            foreach ($order->OrderedItem as $item) {
                 $item->Stock;
                 $item->Stock->Item;
             }
@@ -46,7 +45,7 @@ class OrderController extends Controller
             OrderedItem::create([
                 'order_id' => $created_order->id,
                 'stock_id' => $parsed_item->size_id,
-                'amount'=> $parsed_item->amount
+                'amount' => $parsed_item->amount
             ]);
         }
         return response()->json(['data' => request()->cart], 200);
@@ -59,13 +58,23 @@ class OrderController extends Controller
      * @param \App\Order $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, $id)
     {
-        $validated = request()->validate([
-            // TODO validate
-        ]);
-        $updated_order = Order::create($validated);
-        return response()->json(['data' => $updated_order], 200);
+        foreach (json_decode(request()->data) as $changed_item) {
+            $item = OrderedItem::where('order_id', $changed_item->order_id)->where('stock_id', $changed_item->stock_id)->first();
+            if ($item) {
+                $item->is_picked_up = true;
+                $item->save();
+            }
+        }
+
+        $ordered_items = OrderedItem::where('order_id', $id)->where('is_picked_up', 0)->first();
+        if (!$ordered_items) {
+            $order = Order::where('id', $id)->first();
+            $order->is_picked_up = 1;
+            $order->save();
+        }
+        return response()->json(['data' => 'OK'], 200);
     }
 
     /**

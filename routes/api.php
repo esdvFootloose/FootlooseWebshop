@@ -35,7 +35,7 @@ Route::group(['middleware' => ['json.response']], function () {
 
         Route::get('/orders', 'Api\OrderController@index');
         Route::post('/orders', 'Api\OrderController@store');
-        Route::patch('/orders/{order}', 'Api\OrderController@update');
+        Route::patch('/orders/{id}', 'Api\OrderController@update');
         Route::delete('/orders/{order}', 'Api\OrderController@destroy');
 
         Route::get('/itemrequests', 'Api\ItemRequestController@index');
