@@ -40,7 +40,7 @@
 
 .visible {
     &--mobile {
-        display: initial;
+        display: block;
 
         @media all and (min-width: $breakpoint--tablet) {
             display: none;
@@ -48,10 +48,19 @@
     }
 
     &--tablet {
-        display: initial;
+        display: block;
 
         @media all and (min-width: $breakpoint--web) {
             display: none;
         };
+    }
+}
+
+.align {
+    &--left {
+        margin-right: auto !important;
+    }
+    &--right {
+        margin-left: auto !important;
     }
 }

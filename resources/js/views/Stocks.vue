@@ -16,12 +16,13 @@
                 </th>
             </tr>
             <tr class="row" v-for="item in filteredStocks">
-                <td :class="{'stock-table--align-top' : item.stock.length > 1}">{{ item.id }}</td>
+                <td class="hidden--mobile" :class="{'stock-table--align-top' : item.stock.length > 1}">{{ item.id }}</td>
                 <td :class="{'stock-table--align-top' : item.stock.length > 1}">{{ item.name }}</td>
                 <td :class="{'stock-table--align-top' : item.stock.length > 1}">{{ item.gender }}</td>
                 <td :class="{'stock-table--align-top' : item.stock.length > 1}">€ {{ item.price }}</td>
                 <td :class="{'stock-table--align-top' : item.stock.length > 1}">
-                    <table class="stock-table__stocks" :class="{'stock-table__stocks--no-margin' : item.stock.length < 2}">
+                    <table class="stock-table__stocks"
+                           :class="{'stock-table__stocks--no-margin' : item.stock.length < 2}">
                         <tr v-for="size in item.stock" class="stock-table__stocks__row">
                             <td>
                                 {{ size.size }}
@@ -29,8 +30,9 @@
                         </tr>
                     </table>
                 </td>
-                <td :class="{'stock-table--align-top' : item.stock.length > 1}">
-                    <table class="stock-table__stocks" :class="{'stock-table__stocks--no-margin' : item.stock.length < 2}">
+                <td class="hidden--mobile" :class="{'stock-table--align-top' : item.stock.length > 1}">
+                    <table class="stock-table__stocks"
+                           :class="{'stock-table__stocks--no-margin' : item.stock.length < 2}">
                         <tr v-for="size in item.stock" class="stock-table__stocks__row">
                             <td>
                                 {{ size.stock }}
@@ -38,11 +40,28 @@
                         </tr>
                     </table>
                 </td>
-                <td :class="{'stock-table--align-top' : item.stock.length > 1}">
-                    <table class="stock-table__stocks" :class="{'stock-table__stocks--no-margin' : item.stock.length < 2}">
+                <td :class="{'stock-table--align-top' : item.stock.length > 1}" class="visible--mobile">
+                    <table class="stock-table__stocks"
+                           :class="{'stock-table__stocks--no-margin' : item.stock.length < 2}">
                         <tr v-for="size in item.stock" class="stock-table__stocks__row">
                             <td>
                                 {{ size.stock }}
+                            </td>
+                            <td>
+                                /
+                            </td>
+                            <td>
+                                {{ numberOrdered(size.ordered_item) + size.stock}}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="hidden--mobile" :class="{'stock-table--align-top' : item.stock.length > 1}">
+                    <table class="stock-table__stocks"
+                           :class="{'stock-table__stocks--no-margin' : item.stock.length < 2}">
+                        <tr v-for="size in item.stock" class="stock-table__stocks__row">
+                            <td>
+                                {{ numberOrdered(size.ordered_item) + size.stock}}
                             </td>
                         </tr>
                     </table>
@@ -53,6 +72,9 @@
                 </td>
             </tr>
         </table>
+        <div>
+            <router-link :to="{name: 'stock'}" tag="div" class="button button--primary align--right">Add new</router-link>
+        </div>
     </div>
 </template>
 
@@ -64,7 +86,7 @@
                     {
                         header: 'Item ID',
                         hideMobile: true,
-                        hideTablet: true
+                        hideTablet: false
                     },
                     {
                         header: 'Name',
@@ -109,6 +131,9 @@
             stocks: function () {
                 return this.$store.getters.getItemsDashboard;
             },
+            totalStocks: function() {
+                return this.$store.getters.getStocks;
+            },
             filteredStocks: function () {
                 if (this.$route.params.query === 'noStock') {
                     return this.stocks.filter(item => {
@@ -119,10 +144,19 @@
                         return item.name.toLowerCase().includes(this.stocksSearch.toLowerCase())
                     });
                 }
+            },
+            numberOrdered: function() {
+                return stock => {
+                    let totalOrdered = 0;
+                    for (let i = 0; i < stock.length; i++) {
+                        totalOrdered += stock[i].amount;
+                    }
+                    return totalOrdered;
+                }
             }
         },
         mounted() {
-            if (this.$store.getters.getItemsDashboard.length === 0) {
+            if (this.$store.getters.getNrItemsDashboard === 0) {
                 this.$store.dispatch("fetchItemsDashboard");
             }
         }
@@ -160,7 +194,7 @@
             margin-bottom: 0;
             margin-top: -5px;
 
-            &--no-margin{
+            &--no-margin {
                 margin-top: 0;
             }
 

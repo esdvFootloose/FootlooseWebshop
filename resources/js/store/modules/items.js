@@ -52,7 +52,7 @@ const actions = {
             commit('SET_ITEMS_OUT_OF_STOCK', noStock);
         }).catch(error => {
             console.log(error);
-        })
+        });
     },
     addItemToCart({commit}, item) {
         commit('ADD_TO_CART', item);
