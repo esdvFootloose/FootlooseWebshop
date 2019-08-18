@@ -38,6 +38,9 @@
                         new stock
                         with your size.
                     </div>
+                    <div class="align--center" v-if="textMessage">
+                        {{ textMessage }}
+                    </div>
                 </div>
             </template>
         </card>
@@ -80,6 +83,7 @@
             return {
                 selectedSize: '',
                 selectedAmount: 1,
+                textMessage: '',
             }
         },
         methods: {
@@ -99,6 +103,11 @@
                 } else {
                     this.$store.dispatch("adjustCartItem", cartItem);
                 }
+                this.textMessage = "Item added to cart";
+                let that = this;
+                setTimeout(function() {
+                    that.textMessage = '';
+                }, 5000);
             },
             addToRequests: function () {
                 let size = this.item.stock.filter(size => size.size === this.selectedSize)[0];
@@ -108,6 +117,11 @@
                     size_id: size.id,
                 };
                 this.$store.dispatch('requestItem', requestedItem);
+                this.textMessage = "Item has been requested";
+                let that = this;
+                setTimeout(function() {
+                    that.textMessage = '';
+                }, 5000);
             },
             updateStockInfo: function () {
                 this.canAddItem();
