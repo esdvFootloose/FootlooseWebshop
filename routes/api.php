@@ -28,6 +28,7 @@ Route::group(['middleware' => ['json.response']], function () {
         Route::post('/logout', 'Api\AuthController@logout')->name('logout');
 
         Route::get('/items', 'Api\ItemController@index');
+        Route::get('/items/stocks', 'Api\ItemController@indexStocks');
         Route::get('/itemsDashboard', 'Api\ItemController@indexDashboard');
         Route::post('/items', 'Api\ItemController@store');
         Route::patch('/items/{item}', 'Api\ItemController@update');
@@ -35,7 +36,7 @@ Route::group(['middleware' => ['json.response']], function () {
 
         Route::get('/orders', 'Api\OrderController@index');
         Route::post('/orders', 'Api\OrderController@store');
-        Route::patch('/orders/{order}', 'Api\OrderController@update');
+        Route::patch('/orders/{id}', 'Api\OrderController@update');
         Route::delete('/orders/{order}', 'Api\OrderController@destroy');
 
         Route::get('/itemrequests', 'Api\ItemRequestController@index');

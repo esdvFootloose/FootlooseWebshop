@@ -14,9 +14,13 @@
 html {
   box-sizing: border-box;
   font-family: $font-family-sans-serif;
-  font-size: $font-size--base;
+  font-size: $font-size--small;
   font-weight: $font-weight;
   height: 100%;
+
+    @media all and (min-width: $breakpoint--tablet){
+        font-size: $font-size--base
+    }
 }
 
 * {

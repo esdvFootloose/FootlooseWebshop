@@ -1,6 +1,4 @@
 import axios from 'axios';
-import rootState from 'vuex'
-
 
 const cartCookie = JSON.parse(localStorage.getItem('cart'));
 
@@ -17,6 +15,9 @@ const mutations = {
     },
     SET_ITEMS_DASHBOARD(state, items) {
         state.itemsDashboard = items;
+    },
+    SET_ITEMS_OUT_OF_STOCK(state, number) {
+        state.nrItemsOutOfStock = number;
     },
     ADD_TO_CART(state, item) {
         state.cart.push(item);
@@ -36,25 +37,28 @@ const mutations = {
 
 const actions = {
     fetchItems({commit}) {
-        axios.get('/api/itemsDashboard').then(result => {
+        axios.get('/api/items').then(result => {
             commit('SET_ITEMS', result.data.data);
         }).catch(error => {
             console.log(error);
         })
     },
     fetchItemsDashboard({commit}) {
-        axios.get('/api/items').then(result => {
+        axios.get('/api/itemsDashboard').then(result => {
             commit('SET_ITEMS_DASHBOARD', result.data.data);
+            let noStock = state.itemsDashboard.filter(item => {
+                return item.stock.filter(size => size.stock === 0).length;
+            }).length;
+            commit('SET_ITEMS_OUT_OF_STOCK', noStock);
         }).catch(error => {
             console.log(error);
-        })
+        });
     },
     addItemToCart({commit}, item) {
         commit('ADD_TO_CART', item);
         setCookie();
     },
     adjustCartItem({commit}, item) {
-        console.log('adjust item:', item);
         commit('ADJUST_ITEM', item);
         setCookie()
     },
@@ -88,6 +92,7 @@ const actions = {
 const getters = {
     getItems: state => state.items,
     getItemsDashboard: state => state.itemsDashboard,
+    getNrItemsDashboard: state => state.itemsDashboard.length,
     getItem(state) {
         return slug => state.items.find(item => {
             return item.slug === slug;

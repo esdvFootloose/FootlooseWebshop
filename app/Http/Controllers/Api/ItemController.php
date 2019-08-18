@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Item;
+use App\Stock;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -32,9 +33,28 @@ class ItemController extends Controller
     {
         $items = Item::all();
         foreach($items as $item) {
-            $item->stock = $item->Stock;
+            $item->Stock;
+            foreach($item->stock as $stock)
+            {
+                $stock->OrderedItem;
+            }
+
         }
         return response()->json(['data' => $items], 200);
+    }
+
+    public function indexStocks()
+    {
+        $stocks = Stock::all();
+        foreach($stocks as $stock)
+        {
+            $nr_ordered = 0;
+            foreach($stock->OrderedItem as $item)
+            {
+                $nr_ordered += $item->amount;
+            }
+        }
+        return response()->json(['data' => $stocks], 200);
     }
 
     /**

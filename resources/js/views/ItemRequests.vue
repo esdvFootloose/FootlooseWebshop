@@ -10,13 +10,15 @@
                     header.header }}
                 </th>
             </tr>
-            <tr class="row" v-for="order in mockupTableData">
-                <td v-for="(value, key, index) in order"
-                    :class="{'hidden--mobile' : tableHeaders[index].hideMobile, 'hidden--tablet' : tableHeaders[index].hideTablet}">
-                    {{ value }}
-                </td>
+            <tr class="row" v-for="(request, index) in requests">
+                <td class="hidden--mobile hidden--tablet">{{ index }}</td>
+                <td class="hidden--mobile">{{ request.user.name }}</td>
+                <td class="hidden--mobile">{{ request.created_at }}</td>
+                <td>{{ request.item }}</td>
+                <td>{{ request.gender }}</td>
+                <td>{{ request.size }}</td>
                 <td>
-                    <div class="button">Remove</div>
+                    <div class="button" @click="removeRequest(request.id)">Remove</div>
                 </td>
             </tr>
         </table>
@@ -49,7 +51,7 @@
                         hideTablet: false
                     },
                     {
-                        header: 'Sex',
+                        header: 'Gender',
                         hideMobile: false,
                         hideTablet: false
                     },
@@ -64,86 +66,20 @@
                         hideTablet: false
                     }
                 ],
-                mockupTableData: [
-                    {
-                        'request_id': 1,
-                        'name': 'John Doe',
-                        'date_requested': '29-11-2019',
-                        'item': 'T-Shirt',
-                        'sex': 'Male',
-                        'Size': 'M',
-
-                    },
-                    {
-                        'request_id': 2,
-                        'name': 'John Doe',
-                        'date_requested': '29-11-2019',
-                        'item': 'T-Shirt',
-                        'sex': 'Male',
-                        'Size': 'M',
-
-                    },
-                    {
-                        'request_id': 3,
-                        'name': 'John Doe',
-                        'date_requested': '29-11-2019',
-                        'item': 'T-Shirt',
-                        'sex': 'Male',
-                        'Size': 'M',
-
-                    },
-                    {
-                        'request_id': 4,
-                        'name': 'John Doe',
-                        'date_requested': '29-11-2019',
-                        'item': 'T-Shirt',
-                        'sex': 'Male',
-                        'Size': 'M',
-
-                    },
-                    {
-                        'request_id': 5,
-                        'name': 'John Doe',
-                        'date_requested': '29-11-2019',
-                        'item': 'T-Shirt',
-                        'sex': 'Male',
-                        'Size': 'M',
-
-                    },
-                    {
-                        'request_id': 6,
-                        'name': 'John Doe',
-                        'date_requested': '29-11-2019',
-                        'item': 'T-Shirt',
-                        'sex': 'Male',
-                        'Size': 'M',
-
-                    },
-                    {
-                        'request_id': 7,
-                        'name': 'John Doe',
-                        'date_requested': '29-11-2019',
-                        'item': 'T-Shirt',
-                        'sex': 'Male',
-                        'Size': 'M',
-
-                    },
-                    {
-                        'request_id': 8,
-                        'name': 'John Doe',
-                        'date_requested': '29-11-2019',
-                        'item': 'T-Shirt',
-                        'sex': 'Male',
-                        'Size': 'M',
-
-                    }
-                ]
             }
         },
         computed: {
-            orders: function () {
-                return this.$store.getters.orders;
+            requests: function () {
+                return this.$store.getters.getItemRequests;
             }
+        },
+        methods: {
+            removeRequest: function(itemRequest) {
+                this.$store.dispatch('removeItemRequest', itemRequest);
+            }
+        },
+        mounted() {
+            if (this.$store.getters.getNrRequests === 0) this.$store.dispatch('fetchRequests');
         }
     }
 </script>

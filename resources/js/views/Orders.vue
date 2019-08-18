@@ -14,37 +14,66 @@
                     header.header }}
                 </th>
             </tr>
-            <template v-for="(filterValue, key, keyIndex) in filteredOrders">
+            <template v-for="order in filteredOrders">
                 <tr class="row">
-                    <td v-for="(value, key, index) in filterValue"
-                        :class="{'hidden--mobile' : tableHeaders[index].hideMobile, 'hidden--tablet' : tableHeaders[index].hideTablet}">
-                        {{ (value === 0 || value === 1) && index > 0 ? (value === 0 ? 'false' : 'true') : value }}
-                    </td>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.user.name }}</td>
+                    <td class="hidden--mobile hidden--tablet">{{ order.created_at }}</td>
+                    <td>€ {{ orderValue(order.ordered_item) }}</td>
+                    <td class="hidden--mobile">{{ order.is_paid ? 'Yes' : 'No'}}</td>
+                    <td class="hidden--mobile">{{ order.is_picked_up ? 'Yes' : 'No' }}</td>
+                    <td class="hidden--mobile hidden--tablet">{{ order.is_picked_up? order.updated_at : '' }}</td>
                     <td>
-                        <div class="button" @click="toggle(filterValue.order_id)"
-                             v-if="opened !== filterValue.order_id">Edit
+                        <div class="button" @click="toggle(order.id)"
+                             v-if="opened !== order.id">Edit
                         </div>
                     </td>
                 </tr>
-                <tr v-if="opened === filterValue.order_id">
-                    <td :colspan="(windowSize >= 768) ? (windowSize >= 1025 ? 8 : 5 ) : 3">
+                <tr v-if="opened === order.id">
+                    <td :colspan="(windowSize < 768) ? 3 :(windowSize >= 1025 ? 8 : 5 )">
                         <div class="orders__details">
+                            <table>
+                                <tr v-if="windowSize < 768">
+                                    <td><b>Paid</b></td>
+                                    <td>{{ order.is_paid ? 'Yes' : 'No'}}</td>
+                                    <td><b>Picked up</b></td>
+                                    <td>{{ order.is_picked_up ? 'Yes' : 'No' }}</td>
+                                </tr>
+                                <tr v-if="windowSize < 1025">
+                                    <td><b>Created at</b></td>
+                                    <td>{{ order.created_at }}</td>
+                                    <td><b>Picked up at</b></td>
+                                    <td>{{ order.is_picked_up? order.updated_at : '' }}</td>
+                                </tr>
+                            </table>
+
+                        </div>
+                    </td>
+                </tr>
+                <tr v-if="opened === order.id">
+                    <td :colspan="(windowSize < 768) ? 3 :(windowSize >= 1025 ? 8 : 5 )">
+                        <div class="orders__items">
                             <table>
                                 <tr>
                                     <th v-for="header in itemTableHeaders"> {{ header.header }}</th>
                                 </tr>
-                                <tr v-for="(item, index) in mockupTableDataItems">
-                                    <td v-for="attribute in item">
-                                        <div class="button" v-if=" attribute === false" @click="setPickedUp(item, index)">Picked up</div>
-                                        <template v-if="attribute !== false && attribute !== true">
-                                            {{ attribute }}
-                                        </template>
+                                <tr v-for="item in order.ordered_item">
+                                    <td>{{ item.stock.item.name }}</td>
+                                    <td>{{ item.stock.item.gender }}</td>
+                                    <td>{{ item.stock.size }}</td>
+                                    <td>{{ item.amount }}x</td>
+                                    <td>
+                                        <div class="button" v-if="!item.is_picked_up && order.is_paid"
+                                             @click="setChangedItem(item.stock.id, order.id)">Picked up
+                                        </div>
                                     </td>
                                 </tr>
                             </table>
-                            <div class="orders__details__buttons">
-                                <div class="button button--primary">Save</div>
-                                <div class="button" @click="opened = ''">Cancel</div>
+                            <div class="orders__items__buttons">
+                                <div class="button button--primary" @click="saveChanges(order.id)"
+                                     v-if="!order.is_picked_up">Save
+                                </div>
+                                <div class="button" @click="clearChanges">Cancel</div>
                             </div>
                         </div>
                     </td>
@@ -55,6 +84,7 @@
 </template>
 
 <script>
+    import axios from 'axios';
 
     export default {
         data: function () {
@@ -73,7 +103,7 @@
                     {
                         header: 'Date ordered',
                         hideMobile: true,
-                        hideTablet: false
+                        hideTablet: true,
                     },
                     {
                         header: 'Total (€)',
@@ -83,12 +113,12 @@
                     {
                         header: 'Paid',
                         hideMobile: true,
-                        hideTablet: true
+                        hideTablet: false
                     },
                     {
                         header: 'Picked up',
                         hideMobile: true,
-                        hideTablet: true
+                        hideTablet: false
                     },
                     {
                         header: 'Time picked up',
@@ -99,80 +129,6 @@
                         header: '',
                         hideMobile: false,
                         hideTablet: false
-                    }
-                ],
-                mockupTableData: [
-                    {
-                        'order_id': 1,
-                        'name': 'John Doe',
-                        'data_ordered': '29-11-2019',
-                        'total': 65,
-                        'paid': 0,
-                        'picked_up': 0,
-                        'Time picked up': '30-11-2019 10:31'
-                    },
-                    {
-                        'order_id': 2,
-                        'name': 'John Dee',
-                        'data_ordered': '29-11-2019',
-                        'total': 65,
-                        'paid': 0,
-                        'picked_up': 0,
-                        'Time picked up': '30-11-2019 10:31'
-                    },
-                    {
-                        'order_id': 3,
-                        'name': 'John Doe',
-                        'data_ordered': '29-11-2019',
-                        'total': 65,
-                        'paid': 0,
-                        'picked_up': 0,
-                        'Time picked up': '30-11-2019 10:31'
-                    },
-                    {
-                        'order_id': 4,
-                        'name': 'John Doe',
-                        'data_ordered': '29-11-2019',
-                        'total': 65,
-                        'paid': 0,
-                        'picked_up': 0,
-                        'Time picked up': '30-11-2019 10:31'
-                    },
-                    {
-                        'order_id': 5,
-                        'name': 'John Doe',
-                        'data_ordered': '29-11-2019',
-                        'total': 65,
-                        'paid': 0,
-                        'picked_up': 0,
-                        'Time picked up': '30-11-2019 10:31'
-                    },
-                    {
-                        'order_id': 6,
-                        'name': 'John Doe',
-                        'data_ordered': '29-11-2019',
-                        'total': 65,
-                        'paid': 0,
-                        'picked_up': 0,
-                        'Time picked up': '30-11-2019 10:31'
-                    },
-                    {
-                        'order_id': 7,
-                        'name': 'John Doe',
-                        'data_ordered': '29-11-2019',
-                        'total': 65,
-                        'paid': 0,
-                        'picked_up': 0,
-                        'Time picked up': '30-11-2019 10:31'
-                    },
-                    {
-                        'order_id': 8,
-                        'name': 'John Doe',
-                        'data_ordered': '29-11-2019',
-                        'total': 65,
-                        'paid': 0,
-                        'picked_up': 0,
-                        'Time picked up': '30-11-2019 10:31'
                     }
                 ],
                 itemTableHeaders: [
@@ -203,64 +159,86 @@
                     },
 
                 ],
-                mockupTableDataItems: [
-                    {
-                        item: 'T-Shirt',
-                        sex: 'Male',
-                        size: 'M',
-                        amount: '1',
-                        picked_up: false
-                    },
-                    {
-                        item: 'Sweater',
-                        sex: 'Female',
-                        size: 'S',
-                        amount: '1',
-                        picked_up: false
-                    },
-                    {
-                        item: 'Shoebag',
-                        sex: 'Unisex',
-                        size: 'M',
-                        amount: '2',
-                        picked_up: true
-                    },
-                ],
                 orderSearch: '',
                 collapsedData: {},
                 showDetails: false,
-                opened: null
+                opened: null,
+                changedData: []
             }
         },
         computed: {
             orders: function () {
                 return this.$store.getters.getOrders;
             },
+
             filteredOrders: function () {
-                return this.mockupTableData.filter(order => {
-                    return order.name.toLowerCase().includes(this.orderSearch.toLowerCase())
-                });
+                this.changedData = [];
+                this.opened = '';
+                switch (this.$route.params.query) {
+                    case ('ready'):
+                        return this.orders.filter(order => {
+                            return order.user.name.toLowerCase().includes(this.orderSearch.toLowerCase()) && order.is_paid && !order.is_picked_up;
+                        });
+                        break;
+                    case('new'):
+                        return this.orders.filter(order => {
+                            return order.user.name.toLowerCase().includes(this.orderSearch.toLowerCase()) && !order.is_picked_up;
+                        });
+                        break;
+                    default:
+                        return this.orders.filter(order => {
+                            return order.user.name.toLowerCase().includes(this.orderSearch.toLowerCase())
+                        });
+                        break;
+                }
+
+            },
+            orderValue: function () {
+                return items => {
+                    let value = 0;
+                    for (let i = 0; i < items.length; i++) {
+                        value += items[i].amount * items[i].stock.item.price;
+                    }
+                    return value;
+                }
             },
             windowSize: function () {
                 return window.innerWidth;
             }
-
         },
         methods: {
             toggle(id) {
                 this.opened = id;
             },
-            setPickedUp: function(item, index) {
-                let pickedUpItem = {
-
+            setChangedItem(stockID, orderID) {
+                let changedItem = {
+                    stock_id: stockID,
+                    order_id: orderID
                 };
-                // TODO implement this function in store
-                // this.$store.dispatch("setItemPicketUp", pickedUpItem);
-                console.log(index);
-                console.log(this.mockupTableDataItems);
-                this.mockupTableDataItems[index].picked_up = true;
+                this.changedData.push(changedItem);
+                let item = this.orders.find(order => order.id === orderID).ordered_item.find(item => item.stock.id === stockID);
+                item.is_picked_up = true;
+            },
+            saveChanges(orderID) {
+                axios.patch('/api/orders/' + orderID, {
+                    data: JSON.stringify(this.changedData)
+                }).then(result => {
+                    this.changedData = [];
+                    this.opened = '';
+                    this.$store.dispatch('fetchOrders');
+                });
+            },
+            clearChanges() {
+                for (let i = 0; i < this.changedData.length; i++) {
+                    let item = this.orders.find(order => order.id === this.changedData[i].order_id).ordered_item.find(item => item.stock.id === this.changedData[i].stock_id);
+                    item.is_picked_up = false
+                }
+                this.opened = '';
+                this.changedData = [];
             }
-
+        },
+        mounted() {
+            if (this.$store.getters.getNrOrders === 0) this.$store.dispatch('fetchOrders');
         }
     }
 </script>
@@ -287,7 +265,7 @@
     }
 
     .orders {
-        &__details {
+        &__items {
             font-weight: $font-weight;
             margin-bottom: 30px;
 
@@ -295,6 +273,12 @@
                 display: flex;
                 margin-left: auto;
                 width: fit-content;
+            }
+        }
+
+        &__details {
+            td:nth-child(even) {
+                padding: 0 10px;
             }
         }
     }
