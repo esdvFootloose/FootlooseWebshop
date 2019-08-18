@@ -16,12 +16,12 @@
                 </th>
             </tr>
             <tr class="row" v-for="item in filteredStocks">
-                <td>{{ item.id }}</td>
-                <td>{{ item.name }}</td>
-                <td>{{ item.gender }}</td>
-                <td>€ {{ item.price }}</td>
-                <td>
-                    <table class="stock-table__stocks">
+                <td :class="{'stock-table--align-top' : item.stock.length > 1}">{{ item.id }}</td>
+                <td :class="{'stock-table--align-top' : item.stock.length > 1}">{{ item.name }}</td>
+                <td :class="{'stock-table--align-top' : item.stock.length > 1}">{{ item.gender }}</td>
+                <td :class="{'stock-table--align-top' : item.stock.length > 1}">€ {{ item.price }}</td>
+                <td :class="{'stock-table--align-top' : item.stock.length > 1}">
+                    <table class="stock-table__stocks" :class="{'stock-table__stocks--no-margin' : item.stock.length < 2}">
                         <tr v-for="size in item.stock" class="stock-table__stocks__row">
                             <td>
                                 {{ size.size }}
@@ -29,8 +29,8 @@
                         </tr>
                     </table>
                 </td>
-                <td>
-                    <table class="stock-table__stocks">
+                <td :class="{'stock-table--align-top' : item.stock.length > 1}">
+                    <table class="stock-table__stocks" :class="{'stock-table__stocks--no-margin' : item.stock.length < 2}">
                         <tr v-for="size in item.stock" class="stock-table__stocks__row">
                             <td>
                                 {{ size.stock }}
@@ -38,8 +38,8 @@
                         </tr>
                     </table>
                 </td>
-                <td>
-                    <table class="stock-table__stocks">
+                <td :class="{'stock-table--align-top' : item.stock.length > 1}">
+                    <table class="stock-table__stocks" :class="{'stock-table__stocks--no-margin' : item.stock.length < 2}">
                         <tr v-for="size in item.stock" class="stock-table__stocks__row">
                             <td>
                                 {{ size.stock }}
@@ -47,11 +47,9 @@
                         </tr>
                     </table>
                 </td>
-
-
-
                 <td class="stock-table--centered">
-                    <router-link :to="{name: 'stock', params: {id: item.id}}" tag="div" class="button">Edit</router-link>
+                    <router-link :to="{name: 'stock', params: {id: item.id}}" tag="div" class="button">Edit
+                    </router-link>
                 </td>
             </tr>
         </table>
@@ -112,9 +110,15 @@
                 return this.$store.getters.getItemsDashboard;
             },
             filteredStocks: function () {
-                return this.stocks.filter(stock => {
-                    return stock.name.toLowerCase().includes(this.stocksSearch.toLowerCase())
-                });
+                if (this.$route.params.query === 'noStock') {
+                    return this.stocks.filter(item => {
+                        return item.name.toLowerCase().includes(this.stocksSearch.toLowerCase()) && item.stock.filter(size => size.stock === 0).length > 0
+                    });
+                } else {
+                    return this.stocks.filter(item => {
+                        return item.name.toLowerCase().includes(this.stocksSearch.toLowerCase())
+                    });
+                }
             }
         },
         mounted() {
@@ -146,22 +150,19 @@
     }
 
     .stock-table {
-
-        td {
+        &--align-top {
             vertical-align: top;
-            padding-top: 15px;
-            padding-bottom: 15px;
+            padding-top: 15px !important;
+            padding-bottom: 15px !important;
         }
-
-        &--centered {
-            padding: auto;
-            margin: auto;
-        }
-
 
         &__stocks {
-            margin-top: -5px;
             margin-bottom: 0;
+            margin-top: -5px;
+
+            &--no-margin{
+                margin-top: 0;
+            }
 
             td {
                 padding: 5px;
@@ -171,6 +172,5 @@
                 height: initial;
             }
         }
-
     }
 </style>

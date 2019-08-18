@@ -89,12 +89,20 @@
         mounted() {
             let nrOrders = this.$store.getters.getNrOrders;
             let nrRequests = this.$store.getters.getNrRequests;
-            if (nrOrders === 0 && nrRequests === 0) {
+            let nrItems = this.$store.getters.getNrItemsDashboard;
+            if (nrOrders === 0 && nrRequests === 0 && nrItems) {
                 this.$store.dispatch('fetchAllDashboard');
-            } else if (nrOrders === 0) {
-                this.$store.dispatch('fetchOrders');
-            } else if (nrRequests === 0) {
-                this.$store.dispatch('fetchRequests')
+                this.$store.dispatch('fetchItemsDashboard');
+            } else {
+                if (nrOrders === 0) {
+                    this.$store.dispatch('fetchOrders');
+                }
+                if (nrRequests === 0) {
+                    this.$store.dispatch('fetchRequests');
+                }
+                if (nrItems === 0) {
+                    this.$store.dispatch('fetchItemsDashboard');
+                }
             }
         }
     }
