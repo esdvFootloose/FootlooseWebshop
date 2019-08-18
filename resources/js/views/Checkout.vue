@@ -5,6 +5,14 @@
                 <h1>{{ title }}</h1>
                 <p v-if="message" class="checkout-item__checkout-text">{{ message }}</p>
                 <table v-if="cart.length > 0">
+                    <tr>
+                        <th></th>
+                        <th>Item</th>
+                        <th>Size</th>
+                        <th>Amount</th>
+                        <th>Cost</th>
+                        <th>Remove</th>
+                    </tr>
                     <tr v-for="cartItem in cart" class="row">
                         <td class="checkout-item__image">
                             <img src="https://via.placeholder.com/100" alt="item image">
