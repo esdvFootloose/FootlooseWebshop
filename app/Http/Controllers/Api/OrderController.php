@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Order;
 use App\OrderedItem;
+use App\Stock;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use function MongoDB\BSON\fromJSON;
@@ -34,13 +35,28 @@ class OrderController extends Controller
             'user_id' => request()->user_id,
         ]);
 
-        foreach (json_decode($request->cart) as $item) {
-            $parsed_item = $item;
+        $parsed_cart = json_decode($request->cart);
+
+        foreach($parsed_cart as $item) {
+            $stock_item = Stock::where('id', $item->size_id)->first();
+            if ($stock_item->stock - $item->amount < 0) {
+                $error_item = [
+                  'stock_id' => $item->size_id,
+                  'amount' => $item->amount
+                ];
+                return response()->json(['data' => $error_item], 406);
+            }
+        }
+
+        foreach ($parsed_cart as $item) {
             OrderedItem::create([
                 'order_id' => $created_order->id,
-                'stock_id' => $parsed_item->size_id,
-                'amount'=> $parsed_item->amount
+                'stock_id' => $item->size_id,
+                'amount'=> $item->amount
             ]);
+            $stock_item = Stock::where('id', $item->size_id)->first();
+            $stock_item->amount = $stock_item->amount - $item->amount;
+            $stock_item->save();
         }
         return response()->json(['data' => request()->cart], 200);
     }
