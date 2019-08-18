@@ -16,6 +16,17 @@ class ItemRequestController extends Controller
     public function index()
     {
         $item_requests = ItemRequest::all();
+        foreach($item_requests as $request)
+        {
+            $stock = $request->Stock;
+            $item = $stock->Item;
+            $user = $request->User;
+
+            $request->item = $item->name;
+            $request->gender = $item->gender;
+            $request->size = $stock->size;
+            $request->user = $user;
+        }
         return response()->json(['data' => $item_requests], 200);
     }
 
@@ -56,9 +67,10 @@ class ItemRequestController extends Controller
      * @param \App\ItemRequest $itemRequest
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ItemRequest $itemRequest)
+    public function destroy($id)
     {
-        $itemRequest->delete();
+        $itemRequest = ItemRequest::find($id);
+        if ($itemRequest) $itemRequest->delete();
         return response()->json(['data' => ''], 200);
     }
 }

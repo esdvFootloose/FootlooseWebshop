@@ -8,24 +8,73 @@
             </div>
         </div>
 
-        <table>
+        <table class="stock-table">
             <tr>
                 <th v-for="header in tableHeaders"
                     :class="{'hidden--mobile' : header.hideMobile, 'hidden--tablet' : header.hideTablet}">{{
                     header.header }}
                 </th>
             </tr>
-            <tr class="row" v-for="order in mockupTableData">
-                <td v-for="(value, key, index) in order"
-                    :class="{'hidden--mobile' : tableHeaders[index].hideMobile, 'hidden--tablet' : tableHeaders[index].hideTablet}"
-                >
-                    {{ value }}
+            <tr class="row" v-for="item in filteredStocks">
+                <td class="hidden--mobile" :class="{'stock-table--align-top' : item.stock.length > 1}">{{ item.id }}</td>
+                <td :class="{'stock-table--align-top' : item.stock.length > 1}">{{ item.name }}</td>
+                <td :class="{'stock-table--align-top' : item.stock.length > 1}">{{ item.gender }}</td>
+                <td :class="{'stock-table--align-top' : item.stock.length > 1}">€ {{ item.price }}</td>
+                <td :class="{'stock-table--align-top' : item.stock.length > 1}">
+                    <table class="stock-table__stocks"
+                           :class="{'stock-table__stocks--no-margin' : item.stock.length < 2}">
+                        <tr v-for="size in item.stock" class="stock-table__stocks__row">
+                            <td>
+                                {{ size.size }}
+                            </td>
+                        </tr>
+                    </table>
                 </td>
-                <td>
-                    <div class="button">Edit</div>
+                <td class="hidden--mobile" :class="{'stock-table--align-top' : item.stock.length > 1}">
+                    <table class="stock-table__stocks"
+                           :class="{'stock-table__stocks--no-margin' : item.stock.length < 2}">
+                        <tr v-for="size in item.stock" class="stock-table__stocks__row">
+                            <td>
+                                {{ size.stock }}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td :class="{'stock-table--align-top' : item.stock.length > 1}" class="visible--mobile">
+                    <table class="stock-table__stocks"
+                           :class="{'stock-table__stocks--no-margin' : item.stock.length < 2}">
+                        <tr v-for="size in item.stock" class="stock-table__stocks__row">
+                            <td>
+                                {{ size.stock }}
+                            </td>
+                            <td>
+                                /
+                            </td>
+                            <td>
+                                {{ numberOrdered(size.ordered_item) + size.stock}}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="hidden--mobile" :class="{'stock-table--align-top' : item.stock.length > 1}">
+                    <table class="stock-table__stocks"
+                           :class="{'stock-table__stocks--no-margin' : item.stock.length < 2}">
+                        <tr v-for="size in item.stock" class="stock-table__stocks__row">
+                            <td>
+                                {{ numberOrdered(size.ordered_item) + size.stock}}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="stock-table--centered">
+                    <router-link :to="{name: 'stock', params: {id: item.id}}" tag="div" class="button">Edit
+                    </router-link>
                 </td>
             </tr>
         </table>
+        <div>
+            <router-link :to="{name: 'stock'}" tag="div" class="button button--primary align--right">Add new</router-link>
+        </div>
     </div>
 </template>
 
@@ -37,7 +86,7 @@
                     {
                         header: 'Item ID',
                         hideMobile: true,
-                        hideTablet: true
+                        hideTablet: false
                     },
                     {
                         header: 'Name',
@@ -45,7 +94,7 @@
                         hideTablet: false
                     },
                     {
-                        header: 'Sex',
+                        header: 'Gender',
                         hideMobile: false,
                         hideTablet: false
                     },
@@ -75,80 +124,6 @@
                         hideTablet: false
                     }
                 ],
-                mockupTableData: [
-                    {
-                        'item_id': 1,
-                        'name': 'T-Shirt',
-                        'sex': 'M',
-                        'price': 15,
-                        'sizes': 'S',
-                        'available': 5,
-                        'total': 10
-                    },
-                    {
-                        'item_id': 2,
-                        'name': 'T-Shirt',
-                        'sex': 'M',
-                        'price': 15,
-                        'sizes': 'S',
-                        'available': 5,
-                        'total': 10
-                    },
-                    {
-                        'item_id': 3,
-                        'name': 'T-Shirt',
-                        'sex': 'M',
-                        'price': 15,
-                        'sizes': 'S',
-                        'available': 5,
-                        'total': 10
-                    },
-                    {
-                        'item_id': 4,
-                        'name': 'T-Shirt',
-                        'sex': 'M',
-                        'price': 15,
-                        'sizes': 'S',
-                        'available': 5,
-                        'total': 10
-                    },
-                    {
-                        'item_id': 5,
-                        'name': 'T-Shirt',
-                        'sex': 'M',
-                        'price': 15,
-                        'sizes': 'S',
-                        'available': 5,
-                        'total': 10
-                    },
-                    {
-                        'item_id': 6,
-                        'name': 'T-Shirt',
-                        'sex': 'M',
-                        'price': 15,
-                        'sizes': 'S',
-                        'available': 5,
-                        'total': 10
-                    },
-                    {
-                        'item_id': 7,
-                        'name': 'T-Shirt',
-                        'sex': 'M',
-                        'price': 15,
-                        'sizes': 'S',
-                        'available': 5,
-                        'total': 10
-                    },
-                    {
-                        'item_id': 8,
-                        'name': 'T-Shirt',
-                        'sex': 'M',
-                        'price': 15,
-                        'sizes': 'S',
-                        'available': 5,
-                        'total': 10
-                    }
-                ],
                 stocksSearch: ''
             }
         },
@@ -156,14 +131,32 @@
             stocks: function () {
                 return this.$store.getters.getItemsDashboard;
             },
-            filteredStocks: function() {
-                return this.mockupTableData.filter(stock => {
-                    return stock.name.toLowerCase().includes(this.stocksSearch.toLowerCase())
-                });
+            totalStocks: function() {
+                return this.$store.getters.getStocks;
+            },
+            filteredStocks: function () {
+                if (this.$route.params.query === 'noStock') {
+                    return this.stocks.filter(item => {
+                        return item.name.toLowerCase().includes(this.stocksSearch.toLowerCase()) && item.stock.filter(size => size.stock === 0).length > 0
+                    });
+                } else {
+                    return this.stocks.filter(item => {
+                        return item.name.toLowerCase().includes(this.stocksSearch.toLowerCase())
+                    });
+                }
+            },
+            numberOrdered: function() {
+                return stock => {
+                    let totalOrdered = 0;
+                    for (let i = 0; i < stock.length; i++) {
+                        totalOrdered += stock[i].amount;
+                    }
+                    return totalOrdered;
+                }
             }
         },
         mounted() {
-            if (this.$store.getters.getItemsDashboard.length === 0) {
+            if (this.$store.getters.getNrItemsDashboard === 0) {
                 this.$store.dispatch("fetchItemsDashboard");
             }
         }
@@ -187,6 +180,31 @@
 
         &__search-label {
             margin-right: 10px;
+        }
+    }
+
+    .stock-table {
+        &--align-top {
+            vertical-align: top;
+            padding-top: 15px !important;
+            padding-bottom: 15px !important;
+        }
+
+        &__stocks {
+            margin-bottom: 0;
+            margin-top: -5px;
+
+            &--no-margin {
+                margin-top: 0;
+            }
+
+            td {
+                padding: 5px;
+            }
+
+            &__row {
+                height: initial;
+            }
         }
     }
 </style>

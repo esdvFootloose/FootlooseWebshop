@@ -2,7 +2,7 @@
     <div class="navigation-bar__container">
         <nav class="navigation-bar">
             <router-link :to="{name: 'home'}" class="logo">
-                <img src="/images/Logo_red_notext.svg"/>
+                <img src="/images/Logo_red_notext.svg" alt="Footloose webshop"/>
             </router-link>
             <div
                 class="navigation-bar__menu-toggle navigation-bar__menu-toggle--menu-bars"

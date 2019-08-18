@@ -84,16 +84,26 @@
             },
             nrReadyForPickup: function () {
                 return this.$store.getters.getNrReadyforPickup;
-            },
-            getOrders: function () {
-                return this.$store.getters.getOrders;
-            },
-            getRequests: function (){
-                return this.$store.getters.getRequests;
             }
         },
         mounted() {
-            this.$store.dispatch('fetchAllDashboard');
+            let nrOrders = this.$store.getters.getNrOrders;
+            let nrRequests = this.$store.getters.getNrRequests;
+            let nrItems = this.$store.getters.getNrItemsDashboard;
+            if (nrOrders === 0 && nrRequests === 0 && nrItems) {
+                this.$store.dispatch('fetchAllDashboard');
+                this.$store.dispatch('fetchItemsDashboard');
+            } else {
+                if (nrOrders === 0) {
+                    this.$store.dispatch('fetchOrders');
+                }
+                if (nrRequests === 0) {
+                    this.$store.dispatch('fetchRequests');
+                }
+                if (nrItems === 0) {
+                    this.$store.dispatch('fetchItemsDashboard');
+                }
+            }
         }
     }
 </script>
@@ -119,6 +129,7 @@
                 text-align: center;
                 font-size: 72px;
                 font-weight: bold;
+                margin-bottom: 0;
             }
         }
     }
