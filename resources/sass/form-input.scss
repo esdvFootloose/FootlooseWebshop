@@ -43,6 +43,7 @@ input {
     height: fit-content;
     padding: 10px;
     margin: 10px;
+    cursor: pointer;
 
     @media all and (min-width: $breakpoint--tablet){
         padding: 10px ;

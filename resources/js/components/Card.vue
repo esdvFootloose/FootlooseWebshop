@@ -175,5 +175,9 @@
             margin: 20px auto;
             padding: 20px 20px;
         }
+
+        &:hover {
+            box-shadow: $box-shadow--extra-large;
+        }
     }
 </style>

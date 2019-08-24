@@ -1,7 +1,7 @@
 <template>
     <div class="content">
         <div class="heading">
-            <h1>Stocks</h1>
+            <h1>{{ $route.params.query === 'noStock' ? 'Out of stock' : 'Stocks'}}</h1>
             <div class="heading__search">
                 <label class="heading__search-label">Search</label>
                 <input type="text" v-model="stocksSearch">
