@@ -67,7 +67,7 @@
                     </table>
                 </td>
                 <td class="stock-table--centered">
-                    <router-link :to="{name: 'stock', params: {id: item.id}}" tag="div" class="button">Edit
+                    <router-link :to="{name: 'stock', params: {slug: item.slug}}" tag="div" class="button">Edit
                     </router-link>
                 </td>
             </tr>

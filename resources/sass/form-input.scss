@@ -22,6 +22,14 @@ input {
     }
 }
 
+.labeled-form {
+    label {
+        display: inline-block;
+        width: 140px;
+    }
+}
+
+
 .input-focus {
     &:focus {
         outline: none;

@@ -80,7 +80,7 @@ const router = new VueRouter({
             }
         },
         {
-            path: '/stock/:id',
+            path: '/stock/:slug?',
             component: Stock,
             name: 'stock',
             meta: {

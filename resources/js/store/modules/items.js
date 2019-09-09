@@ -5,6 +5,7 @@ const cartCookie = JSON.parse(localStorage.getItem('cart'));
 const state = {
     items: [],
     itemsDashboard: [],
+    availableSizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
     cart: cartCookie || [],
     nrItemsOutOfStock: 0,
 };
@@ -90,24 +91,30 @@ const actions = {
     }
 };
 const getters = {
-    getItems: state => state.items,
-    getItemsDashboard: state => state.itemsDashboard,
-    getNrItemsDashboard: state => state.itemsDashboard.length,
+    getCart: state => state.cart,
     getItem(state) {
         return slug => state.items.find(item => {
             return item.slug === slug;
         });
     },
-    getItemById: (state) => (id) => {
-        return state.items.find(item => item.id === id)
-    },
-    getCart: state => state.cart,
-    getNrItemsOutOfStock: state => state.nrItemsOutOfStock,
+    getItems: state => state.items,
     itemInCart: state => item => {
         let selectedItem = state.items.find(stockItem => stockItem.slug === item.slug);
         let selectedSize = selectedItem.stock.find(size => size.size === item.size).id;
         return state.cart.find(cartItem => cartItem.item_id === selectedItem.id && cartItem.size_id === selectedSize);
-    }
+    },
+    getItemById: (state) => (id) => {
+        return state.items.find(item => item.id === id)
+    },
+    getItemsDashboard: state => state.itemsDashboard,
+    getDashboardItem(state) {
+        return slug => state.itemsDashboard.find(item => {
+            return item.slug === slug;
+        });
+    },
+    getNrItemsDashboard: state => state.itemsDashboard.length,
+    getNrItemsOutOfStock: state => state.nrItemsOutOfStock,
+    getAllSizes: state => state.availableSizes
 };
 
 export default {
