@@ -21,12 +21,21 @@
                     <div class="stock__field">
                         <label>Gender</label>
                         <div class="stock__input">
-                            <input type="radio" id="male" value="Male" v-model="item.gender" style="width: 20px;">
-                            <label for="male">Male</label>
-                            <input type="radio" id="female" value="Female" v-model="item.gender" style="width: 20px;">
-                            <label for="female">Female</label>
-                            <input type="radio" id="unisex" value="Unisex" v-model="item.gender" style="width: 20px;">
-                            <label for="unisex">Unisex</label>
+                            <div>
+                                <input type="radio" id="male" value="Male" v-model="item.gender" style="width: 20px;">
+                                <label for="male">Male</label>
+                            </div>
+                            <div>
+
+                                <input type="radio" id="female" value="Female" v-model="item.gender"
+                                       style="width: 20px;">
+                                <label for="female">Female</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="unisex" value="Unisex" v-model="item.gender"
+                                       style="width: 20px;">
+                                <label for="unisex">Unisex</label>
+                            </div>
                         </div>
                     </div>
 
@@ -34,15 +43,15 @@
                         <div>
                             <label class="stock__input__center-aligned">Available from</label>
                         </div>
-                        <div style="padding: 0 5px;">
-                            <input style="width: 90%;" type="date" v-model="item.available_from"/>
+                        <div class="stock__input__availability">
+                            <input type="date" v-model="item.available_from"/>
                         </div>
 
                         <div>
                             <label class="stock__input__center-aligned">Available to</label>
                         </div>
-                        <div style="padding: 0 5px;">
-                            <input style="width: 90%;" type="date" v-model="item.available_to"/>
+                        <div class="stock__input__availability">
+                            <input type="date" v-model="item.available_to"/>
                         </div>
                     </div>
                     <div class="hline"></div>
@@ -137,10 +146,19 @@
         }
 
         &__input {
-            display: inline-flex;
+            display: flex;
             justify-content: space-evenly;
-            flex-wrap: wrap;
-            width: calc(100% - 145px);
+            flex-wrap: nowrap;
+            flex-direction: column;
+            width: calc(100% - 100px);
+
+            @media all and (min-width: $breakpoint--web) {
+
+            }
+
+            @media all and (min-width: $breakpoint--web) {
+                flex-direction: row;
+            }
 
             label {
                 margin: 8px;
@@ -163,6 +181,11 @@
                 flex-wrap: wrap
             }
 
+            &__availability {
+                width: calc(100% - 100px);
+                padding: 0 5px;
+            }
+
             &__center-aligned {
                 display: flex;
                 align-items: center;
@@ -172,7 +195,7 @@
         &__stock-table {
             margin: auto;
             @media all and (min-width: $breakpoint--web) {
-                margin-left: 140px;
+                margin-left: 100px;
             }
         }
     }
