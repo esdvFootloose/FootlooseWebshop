@@ -86,8 +86,8 @@
                     </div>
                 </div>
                 <div style="margin-left:auto; display: flex; width: fit-content">
-                    <div class="button button--primary button--fixed-width">Save</div>
-                    <div class="button button--fixed-width">Cancel</div>
+                    <div class="button button--primary button--fixed-width" @click="saveStock">Save</div>
+                    <div class="button button--fixed-width" @click="goBack">Cancel</div>
                 </div>
             </template>
         </card>
@@ -97,17 +97,32 @@
 <script>
     // Todo: sort sizes by available sizes
     import Card from "../components/Card";
+    import axios from "axios";
 
     export default {
         components: {Card},
         computed: {
             item: function () {
-                return this.$store.getters.getDashboardItem(this.$route.params.slug);
+                if (this.$route.params.slug) {
+                    console.log('taking the route one');
+                    return this.$store.getters.getDashboardItem(this.$route.params.slug);
+                } else {
+                    console.log('taking the new one');
+                    return this.newItem;
+                }
             }
         },
         data: function () {
             return {
-                allSizes: []
+                allSizes: [],
+                newItem: {
+                    name: '',
+                    description: '',
+                    gender: '',
+                    available_from: '',
+                    available_to: '',
+                    stock: []
+                }
             }
         },
         methods: {
@@ -120,10 +135,30 @@
                     };
                     this.item.stock.push(newSize);
                 }
+            },
+            saveStock: function () {
+                if (!this.item.id) {
+                    axios.post('/api/items', this.newItem).then(result => {
+                        this.$store.dispatch('fetchItems');
+                        this.$store.dispatch('fetchItemsDashboard');
+                    }).catch(error => {
+                        console.log(error);
+                    });
+                } else {
+                    axios.patch('/api/items/' + this.item.id, this.item).then(result => {
+                        this.$store.dispatch('fetchItems');
+                        this.$store.dispatch('fetchItemsDashboard');
+                    }).catch(error => {
+                        console.log(error);
+                    });
+                }
+            },
+            goBack: function () {
+                this.$router.go(-1);
             }
         },
         mounted() {
-            if (this.$route.params.length > 0) {
+            if (this.$route.params.slug) {
                 if (this.$store.getters.getNrItemsDashboard === 0) {
                     this.$store.dispatch('fetchItemsDashboard');
                 }
