@@ -19,6 +19,10 @@
                         <textarea class="stock__input stock__input__description" v-model="item.description"></textarea>
                     </div>
                     <div class="stock__field">
+                        <label>Price</label>
+                        <input type="number" class="stock__input" v-model="item.price"/>
+                    </div>
+                    <div class="stock__field">
                         <label>Gender</label>
                         <div class="stock__input">
                             <div>
@@ -104,10 +108,8 @@
         computed: {
             item: function () {
                 if (this.$route.params.slug) {
-                    console.log('taking the route one');
                     return this.$store.getters.getDashboardItem(this.$route.params.slug);
                 } else {
-                    console.log('taking the new one');
                     return this.newItem;
                 }
             }
@@ -138,16 +140,16 @@
             },
             saveStock: function () {
                 if (!this.item.id) {
-                    axios.post('/api/items', this.newItem).then(result => {
+                    axios.post('/api/items', this.item).then(result => {
                         this.$store.dispatch('fetchItems');
-                        this.$store.dispatch('fetchItemsDashboard');
+                        this.$store.dispatch('fetchAllDashboard');
                     }).catch(error => {
                         console.log(error);
                     });
                 } else {
                     axios.patch('/api/items/' + this.item.id, this.item).then(result => {
                         this.$store.dispatch('fetchItems');
-                        this.$store.dispatch('fetchItemsDashboard');
+                        this.$store.dispatch('fetchAllDashboard');
                     }).catch(error => {
                         console.log(error);
                     });
