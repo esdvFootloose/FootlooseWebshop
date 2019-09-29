@@ -93,6 +93,8 @@
 
         &__image {
             margin-bottom: 5px;
+            min-height: 250px;
+            display: flex;
 
             img {
                 display: block;
@@ -103,6 +105,7 @@
             }
 
             &--large {
+                min-height: 350px;
                 img {
                     max-width: 350px !important;
                 }

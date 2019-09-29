@@ -2,11 +2,14 @@
     <div class="content">
         <card
             :is-detailed="true"
-            image="https://via.placeholder.com/450"
+            :image="item.image"
             :large-image="true"
         >
             <template v-slot:underneathImage class="width--full">
-                <div class="button button--fixes-width align--center">Upload image</div>
+                <div class="stock__input__file-input align--center">
+                    <label for="image-upload" class="button button--fixes-width align--center">Upload image</label>
+                    <input type="file" id="image-upload" ref="product-image" style="display: none" @change="handleFileUpload">
+                </div>
             </template>
             <template v-slot:description>
                 <div class="labeled-form">
@@ -155,6 +158,9 @@
                     });
                 }
             },
+            handleFileUpload: function() {
+                this.item.image = this.refs.product-image.files;
+            },
             goBack: function () {
                 this.$router.go(-1);
             }
@@ -199,6 +205,10 @@
 
             label {
                 margin: 8px;
+            }
+
+            &__file-input {
+                width: fit-content;
             }
 
             &__description {

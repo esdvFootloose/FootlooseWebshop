@@ -20,6 +20,7 @@ class ItemController extends Controller
         $items = Item::all();
         foreach ($items as $item) {
             $item->stock = $item->Stock;
+            $item->image = '/images/placeholder.png';
         }
         return response()->json(['data' => $items], 200);
     }
@@ -37,6 +38,7 @@ class ItemController extends Controller
             foreach ($item->stock as $stock) {
                 $stock->OrderedItem;
             }
+            $item->image = '/images/placeholder.png';
 
         }
         return response()->json(['data' => $items], 200);
