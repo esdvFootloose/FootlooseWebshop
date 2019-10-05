@@ -8,7 +8,7 @@
                 route-name="item"
                 :route-params="{'slug' :item.slug}"
                 :is-primary-button="true"
-                image="https://via.placeholder.com/175"
+                :image="item.image"
                 :text-heading="item.name + ' ' +(item.gender === 'Unisex' ? '' : item.gender.toLowerCase())"
                 :text-subheading="getSizesAsText(item.stock)"
             >
