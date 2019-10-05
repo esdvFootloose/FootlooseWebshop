@@ -37,8 +37,8 @@ class ItemController extends Controller
             $item->Stock;
             foreach ($item->stock as $stock) {
                 $stock->OrderedItem;
+                $item->image = count($image = $item->getMedia('product')) > 0 ? $image[0]->getUrl() : '/images/placeholder.png';
             }
-            $item->image = '/images/placeholder.png';
 
         }
         return response()->json(['data' => $items], 200);

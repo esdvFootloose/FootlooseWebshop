@@ -23,7 +23,6 @@ EOT
                 ,'gender' => 'Male',
             ]);
 
-            $item->addMedia(storage_path('images/Footloose t-shirt.png'))->preservingOriginal()->toMediaCollection('product');
 
         }
 
@@ -38,7 +37,6 @@ EOT
                 ,'gender' => 'Female',
             ]);
 
-            $item->addMedia(storage_path('images/Footloose t-shirt.png'))->preservingOriginal()->toMediaCollection('product');
 
         }
 
@@ -53,7 +51,6 @@ A very comfortable footloose sweater to keep you warm during the colder periods 
 EOT
             ]);
 
-            $item->addMedia(storage_path('images/Footloose hoodie.png'))->preservingOriginal()->toMediaCollection('product');
 
         }
         if (!Item::where('name', 'Sweater')->where('gender', 'Female')->first())
@@ -67,7 +64,6 @@ A very comfortable footloose sweater to keep you warm during the colder periods 
 EOT
             ]);
 
-            $item->addMedia(storage_path('images/Footloose hoodie.png'))->preservingOriginal()->toMediaCollection('product');
 
         }
 
@@ -95,7 +91,6 @@ A shoe bag printed with the Footloose logo to transport your dance shoes from an
 EOT
             ]);
 
-            $item->addMedia(storage_path('images/Footloose shoebag.png'))->preservingOriginal()->toMediaCollection('product');
 
         }
 
@@ -110,7 +105,6 @@ Take your footloose gear even under the shower, with this comfortable 100x50 cm 
 EOT
             ]);
 
-            $item->addMedia(storage_path('images/Footloose towel.png'))->preservingOriginal()->toMediaCollection('product');
 
         }
     }
