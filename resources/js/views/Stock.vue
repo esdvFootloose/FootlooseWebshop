@@ -7,8 +7,8 @@
         >
             <template v-slot:underneathImage class="width--full">
                 <div class="stock__input__file-input align--center">
-                    <label for="image-upload" class="button button--fixes-width align--center">Upload image</label>
-                    <input type="file" id="image-upload" ref="product-image" style="display: none" @change="handleFileUpload">
+                    <label for="image-upload" class="button button--fixes-width button--secondary button--disabled align--center">Upload image</label>
+                    <input type="file" id="image-upload" ref="productImage" style="display: none" @change="handleFileUpload" disabled>
                 </div>
             </template>
             <template v-slot:description>
@@ -127,7 +127,8 @@
                     available_from: '',
                     available_to: '',
                     stock: []
-                }
+                },
+                itemImage: []
             }
         },
         methods: {
@@ -142,6 +143,38 @@
                 }
             },
             saveStock: function () {
+                // let stocks = this.item.stock;
+                //
+                // delete this.item.image;
+                // delete this.item.stock;
+                //
+                // let formData = new FormData();
+                // for (let prop in this.item) {
+                //     if (this.item[prop] === null) this.item[prop] = "";
+                //     formData.append(prop, this.item[prop]);
+                // }
+                // console.log("appending image");
+                // for (let i = 0; i < this.itemImage.length; i++) {
+                //     let file = this.itemImage[i];
+                //     formData.append('image[' + i + ']', file);
+                // }
+                // formData.append('image[0]', this.itemImage);
+                // console.log(stocks.length);
+                // for (let j = 0; j < stocks.length; j++) {
+                //     let itemStock = stocks[j];
+                //     formData.append('stock[' + j + ']', itemStock);
+                // }
+
+                // console.log(formData);
+                // axios.patch('/api/items/' + this.item.id, formData).then(result => {
+                //     this.$store.dispatch('fetchItems');
+                //     this.$store.dispatch('fetchAllDashboard');
+                // }).catch(error => {
+                //     console.log(error);
+                // });
+                // for (let i = 0; i < this.item.image.length; i++) {
+                //     let file = this.image[i]
+                // }
                 if (!this.item.id) {
                     axios.post('/api/items', this.item).then(result => {
                         this.$store.dispatch('fetchItems');
@@ -158,8 +191,9 @@
                     });
                 }
             },
-            handleFileUpload: function() {
-                this.item.image = this.refs.product-image.files;
+            handleFileUpload: function () {
+                console.log(this.$refs.productImage.files);
+                this.itemImage = this.$refs.productImage.files[0];
             },
             goBack: function () {
                 this.$router.go(-1);

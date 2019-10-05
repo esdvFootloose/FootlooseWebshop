@@ -20,7 +20,7 @@ class ItemController extends Controller
         $items = Item::all();
         foreach ($items as $item) {
             $item->stock = $item->Stock;
-            $item->image = '/images/placeholder.png';
+            $item->image = count($image = $item->getMedia('product')) > 0 ? $image[0]->getUrl() : '/images/placeholder.png';
         }
         return response()->json(['data' => $items], 200);
     }
@@ -64,7 +64,18 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = request()->validate([
+//        $validated = $request->validate([
+//            'name' => 'required|String',
+//            'description' => 'nullable|String',
+//            'gender' => 'required|in:Male,Female,Unisex',
+//            'price' => 'required|gte:0',
+//            'image' => 'nullable|array',
+//            'image[]' => 'max:10000|mimes:jpg,jpeg,png,gif',
+//            'available_from' => 'date|nullable',
+//            'available_to' => 'date|nullable',
+//            'stock' => 'array|required'
+//        ]);
+        $validated = $request->validate([
             'name' => 'required|String',
             'description' => 'nullable|String',
             'gender' => 'required|in:Male,Female,Unisex',
@@ -75,6 +86,12 @@ class ItemController extends Controller
         ]);
 
         $created_item = Item::create($validated);
+
+//        foreach ($validated['image'] as $file) {
+//            $created_item->addMedia($file)
+//                ->toMediaCollection('product');
+//        }
+
         $checked_sizes = array();
 
         foreach ($request->stock as $item_stock) {
@@ -111,6 +128,18 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
+
+//        $validated = request()->validate([
+//            'name' => 'required|String',
+//            'description' => 'nullable|String',
+//            'gender' => 'required|in:Male,Female,Unisex',
+//            'price' => 'required|gte:0',
+//            'image' => 'nullable|array',
+//            'image[]' => 'max:10000|mimes:jpg,jpeg,png,gif',
+//            'available_from' => 'date|nullable',
+//            'available_to' => 'date|nullable',
+//            'stock' => 'array|nullable',
+//        ]);
         $validated = request()->validate([
             'name' => 'required|String',
             'description' => 'nullable|String',
@@ -118,8 +147,10 @@ class ItemController extends Controller
             'price' => 'required|gte:0',
             'available_from' => 'date|nullable',
             'available_to' => 'date|nullable',
-            'stock' => 'array|required'
+            'stock' => 'array|nullable',
         ]);
+
+
         $item->fill($validated);
 
         $checked_sizes = array();
@@ -154,7 +185,13 @@ class ItemController extends Controller
             array_push($checked_sizes, $stock);
         }
 
+//        foreach ($validated['image'] as $file) {
+//            $item->addMedia($file)
+//                ->toMediaCollection('product');
+//        }
+
         $item->save();
+
         foreach ($checked_sizes as $checked_stock) {
             $checked_stock->save();
         }

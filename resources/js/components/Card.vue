@@ -93,8 +93,8 @@
 
         &__image {
             margin-bottom: 5px;
-            min-height: 250px;
-            display: flex;
+            /*min-height: 250px;*/
+            /*display: flex;*/
 
             img {
                 display: block;

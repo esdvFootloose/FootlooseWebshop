@@ -8,7 +8,7 @@ use Spatie\Sluggable\SlugOptions;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
-class Item extends Model
+class Item extends Model implements HasMedia
 {
     use HasSlug;
     use HasMediaTrait;
@@ -31,6 +31,12 @@ class Item extends Model
          return SlugOptions::create()
              ->generateSlugsFrom(['name', 'gender'])
              ->saveSlugsTo('slug');
+    }
+
+    public function registerMediaCollections()
+    {
+        $this->addMediaCollection('product')
+            ->singleFile();
     }
 
 }
