@@ -22,6 +22,14 @@ input {
     }
 }
 
+.labeled-form {
+    label {
+        display: inline-block;
+        width: 100px;
+    }
+}
+
+
 .input-focus {
     &:focus {
         outline: none;
@@ -43,6 +51,7 @@ input {
     height: fit-content;
     padding: 10px;
     margin: 10px;
+    cursor: pointer;
 
     @media all and (min-width: $breakpoint--tablet){
         padding: 10px ;

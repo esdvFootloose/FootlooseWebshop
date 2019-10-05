@@ -1,75 +1,71 @@
 // Variables
 @import 'variables';
 @import 'general';
-
 // Typography
 @import 'typography';
-
 // Form input
 @import 'form-input.scss';
-
 // Table
 @import 'table';
 
 html {
-  box-sizing: border-box;
-  font-family: $font-family-sans-serif;
-  font-size: $font-size--small;
-  font-weight: $font-weight;
-  height: 100%;
+    box-sizing: border-box;
+    font-family: $font-family-sans-serif;
+    font-size: $font-size--small;
+    font-weight: $font-weight;
+    height: 100%;
 
-    @media all and (min-width: $breakpoint--tablet){
+    @media all and (min-width: $breakpoint--tablet) {
         font-size: $font-size--base
     }
 }
 
 * {
-  padding: 0;
-  margin: 0;
-  box-sizing: inherit;
-  &::before,&::after {
+    padding: 0;
+    margin: 0;
     box-sizing: inherit;
 
-  }
+    &::before, &::after {
+        box-sizing: inherit;
+
+    }
 }
 
 body {
-  margin: 0;
-  position: relative;
-  min-height: 100%;
+    margin: 0;
+    position: relative;
+    min-height: 100%;
 }
 
 .content {
-  grid-area: main;
-  height: fit-content;
-  padding: 40px 30px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  width: 100%;
-  margin: auto;
-
-  @media all and (min-width: $breakpoint--tablet) {
-    padding: 30px 80px;
-  }
-
-  @media all and (min-width: $breakpoint--web) {
-    padding: 30px 120px;
-  }
-
-  &__main {
-    margin-left: auto;
-    margin-right: auto;
+    grid-area: main;
+    height: fit-content;
+    padding: 40px 30px;
+    overflow-x: hidden;
+    overflow-y: auto;
     width: 100%;
-    max-width: $breakpoint--web-large;
-  }
+    margin: auto;
+
+    @media all and (min-width: $breakpoint--tablet) {
+        padding: 30px 80px;
+    }
+
+    @media all and (min-width: $breakpoint--web) {
+        padding: 30px 120px;
+    }
+
+    &__main {
+        margin-top: $navigation-bar-height;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+        max-width: $breakpoint--web-large;
+    }
 }
 
 #app {
-  display: grid;
-  grid-template-areas:
-          'navigation-bar'
-          'main'
-          'footer';
-  grid-template-rows: auto auto 1fr;
-  min-height: 100vh;
+    display: grid;
+    grid-template-areas: 'navigation-bar' 'main' 'footer';
+    grid-template-rows: auto auto 1fr;
+    min-height: 100vh;
 }

@@ -2,7 +2,7 @@
     <div class="content content--item">
         <card
             :is-detailed="true"
-            image="https://via.placeholder.com/450"
+            :image="item.image"
             :large-image="true"
             :title="item.name + ' ' +(item.gender === 'Unisex' ? '' : item.gender.toLowerCase())"
         >

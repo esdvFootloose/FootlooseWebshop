@@ -18,6 +18,8 @@
             width: auto;
         }
     }
+
+
 }
 
 .hidden {
@@ -64,6 +66,6 @@
         margin-left: auto !important;
     }
     &--center {
-        margin: auto;
+        margin: auto !important;
     }
 }

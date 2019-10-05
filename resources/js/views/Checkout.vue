@@ -11,7 +11,7 @@
                         <th>Size</th>
                         <th>Amount</th>
                         <th>Cost</th>
-                        <th>Remove</th>
+                        <th></th>
                     </tr>
                     <tr v-for="cartItem in cart" class="row">
                         <td class="checkout-item__image">
@@ -33,7 +33,13 @@
                         </td>
                         <td class="hidden--mobile">{{ cartItem.amount }}x €{{ item(cartItem.item_id).price }}</td>
                         <td>€ {{ cartItem.amount * item(cartItem.item_id).price }}</td>
-                        <td v-if="!purchased" @click="removeItem(cartItem)">X</td>
+                        <td v-if="!purchased" >
+                            <custom-icon
+                            name="x"
+                            base-class="custom-icon"
+                            class="checkout-icon"
+                            @click="removeItem(cartItem)"
+                        ></custom-icon></td>
                     </tr>
                     <tr class="row checkout-item__total">
                         <td :colspan="(windowSize >= 768) ? (windowSize >= 1025 ? 4 : 3 ) : 2">Total</td>
@@ -52,10 +58,12 @@
 
 <script>
     import Card from '../components/Card'
+    import CustomIcon from "vue-icon/lib/vue-feather.esm";
 
     export default {
         components: {
-            Card
+            Card,
+            CustomIcon
         },
         computed: {
             item: function () {
@@ -140,5 +148,10 @@
         &__checkout-text {
             margin-bottom: 20px;
         }
+    }
+
+    .checkout-icon {
+        height: $font-size--heading - 5pt;
+        width: $font-size--heading - 5pt;
     }
 </style>

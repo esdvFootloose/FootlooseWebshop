@@ -2,7 +2,7 @@
     <div class="navigation-bar__container">
         <nav class="navigation-bar">
             <router-link :to="{name: 'home'}" class="logo">
-                <img src="/images/Logo_red_notext.svg" alt="Footloose webshop"/>
+                <img src="/images/Logo_webshop.svg" alt="Footloose webshop"/>
             </router-link>
             <div
                 class="navigation-bar__menu-toggle navigation-bar__menu-toggle--menu-bars"
@@ -20,7 +20,6 @@
                 v-if="loggedIn"
                 :class="{'navigation-bar__menu--visible' : showMenu}"
             >
-                <a href="https://www.esdvfootloose.nl" class="navigation-bar__menu-item">Association</a>
                 <router-link
                     :to="{name: 'dashboard'}"
                     v-if="isAdmin"
@@ -69,6 +68,7 @@
                         </template>
                     </div>
                 </router-link>
+                <a href="https://www.esdvfootloose.nl" class="navigation-bar__menu-item">Association</a>
                 <div v-on:click="logout" class="navigation-bar__menu-item">Log out</div>
             </div>
         </nav>
@@ -139,7 +139,7 @@
             display: flex;
             align-content: center;
             background: $color--black;
-            position: sticky;
+            position: fixed;
             justify-content: center;
             top: 0;
             height: $navigation-bar-height;
@@ -159,7 +159,7 @@
                 display: flex;
                 flex-direction: row;
                 justify-content: center;
-                position: sticky;
+                position: fixed;
                 right: 0;
                 margin-right: 40px;
                 background: none;
@@ -174,6 +174,7 @@
             padding: 0 25px;
             color: white;
             text-decoration: none;
+            cursor: pointer;
 
             &:hover,
             &--active {
