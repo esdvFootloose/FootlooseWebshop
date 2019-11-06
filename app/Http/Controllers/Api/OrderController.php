@@ -6,6 +6,8 @@ use App\Order;
 use App\OrderedItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Artisan;
+use Mollie\Laravel\Facades\Mollie;
 
 
 class OrderController extends Controller
@@ -36,6 +38,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+
         $created_order = Order::create([
             'user_id' => request()->user_id,
         ]);
@@ -48,7 +51,15 @@ class OrderController extends Controller
                 'amount' => $parsed_item->amount
             ]);
         }
-        return response()->json(['data' => request()->cart], 200);
+
+        $payment = $this->createPayment($created_order->id);
+
+        $created_order->payment_id = $payment->getCheckoutUrl();
+        $created_order->save();
+//        return redirect()->to($payment->getCheckoutUrl(), 303);
+
+
+        return response()->json(['data' => $payment->getCheckoutUrl()], 200);
     }
 
     /**
@@ -87,5 +98,35 @@ class OrderController extends Controller
     {
         $order->delete();
         return response()->json(['data' => ''], 200);
+    }
+
+    private function createPayment($order_id) {
+        $order = Order::where('id', $order_id)->first();
+        $order_total = 0;
+
+        foreach ($order->OrderedItem as $item) {
+            $item->Stock;
+            $item->Stock->Item;
+
+            $order_total += $item->amount * $item->Stock->Item->price;
+        }
+        $order_total = strval(number_format($order_total, 2, '.',''));
+
+        $payment = Mollie::api()->payments()->create([
+            'amount' => [
+                'currency' => 'EUR',
+                'value' => $order_total
+            ],
+            'method' => 'ideal',
+            'description' => 'Footloose Webshop order ID: '. $order_id,
+            'webhookUrl' => route('webhooks.mollie'),
+//            'redirectUrl' => route('order.success'),
+            'redirectUrl' => 'https://webshop.esdvfootloose.nl',
+        ]);
+
+        return Mollie::api()->payments()->get($payment->id);
+
+        // redirect customer to Mollie checkout page
+//        return redirect()->to($payment->getCheckoutUrl(), 303);
     }
 }
