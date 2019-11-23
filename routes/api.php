@@ -27,6 +27,8 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::middleware('auth:api')->group(function () {
         Route::post('/logout', 'Api\AuthController@logout')->name('logout');
 
+        Route::get('/cart', 'Api\CartController@index');
+
         Route::get('/items', 'Api\ItemController@index');
         Route::get('/items/stocks', 'Api\ItemController@indexStocks');
         Route::get('/itemsDashboard', 'Api\ItemController@indexDashboard');
