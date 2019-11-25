@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Cart;
 use App\Jobs\AddToCart;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
 
 class CartController extends Controller
 {
@@ -29,14 +31,21 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
+
         $validated = $request->validate([
-            'stock_id' => 'required|gte:0',
-            'user_id' => 'required|gte:0',
-            'amount' => 'required|gt:0'
+            'stock_id' => 'gte:0',
+            'user_id' => 'gte:0',
+            'amount' => 'gt:0'
         ]);
 
         $cart = Cart::firstOrNew($validated);
-        $cart->expires_at = Carbon::now()->addMinutes(15);
+//        $cart = Cart::firstOrNew([
+//            'stock_id' => $request->stock_id,
+//            'user_id' => $request->user_id,
+//            'amount' => $request->amount
+//        ]);
+
+        $cart->expires_at = Carbon::now()->addMinutes(15)->toDateTimeString();
         AddToCart::dispatchNow($cart);
         $added_item = Cart::where('stock_id', $cart->stock_id)
             ->where('user_id', $cart->user_id)

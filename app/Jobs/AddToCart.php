@@ -35,7 +35,7 @@ class AddToCart implements ShouldQueue
     {
         $stock = Stock::where('id', $this->cart->stock_id)->first();
         if ($stock->stock >= $this->cart->amount) {
-            $stock->amount = $stock->amount - $this->cart->amount;
+            $stock->stock = $stock->stock - $this->cart->amount;
             $stock->save();
             $this->cart->save();
         }
