@@ -83,6 +83,7 @@ const actions = {
         };
         axios.post('/api/orders', order).then(result => {
             commit('CLEAR_CART');
+            window.location = result.data.data;
             return true;
         }).catch(error => {
             console.log(error);

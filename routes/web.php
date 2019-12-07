@@ -13,3 +13,4 @@
 
 Route::get('/{any}', 'SpaController@index')->where('any', '.*')->name('spa');
 
+Route::name('webhooks.mollie')->post('webhooks/mollie', 'MollieWebhookController@handle');

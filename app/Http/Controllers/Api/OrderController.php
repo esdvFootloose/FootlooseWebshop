@@ -6,6 +6,7 @@ use App\Order;
 use App\OrderedItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Mollie\Laravel\Facades\Mollie;
 
 
 class OrderController extends Controller
@@ -22,8 +23,10 @@ class OrderController extends Controller
             foreach ($order->OrderedItem as $item) {
                 $item->Stock;
                 $item->Stock->Item;
+                $item->Stock->Item->image = count($image = $item->Stock->Item->getMedia('product')) > 0 ? $image[0]->getUrl() : '/images/placeholder.png';
             }
             $order->User;
+
         }
         return response()->json(['data' => $orders], 200);
     }
@@ -36,6 +39,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+
         $created_order = Order::create([
             'user_id' => request()->user_id,
         ]);
@@ -48,7 +52,48 @@ class OrderController extends Controller
                 'amount' => $parsed_item->amount
             ]);
         }
-        return response()->json(['data' => request()->cart], 200);
+
+        $payment = $this->createPayment($created_order->id);
+
+        $created_order->payment_id = $payment->id;
+        $created_order->save();
+
+        return response()->json(['data' => $payment->getCheckoutUrl()], 200);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $order = Order::where('id', $id)->first();
+        foreach ($order->OrderedItem as $item) {
+            $item->Stock;
+            $item->Stock->Item;
+            $item->Stock->Item->image = count($image = $item->Stock->Item->getMedia('product')) > 0 ? $image[0]->getUrl() : '/images/placeholder.png';
+        }
+        $old_payment = Mollie::api()->payments()->get($order->payment_id);
+
+        if (!$old_payment->isPaid() && !$old_payment->isOpen()) {
+            $payment = Mollie::api()->payments()->create([
+                'amount' => [
+                    'currency' => 'EUR',
+                    'value' => $old_payment->amount->value
+                ],
+                'method' => 'ideal',
+                'description' => 'Footloose mechendise  order #: ' . $order->id,
+                'webhookUrl' => route('webhooks.mollie'),
+                'redirectUrl' => route('spa', ['any' => 'order/' . $order->id])
+            ]);
+            $order->payment_id = $payment->id;
+            $order->save();
+            $order->payment_url = Mollie::api()->payments()->get($payment->id)->getCheckoutUrl();
+        }
+        $order->User;
+        return response()->json(['data' => $order], 200);
     }
 
     /**
@@ -87,5 +132,33 @@ class OrderController extends Controller
     {
         $order->delete();
         return response()->json(['data' => ''], 200);
+    }
+
+    private function createPayment($order_id)
+    {
+        $order = Order::where('id', $order_id)->first();
+        $order_total = 0;
+
+        foreach ($order->OrderedItem as $item) {
+            $item->Stock;
+            $item->Stock->Item;
+
+            $order_total += $item->amount * $item->Stock->Item->price;
+        }
+        $order_total = strval(number_format($order_total, 2, '.', ''));
+
+        $payment = Mollie::api()->payments()->create([
+            'amount' => [
+                'currency' => 'EUR',
+                'value' => $order_total
+            ],
+            'method' => 'ideal',
+            'description' => 'Footloose mechendise  order #: ' . $order_id,
+            'webhookUrl' => route('webhooks.mollie'),
+            'redirectUrl' => route('spa', ['any' => 'order/' . $order_id])
+        ]);
+
+        return Mollie::api()->payments()->get($payment->id);
+
     }
 }
