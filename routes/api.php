@@ -29,6 +29,7 @@ Route::group(['middleware' => ['json.response']], function () {
 
         Route::get('/cart', 'Api\CartController@index');
         Route::post('/cart', 'Api\CartController@store');
+        Route::delete('/cart', 'Api\CartController@destroy');
 
         Route::get('/items', 'Api\ItemController@index');
         Route::get('/items/stocks', 'Api\ItemController@indexStocks');

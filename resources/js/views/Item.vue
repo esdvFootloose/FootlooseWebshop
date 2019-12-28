@@ -95,13 +95,13 @@
                 let currentCartItem = this.cart.filter(item => item.item_id === this.item.id && item.size_id === size.id);
                 let cartItem = {
                     item_id: this.item.id,
-                    size_id: size.id,
+                    stock_id: size.id,
                     amount: Number(this.selectedAmount)
                 };
                 if (currentCartItem.length === 0) {
                     this.$store.dispatch("addItemToCart", cartItem);
                 } else {
-                    this.$store.dispatch("adjustCartItem", cartItem);
+                    this.$store.dispatch("addItemToCart", cartItem);
                 }
                 this.textMessage = "Item added to cart";
                 let that = this;

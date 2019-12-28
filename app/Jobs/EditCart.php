@@ -4,17 +4,13 @@ namespace App\Jobs;
 
 use App\Cart;
 use App\Stock;
+use Debugbar;
 use Illuminate\Bus\Queueable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-class AddToCart implements ShouldQueue
+class EditCart
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    protected $cart;
+    use Dispatchable, Queueable;
 
     /**
      * Create a new job instance.
@@ -31,20 +27,21 @@ class AddToCart implements ShouldQueue
      *
      * @return void
      */
-
-
     public function handle()
     {
-        /**
-         * If the cart already contains the item but the quantities are different, update both cart and stock, else 
-         */
         $stock = Stock::where('id', $this->cart->stock_id)->first();
+        Debugbar::info('stock', $stock);
         if ($this->cart->id) {
-            $current_cart = Cart::where('id', $this->cart->id);
+            $current_cart = Cart::where('id', $this->cart->id)->first();
+            Debugbar::info('current cart', $current_cart);
             if ($stock->stock - ($this->cart->amount - $current_cart->amount) >= 0) {
                 $stock->stock = $stock->stock - ($this->cart->amount - $current_cart->amount);
+                if ($this->cart->amount == 0) {
+                    $this->cart->delete();
+                } else {
+                    $this->cart->save();
+                }
                 $stock->save();
-                $this->cart->save();
             }
         } else if ($stock->stock >= $this->cart->amount) {
             $stock->stock = $stock->stock - $this->cart->amount;

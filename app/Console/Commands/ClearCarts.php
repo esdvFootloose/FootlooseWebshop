@@ -20,7 +20,7 @@ class ClearCarts extends Command
      *
      * @var string
      */
-    protected $description = 'Command to clear the cart ites which are out of date in order to disallow blocking items';
+    protected $description = 'Command to clear the cart items which are out of date in order to disallow blocking items';
 
     /**
      * Create a new command instance.
