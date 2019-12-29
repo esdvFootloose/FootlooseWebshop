@@ -4,7 +4,6 @@ namespace App\Jobs;
 
 use App\Cart;
 use App\Stock;
-use Debugbar;
 use Illuminate\Bus\Queueable;
 use Illuminate\Foundation\Bus\Dispatchable;
 
@@ -30,10 +29,8 @@ class EditCart
     public function handle()
     {
         $stock = Stock::where('id', $this->cart->stock_id)->first();
-        Debugbar::info('stock', $stock);
         if ($this->cart->id) {
             $current_cart = Cart::where('id', $this->cart->id)->first();
-            Debugbar::info('current cart', $current_cart);
             if ($stock->stock - ($this->cart->amount - $current_cart->amount) >= 0) {
                 $stock->stock = $stock->stock - ($this->cart->amount - $current_cart->amount);
                 if ($this->cart->amount == 0) {

@@ -21,16 +21,6 @@ const mutations = {
     SET_CART(state, cart) {
         state.cart = cart;
     },
-    REMOVE_FROM_CART(state, item) {
-        let indexItem = state.cart.indexOf(
-            state.cart.filter(
-                filterItem =>
-                    filterItem.item_id === item.item_id &&
-                    filterItem.size_id === item.size_id
-            )[0]
-        );
-        if (indexItem !== -1) state.cart.splice(indexItem, 1);
-    },
     ADJUST_ITEM(state, item) {
         let indexItem = state.cart.indexOf(
             state.cart.filter(
@@ -81,6 +71,7 @@ const actions = {
                 console.log(error);
             });
     },
+    // Todo Remove console log
     addItemToCart({ commit }, item) {
         axios
             .post("/api/cart", item)
@@ -91,12 +82,9 @@ const actions = {
             .catch(error => {
                 console.error(error);
             });
-        // setCookie();
     },
-    adjustCartItem({ commit }, item) {
-        commit("ADJUST_ITEM", item);
-    },
-    removeItemFromCart({ commit }, item) {
+    // Todo Remove console log
+    removeItemFromCart({ dispatch }, item) {
         axios
             .delete("/api/cart/", item)
             .then(result => {
@@ -105,12 +93,13 @@ const actions = {
             .catch(error => {
                 console.error(error);
             });
-        commit("REMOVE_FROM_CART", item);
+        dispatch("fetchCart");
     },
     clearCart({ commit }) {
         commit("CLEAR_CART");
         localStorage.removeItem("cart");
     },
+    // TODO remove console log
     requestItem({ commit }, requestedItem) {
         axios.post("/api/itemrequests", requestedItem).then(result => {
             console.log(result);
