@@ -75,7 +75,7 @@ const actions = {
         axios
             .post("/api/cart", item)
             .then(result => {
-                dispatch('fetchCart')                
+                dispatch("fetchCart");
             })
             .catch(error => {
                 console.error(error);
@@ -95,13 +95,12 @@ const actions = {
         commit("CLEAR_CART");
         localStorage.removeItem("cart");
     },
-    // TODO remove console log
     requestItem({ commit }, requestedItem) {
         axios.post("/api/itemrequests", requestedItem);
     },
     orderCartItems({ commit }) {
         axios
-            .post("/api/orders", {cart: JSON.stringify(state.cart)})
+            .post("/api/orders", { cart: JSON.stringify(state.cart) })
             .then(result => {
                 commit("CLEAR_CART");
                 window.location = result.data.data;
