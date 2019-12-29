@@ -39,20 +39,17 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-
         $created_order = Order::create([
-            'user_id' => request()->user_id,
+            'user_id' => auth()->user()->id,
         ]);
 
         foreach (json_decode($request->cart) as $item) {
-            $parsed_item = $item;
             OrderedItem::create([
                 'order_id' => $created_order->id,
-                'stock_id' => $parsed_item->size_id,
-                'amount' => $parsed_item->amount
+                'stock_id' => $item->stock_id,
+                'amount' => $item->amount
             ]);
         }
-
         $payment = $this->createPayment($created_order->id);
 
         $created_order->payment_id = $payment->id;
@@ -157,6 +154,8 @@ class OrderController extends Controller
             'webhookUrl' => route('webhooks.mollie'),
             'redirectUrl' => route('spa', ['any' => 'order/' . $order_id])
         ]);
+
+
 
         return Mollie::api()->payments()->get($payment->id);
 

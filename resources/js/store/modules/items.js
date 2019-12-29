@@ -105,13 +105,9 @@ const actions = {
             console.log(result);
         });
     },
-    orderCartItems({ commit }, userId) {
-        let order = {
-            user_id: userId,
-            cart: JSON.stringify(state.cart)
-        };
+    orderCartItems({ commit }) {
         axios
-            .post("/api/orders", order)
+            .post("/api/orders", {cart: JSON.stringify(state.cart)})
             .then(result => {
                 commit("CLEAR_CART");
                 window.location = result.data.data;

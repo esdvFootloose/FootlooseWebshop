@@ -95,7 +95,7 @@
             purchase: function () {
                 this.title = 'Order placed';
                 this.purchased = true;
-                if (this.$store.dispatch('orderCartItems', this.$store.getters.getUser.id)) {
+                if (this.$store.dispatch('orderCartItems')) {
                     this.title = 'Order placed';
                     this.message = 'Thank you for your order. Please check your mail for payment details.';
                     this.purchased = true;

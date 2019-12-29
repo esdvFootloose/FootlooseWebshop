@@ -6,7 +6,6 @@ use App\Cart;
 use App\Http\Controllers\Controller;
 use App\Jobs\EditCart;
 use Carbon\Carbon;
-use Debugbar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -58,7 +57,6 @@ class CartController extends Controller
         $cart->user_id = Auth::user()->id;
         $cart->expires_at = Carbon::now()->addMinutes(15)->toDateTimeString();
 
-        Debugbar::info('CC cart', $cart);
         EditCart::dispatchNow($cart);
         $added_item = Cart::where('stock_id', $cart->stock_id)
             ->where('user_id', $cart->user_id)
