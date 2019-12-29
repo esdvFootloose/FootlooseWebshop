@@ -58,13 +58,13 @@
                     </div>
                     <div class="navigation-bar__dropdown-content" v-if="cartItems.length > 0">
                         <template v-for="cartItem in cartItems">
-                            <router-link
+                            <!-- <router-link
                                 :to="{name: 'item', params: {slug: item(cartItem.item_id).slug, size: item(cartItem.item_id).stock.find(size => size.id === cartItem.size_id).size}}"
                             >
                                 {{ item(cartItem.item_id).name }}
                                 {{ item(cartItem.item_id).gender }}
                                 {{ cartItem.amount + 'x ' + itemSize(cartItem) }}
-                            </router-link>
+                            </router-link> -->
                         </template>
                     </div>
                 </router-link>
@@ -113,7 +113,10 @@
             },
             itemSize: function () {
                 return cartItem => this.item(cartItem.item_id).stock.find(size => size.id === cartItem.size_id).size;
-            },
+            }
+        },
+        mounted() {
+            this.$store.dispatch("fetchCart");
         }
     };
 </script>

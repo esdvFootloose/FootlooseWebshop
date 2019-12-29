@@ -1,12 +1,10 @@
 import axios from "axios";
 
-const cartCookie = JSON.parse(localStorage.getItem("cart"));
-
 const state = {
+    cart: [],
     items: [],
     itemsDashboard: [],
     availableSizes: ["XS", "S", "M", "L", "XL", "XXL"],
-    cart: cartCookie || [],
     nrItemsOutOfStock: 0
 };
 
@@ -20,8 +18,8 @@ const mutations = {
     SET_ITEMS_OUT_OF_STOCK(state, number) {
         state.nrItemsOutOfStock = number;
     },
-    ADD_TO_CART(state, item) {
-        state.cart.push(item);
+    SET_CART(state, cart) {
+        state.cart = cart;
     },
     REMOVE_FROM_CART(state, item) {
         let indexItem = state.cart.indexOf(
@@ -49,6 +47,16 @@ const mutations = {
 };
 
 const actions = {
+    fetchCart({ commit }) {
+        axios
+            .get("/api/cart")
+            .then(result => {
+                commit("SET_CART", result.data.data);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    },
     fetchItems({ commit }) {
         axios
             .get("/api/items")
@@ -87,16 +95,17 @@ const actions = {
     },
     adjustCartItem({ commit }, item) {
         commit("ADJUST_ITEM", item);
-        setCookie();
     },
     removeItemFromCart({ commit }, item) {
-        axios.delete("/api/cart/", item).then(result => {
-            console.log('item removed from cart');
-        }).catch(error => {
-            console.error(error);
-        });
+        axios
+            .delete("/api/cart/", item)
+            .then(result => {
+                console.log("item removed from cart");
+            })
+            .catch(error => {
+                console.error(error);
+            });
         commit("REMOVE_FROM_CART", item);
-        setCookie();
     },
     clearCart({ commit }) {
         commit("CLEAR_CART");
@@ -168,8 +177,3 @@ export default {
     actions,
     getters
 };
-
-function setCookie() {
-    let cartItemsString = JSON.stringify(state.cart);
-    localStorage.setItem("cart", cartItemsString);
-}

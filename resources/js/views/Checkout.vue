@@ -20,25 +20,24 @@
                         <td>
                             <div style="display: flex; flex-direction: column">
                                 <router-link
-                                    :to="{name: 'item', params: {slug: item(cartItem.item_id).slug, size: item(cartItem.item_id).stock.find(size => size.id === cartItem.size_id).size}}">
-                                    {{ item(cartItem.item_id).name }}
+                                    :to="{name: 'item', params: {slug: cartItem.stock.item.slug, size: cartItem.stock.size}}">
+                                    {{ cartItem.stock.item.name }}
                                 </router-link>
-                                <div class="visible--mobile visible--tablet">Size: {{ itemSize(cartItem) }}</div>
-                                <div class="visible--mobile">{{ cartItem.amount }}x €{{ item(cartItem.item_id).price }}
+                                <div class="visible--mobile visible--tablet">Size: {{ cartItem.stock.size }}</div>
+                                <div class="visible--mobile">{{ cartItem.amount }}x €{{ cartItem.stock.item.price }}
                                 </div>
                             </div>
 
                         </td>
-                        <td class="hidden--mobile hidden--tablet">Size: {{ itemSize(cartItem) }}
+                        <td class="hidden--mobile hidden--tablet">Size: {{ cartItem.stock.size }}
                         </td>
-                        <td class="hidden--mobile">{{ cartItem.amount }}x €{{ item(cartItem.item_id).price }}</td>
-                        <td>€ {{ cartItem.amount * item(cartItem.item_id).price }}</td>
-                        <td v-if="!purchased" >
+                        <td class="hidden--mobile">{{ cartItem.stock.size }}x €{{ cartItem.stock.item.price }}</td>
+                        <td>€ {{ cartItem.amount * cartItem.stock.item.price }}</td>
+                        <td v-if="!purchased" v-on:click="removeItem(cartItem)">
                             <custom-icon
                             name="x"
                             base-class="custom-icon"
                             class="checkout-icon"
-                            @click="removeItem(cartItem)"
                         ></custom-icon></td>
                     </tr>
                     <tr class="row checkout-item__total">
@@ -75,7 +74,7 @@
             totalPrice: function () {
                 let price = 0;
                 for (let i = 0; i < this.cart.length; i++) {
-                    price += this.cart[i].amount * this.item(this.cart[i].item_id).price;
+                    price += this.cart[i].amount * this.cart[i].stock.item.price;
                 }
                 return price;
             },
@@ -105,6 +104,7 @@
                 }
             },
             removeItem: function (item) {
+                console.log("removed clicked");
                 this.$store.dispatch('removeItemFromCart', item);
                 this.loadCart()
             },
@@ -114,6 +114,7 @@
             }
         },
         mounted: function () {
+            this.$store.dispatch('fetchCart');
             this.loadCart();
         }
     }

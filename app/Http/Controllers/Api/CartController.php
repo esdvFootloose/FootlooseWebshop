@@ -20,8 +20,13 @@ class CartController extends Controller
      */
     public function index()
     {
-        $cart = Cart::where('user_id', auth()->user()->id)->first();
-        return response()->json(['data' => $cart], 200);
+        $cart_items = Cart::where('user_id', auth()->user()->id)->get();
+        foreach ($cart_items as $item) {
+            $item->Stock;
+            $item->Stock->Item;
+        }
+        $cart_items;
+        return response()->json(['data' => $cart_items], 200);
     }
 
     /**
