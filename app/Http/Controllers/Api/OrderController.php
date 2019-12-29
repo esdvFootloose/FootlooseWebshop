@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Cart;
 use App\Order;
 use App\OrderedItem;
 use Illuminate\Http\Request;
@@ -55,6 +56,8 @@ class OrderController extends Controller
         $created_order->payment_id = $payment->id;
         $created_order->save();
 
+        $this->removeCart();
+
         return response()->json(['data' => $payment->getCheckoutUrl()], 200);
     }
 
@@ -67,6 +70,9 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::where('id', $id)->first();
+        if ($order->user_id != auth()->user()->id) {
+            return response()->json(['Data' => 'Error, you are not allowed to view this order'], 401);
+        }
         foreach ($order->OrderedItem as $item) {
             $item->Stock;
             $item->Stock->Item;
@@ -88,6 +94,8 @@ class OrderController extends Controller
             $order->payment_id = $payment->id;
             $order->save();
             $order->payment_url = Mollie::api()->payments()->get($payment->id)->getCheckoutUrl();
+        } else if ($old_payment->isOpen()) {
+            $order->payment_url = Mollie::api()->payments()->get($old_payment->id)->getCheckoutUrl();
         }
         $order->User;
         return response()->json(['data' => $order], 200);
@@ -156,8 +164,12 @@ class OrderController extends Controller
         ]);
 
 
-
         return Mollie::api()->payments()->get($payment->id);
 
+    }
+
+    private function removeCart()
+    {
+        Cart::where('user_id', auth()->user()->id)->delete();
     }
 }
