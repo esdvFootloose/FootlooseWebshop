@@ -71,29 +71,25 @@ const actions = {
                 console.log(error);
             });
     },
-    // Todo Remove console log
-    addItemToCart({ commit }, item) {
+    addItemToCart({ commit, dispatch }, item) {
         axios
             .post("/api/cart", item)
             .then(result => {
-                commit("ADD_TO_CART", item);
-                console.log("item added to cart");
+                dispatch('fetchCart')                
             })
             .catch(error => {
                 console.error(error);
             });
     },
-    // Todo Remove console log
     removeItemFromCart({ dispatch }, item) {
         axios
             .delete("/api/cart/", item)
             .then(result => {
-                console.log("item removed from cart");
+                dispatch("fetchCart");
             })
             .catch(error => {
                 console.error(error);
             });
-        dispatch("fetchCart");
     },
     clearCart({ commit }) {
         commit("CLEAR_CART");
@@ -101,9 +97,7 @@ const actions = {
     },
     // TODO remove console log
     requestItem({ commit }, requestedItem) {
-        axios.post("/api/itemrequests", requestedItem).then(result => {
-            console.log(result);
-        });
+        axios.post("/api/itemrequests", requestedItem);
     },
     orderCartItems({ commit }) {
         axios
