@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use App\Cart;
 use App\Order;
+use App\User;
 use App\OrderedItem;
+use App\Mail\OrderPaid;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Mail\OrderCreated;
+use Illuminate\Support\Facades\Mail;
 use Mollie\Laravel\Facades\Mollie;
 
 
@@ -58,6 +62,11 @@ class OrderController extends Controller
 
         $this->removeCart();
 
+        // Todo check if this works with FL login
+        Mail::to(auth()->user()->email)->send(
+            new OrderCreated(auth()->user()->name, $created_order->id)
+        );
+
         return response()->json(['data' => $payment->getCheckoutUrl()], 200);
     }
 
@@ -80,6 +89,15 @@ class OrderController extends Controller
         }
         $old_payment = Mollie::api()->payments()->get($order->payment_id);
 
+        // Todo check if working with FL credentials
+        if (!$order->is_paid && $old_payment->isPaid()){
+            $order->is_paid = true;
+            $user = User::where('id', $order->user_id)->select('email', 'name')->first();
+             Mail::to($user->email)->send(
+                 new OrderPaid($user->name, $order->id)
+             );
+        }
+
         if (!$old_payment->isPaid() && !$old_payment->isOpen()) {
             $payment = Mollie::api()->payments()->create([
                 'amount' => [
@@ -96,7 +114,7 @@ class OrderController extends Controller
             $order->payment_url = Mollie::api()->payments()->get($payment->id)->getCheckoutUrl();
         } else if ($old_payment->isOpen()) {
             $order->payment_url = Mollie::api()->payments()->get($old_payment->id)->getCheckoutUrl();
-        }
+        } 
         $order->User;
         return response()->json(['data' => $order], 200);
     }
