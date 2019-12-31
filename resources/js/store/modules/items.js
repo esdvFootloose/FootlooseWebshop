@@ -47,14 +47,17 @@ const actions = {
                 console.error(error);
             });
     },
-    fetchItems({ commit }) {
+    fetchItems({ commit, dispatch }) {
         axios
             .get("/api/items")
             .then(result => {
                 commit("SET_ITEMS", result.data.data);
             })
-            .catch(error => {
-                console.log(error);
+            .catch((error) => {
+                console.error(error)
+                if (error.toString().indexOf(401)){
+                    dispatch("logout");
+                }
             });
     },
     fetchItemsDashboard({ commit }) {
