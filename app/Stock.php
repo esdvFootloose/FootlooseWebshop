@@ -22,6 +22,12 @@ class Stock extends Model
         return $this->hasMany(OrderedItem::class);
     }
 
+    public function Cart()
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+
     public function ItemRequest()
     {
         return $this->hasMany(ItemRequest::class);
