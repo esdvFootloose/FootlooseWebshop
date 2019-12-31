@@ -23,6 +23,8 @@ class CartController extends Controller
         foreach ($cart_items as $item) {
             $item->Stock;
             $item->Stock->Item;
+            $item->Stock->Item->image = count($image = $item->Stock->Item->getMedia('product')) > 0 ? $image[0]->getUrl() : '/images/placeholder.png';
+
         }
         $cart_items;
         return response()->json(['data' => $cart_items], 200);
