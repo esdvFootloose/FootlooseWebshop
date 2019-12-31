@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
 
-        $schedule->job(new ClearCarts)->everyFiveMinutes()->withoutOverlapping()->runInBackground()->evenInMaintenanceMode();
+        $schedule->command('cart:clear')->everyFiveMinutes()->withoutOverlapping()->runInBackground()->evenInMaintenanceMode();
     }
 
     /**
