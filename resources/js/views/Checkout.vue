@@ -65,12 +65,6 @@
             CustomIcon
         },
         computed: {
-            item: function () {
-                return id => this.$store.getters.getItemById(id);
-            },
-            itemSize: function () {
-                return cartItem => this.item(cartItem.item_id).stock.find(size => size.id === cartItem.size_id).size;
-            },
             totalPrice: function () {
                 let price = 0;
                 for (let i = 0; i < this.cart.length; i++) {
