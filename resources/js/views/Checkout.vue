@@ -15,7 +15,7 @@
                     </tr>
                     <tr v-for="cartItem in cart" class="row">
                         <td class="checkout-item__image">
-                            <img src="https://via.placeholder.com/100" alt="item image">
+                            <img :src="cartItem.stock.item.image" alt="item image">
                         </td>
                         <td>
                             <div style="display: flex; flex-direction: column">
