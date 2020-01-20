@@ -149,16 +149,16 @@
                 return stock => {
                     let totalOrdered = 0;
                     for (let i = 0; i < stock.length; i++) {
-                        totalOrdered += stock[i].amount;
+                        if (!stock[i].is_picked_up){
+                            totalOrdered += stock[i].amount;
+                        }
                     }
                     return totalOrdered;
                 }
             }
         },
         mounted() {
-            if (this.$store.getters.getNrItemsDashboard === 0) {
                 this.$store.dispatch("fetchItemsDashboard");
-            }
         }
 
     }

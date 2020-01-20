@@ -53,9 +53,9 @@ const actions = {
             .then(result => {
                 commit("SET_ITEMS", result.data.data);
             })
-            .catch((error) => {
-                console.error(error)
-                if (error.toString().indexOf(401)){
+            .catch(error => {
+                console.error(error);
+                if (error.toString().indexOf(401)) {
                     dispatch("logout");
                 }
             });
