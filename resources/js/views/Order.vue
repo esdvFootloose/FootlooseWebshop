@@ -1,125 +1,127 @@
 <template>
-    <div class="content content__checkout">
-        <Card>
-            <template v-slot:description>
-                <h1>Order overview</h1>
-                <p v-if="message" class="checkout-item__checkout-text">{{ message }}</p>
-                <a :href="paymentLink" v-if="paymentLink">{{ paymentLink }}</a>
-                <table>
-                    <tr>
-                        <th></th>
-                        <th>Item</th>
-                        <th>Size</th>
-                        <th>Amount</th>
-                        <th>Cost</th>
-                    </tr>
-                    <tr v-for="item in order.ordered_item" class="row">
-                        <td class="checkout-item__image">
-                            <img :src="item.stock.item.image" alt="item image">
-                        </td>
-                        <td>
-                            <div style="display: flex; flex-direction: column">
-                                <router-link
-                                    :to="{name: 'item', params: {slug: item.stock.item.slug, size: item.stock.size}}">
-                                    {{ item.stock.item.name }}
-                                </router-link>
-                                <div class="visible--mobile visible--tablet">Size: {{ item.stock.size }}</div>
-                                <div class="visible--mobile">{{ item.amount }}x €{{ item.stock.item.price }}
-                                </div>
-                            </div>
-
-                        </td>
-                        <td class="hidden--mobile hidden--tablet">Size: {{ item.stock.size }}
-                        </td>
-                        <td class="hidden--mobile">{{ item.amount }}x €{{ item.stock.item.price }}</td>
-                        <td>€ {{ item.amount * item.stock.item.price }}</td>
-                    </tr>
-                    <tr class="row checkout-item__total">
-                        <td :colspan="(windowSize >= 768) ? (windowSize >= 1025 ? 4 : 3 ) : 2">Total</td>
-                        <td colspan="2" style="padding-left: 0">
-                            € {{totalPrice}}
-                        </td>
-                    </tr>
-                </table>
-            </template>
-        </Card>
+  <div class="content order-edit">
+    <div class="heading">
+      <h1>Order {{order.id}}</h1>
     </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Type</th>
+          <th>Size</th>
+          <th>Amount</th>
+          <th>In stock</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="item in order.ordered_item" :key="item.id" class="row">
+          <td class="align--top">{{item.stock.item.name}}</td>
+          <td class="align--top">{{item.stock.item.gender}}</td>
+          <td class="align--top">
+            <select v-model="item.stock.size" @change="setNewSize($event, item)">
+              <option
+                v-for="size in getStock(item.stock.item.slug).stock"
+                :key="size.id"
+                :value="size.size"
+              >{{ size.size }}</option>
+            </select>
+          </td>
+          <td class="align--top">{{item.amount}}x</td>
+          <td>
+            <table>
+              <tr v-for="size in getStock(item.stock.item.slug).stock" :key="size.id">
+                <td>{{ size.size }}</td>
+                <td>{{ size.stock }}</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div style="margin-left:auto; display: flex; width: fit-content">
+      <div class="button button--primary" @click="saveOrder">Save</div>
+      <div class="button" @click="goBack">Cancel</div>
+    </div>
+  </div>
 </template>
 
 <script>
-    import Card from "../components/Card";
-
-    export default {
-        name: "Order",
-        components: {Card},
-        computed: {
-            order: function () {
-                return this.$store.getters.getOrder;
-            },
-            windowSize: function () {
-                return window.innerWidth;
-            },
-            totalPrice: function () {
-                let price = 0;
-                for (let i = 0; i < this.order.ordered_item.length; i++) {
-                    price += this.order.ordered_item[i].amount * this.order.ordered_item[i].stock.item.price;
-                }
-                return price;
-            },
-            message: function() {
-                if (this.order.is_paid){
-                    return "Your order has been paid"
-                } else {
-                    return 'Your order has not been paid yet. Please pay here by clicking on this link:';
-                }
-            },
-           paymentLink: function() {
-                return this.order.payment_url;
-           }
-        },
-
-        mounted() {
-            this.$store.dispatch('fetchOrder', this.$route.params.id);
-            if (this.$store.getters.getOrder === null) {
-                this.$store.dispatch('fetchOrder', {id: this.$route.params.id});
-            }
-        }
+export default {
+  data: function() {
+    return {
+      order: {},
+      interval: null,
+      changedItems: []
+    };
+  },
+  computed: {
+    getStock(slug) {
+      return this.$store.getters.getDashboardItem;
     }
+  },
+  methods: {
+    goBack() {
+      this.$router.go(-1);
+    },
+    setNewSize(event, item) {
+      let stocks = this.getStock(item.stock.item.slug).stock;
+      let size = stocks.find(size => {
+        return size.size === event.target.value;
+      });
+      let changedItem = {
+        stock_id: size.id,
+        order_id: this.order.id,
+        amount: item.amount,
+        is_picked_up: item.is_picked_up,
+        old_stock: item.stock.id
+      };
+      this.changedItems.push(changedItem);
+    },
+    saveOrder() {
+      axios
+        .patch("/api/orders/" + this.order.id, {
+          data: JSON.stringify(this.changedItems)
+        })
+        .then(result => {
+          let that = this;
+          this.$store.dispatch("fetchOrder", this.$route.params.id);
+          this.data = {};
+
+          setTimeout(function() {
+            that.order = that.$store.getters.getOrder;
+          }, 2000);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
+  },
+  mounted() {
+    this.$store.dispatch("fetchItemsDashboard");
+    this.$store.dispatch("fetchOrder", this.$route.params.id);
+    this.interval = setInterval(
+      function() {
+        this.order = this.$store.getters.getOrder;
+        if (this.order !== {}) {
+          this.interval = null;
+        }
+      }.bind(this),
+      100
+    );
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-    @import "../../sass/app";
+.order-edit {
+  tr {
+    height: initial;
+  }
 
-    .content__checkout {
-        max-width: 1200px;
-        margin: auto;
-    }
-
-    .checkout-item {
-        &__image {
-            padding: 10px 0;
-
-            img {
-                height: 50px;
-                width: auto;
-
-                @media all and (min-width: $breakpoint--tablet) {
-                    height: 75px;
-                }
-            }
-        }
-
-        &__total {
-            font-weight: $font-weight--bold;
-        }
-
-        &__checkout-text {
-            margin-bottom: 20px;
-        }
-    }
-
-    .checkout-icon {
-        height: $font-size--heading - 5pt;
-        width: $font-size--heading - 5pt;
-    }
+  .align--top {
+    vertical-align: top;
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+  }
+}
 </style>

@@ -3,16 +3,20 @@
 namespace App\Http\Controllers\Api;
 
 use App\Cart;
-use App\Order;
-use App\User;
-use App\OrderedItem;
-use App\Mail\OrderPaid;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Jobs\EditCart;
 use App\Mail\OrderCreated;
+use App\Mail\OrderPaid;
+use App\Order;
+use App\OrderedItem;
+use App\User;
+use Illuminate\Support\Carbon;
+use Barryvdh\Debugbar\Middleware\DebugbarEnabled;
+use DebugBar\DebugBar;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Mollie\Laravel\Facades\Mollie;
-
 
 class OrderController extends Controller
 {
@@ -52,7 +56,7 @@ class OrderController extends Controller
             OrderedItem::create([
                 'order_id' => $created_order->id,
                 'stock_id' => $item->stock_id,
-                'amount' => $item->amount
+                'amount' => $item->amount,
             ]);
         }
         $payment = $this->createPayment($created_order->id);
@@ -90,31 +94,31 @@ class OrderController extends Controller
         $old_payment = Mollie::api()->payments()->get($order->payment_id);
 
         // Todo check if working with FL credentials
-        if (!$order->is_paid && $old_payment->isPaid()){
+        if (!$order->is_paid && $old_payment->isPaid()) {
             $order->is_paid = true;
             $user = User::where('id', $order->user_id)->select('email', 'name')->first();
-             Mail::to($user->email)->send(
-                 new OrderPaid($user->name, $order->id)
-             );
+            Mail::to($user->email)->send(
+                new OrderPaid($user->name, $order->id)
+            );
         }
 
         if (!$old_payment->isPaid() && !$old_payment->isOpen()) {
             $payment = Mollie::api()->payments()->create([
                 'amount' => [
                     'currency' => 'EUR',
-                    'value' => $old_payment->amount->value
+                    'value' => $old_payment->amount->value,
                 ],
                 'method' => 'ideal',
                 'description' => 'Footloose mechendise  order #: ' . $order->id,
                 'webhookUrl' => route('webhooks.mollie'),
-                'redirectUrl' => route('spa', ['any' => 'order/' . $order->id])
+                'redirectUrl' => route('spa', ['any' => 'order/' . $order->id]),
             ]);
             $order->payment_id = $payment->id;
             $order->save();
             $order->payment_url = Mollie::api()->payments()->get($payment->id)->getCheckoutUrl();
         } else if ($old_payment->isOpen()) {
             $order->payment_url = Mollie::api()->payments()->get($old_payment->id)->getCheckoutUrl();
-        } 
+        }
         $order->User;
         return response()->json(['data' => $order], 200);
     }
@@ -128,14 +132,50 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $order = Order::where('id', $id)->first();
+        $ordered_items = $order->OrderedItem;
         foreach (json_decode(request()->data) as $changed_item) {
             $item = OrderedItem::where('order_id', $changed_item->order_id)->where('stock_id', $changed_item->stock_id)->first();
-            if ($item) {
+
+            \Debugbar::info('info', $item);
+            \DebugBar::info('changed', $changed_item);
+            // Case where the ordered item is different from the pickup
+            if (!$item) {
+                $cart = new Cart([
+                    'stock_id' => $changed_item->stock_id,
+                    'amount' => $changed_item->amount,
+                    'user_id' => Auth::user()->id,
+                    'expires_at' => Carbon::now()->addMinutes(15)->toDateTimeString()
+                ]);
+                EditCart::dispatchNow($cart);
+                $added_item = Cart::where('stock_id', $cart->stock_id)
+                    ->where('user_id', $cart->user_id)
+                    ->where('amount', $cart->amount)
+                    ->where('expires_at', $cart->expires_at)
+                    ->first();
+                if ($added_item) {
+                    $old_cart = Cart::create([
+                        'stock_id' => $changed_item->old_stock,
+                        'amount' => 0,
+                        'user_id' => Auth::user()->id,
+                        'expires_at' => Carbon::now()->addMinutes(15)->toDateTimeString()
+                    ]);
+                    $old_cart->amount = -1 * $changed_item->amount;
+                    EditCart::dispatchNow($old_cart);
+                    $item = OrderedItem::where('order_id', $changed_item->order_id)->where('stock_id', $changed_item->old_stock)->first();
+                    $item->stock_id = $changed_item->stock_id;
+                    $item->save();
+                } else {
+                    return response()->json(['data' => 'Error: not sufficient stock'], 409);
+                }
+            } else {
+                // else change is that item is picked up
                 $item->is_picked_up = true;
                 $item->save();
             }
         }
 
+        // If all items picked up, set order as finished/picked up
         $ordered_items = OrderedItem::where('order_id', $id)->where('is_picked_up', 0)->first();
         if (!$ordered_items) {
             $order = Order::where('id', $id)->first();
@@ -173,14 +213,13 @@ class OrderController extends Controller
         $payment = Mollie::api()->payments()->create([
             'amount' => [
                 'currency' => 'EUR',
-                'value' => $order_total
+                'value' => $order_total,
             ],
             'method' => 'ideal',
             'description' => 'Footloose mechendise  order #: ' . $order_id,
             'webhookUrl' => route('webhooks.mollie'),
-            'redirectUrl' => route('spa', ['any' => 'order/' . $order_id])
+            'redirectUrl' => route('spa', ['any' => 'order/' . $order_id]),
         ]);
-
 
         return Mollie::api()->payments()->get($payment->id);
 

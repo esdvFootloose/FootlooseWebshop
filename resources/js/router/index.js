@@ -6,12 +6,12 @@ import Home from '../views/Home'
 import Checkout from '../views/Checkout';
 import Dashboard from '../views/Dashboard';
 import Item from '../views/Item';
-import ItemRequests from '../views/ItemRequests';
 import Order from '../views/Order';
+import ItemRequests from '../views/ItemRequests';
+import OrderSummary from '../views/OrderSummary';
 import Orders from '../views/Orders';
 import Stock from '../views/Stock';
 import Stocks from '../views/Stocks';
-import Ordered from "../views/Ordered";
 import Login from "../views/Login";
 
 const router = new VueRouter({
@@ -65,8 +65,8 @@ const router = new VueRouter({
         },
         {
             path: '/order/:id',
-            component: Order,
-            name: 'order',
+            component: OrderSummary,
+            name: 'ordersummary',
             meta: {
                 requiresAuth: true,
             }
@@ -104,9 +104,9 @@ const router = new VueRouter({
             }
         },
         {
-            path: '/ordered',
-            component: Ordered,
-            name: 'ordered',
+            path: '/order/edit/:id',
+            component: Order,
+            name: 'order',
             meta: {
                 requiresAuth: true,
             }
