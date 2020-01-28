@@ -47,7 +47,11 @@ class AuthController extends Controller
             ])->getBody()->getContents());
 
             if ($user) {
-                $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+                $temp_user = new User([
+                    'email' => $user->username.'@esdvfootloose.nl',
+                    'name' => $user->username
+                ]);
+                $token = $temp_user->createToken('Laravel Password Grant Client')->accessToken;
                 $response = [
                     'user' => $user,
                     'token' => $token,
@@ -55,7 +59,7 @@ class AuthController extends Controller
                 ];
                 return response()->json($response, 200);
             }
-            
+
             return response()->json([
                 'message' => 'Wrong username or password',
                 'status' => 422,
