@@ -42,27 +42,20 @@ class AuthController extends Controller
                 $post_body->otp = $request->code;
             }
 
-            $promise = $client->requestAsync('POST', 'login', [
+            $user = json_decode($client->request('POST', 'login', [
                 'json' => $post_body,
-            ]);
+            ])->getBody()->getContents());
 
-            $promise->then(
-                function (ResponseInterface $response) {
-                    if ($response->getStatusCode() == 200) {
-                        $user = json_decode($response->getBody()->getContents());
-                        if ($user) {
-                            $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-                            $response = [
-                                'user' => $user,
-                                'token' => $token,
-                                'status' => 200,
-                            ];
-                            return response()->json($response, 200);
-                        }
-                    }
-                }
-            );
-
+            if ($user) {
+                $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+                $response = [
+                    'user' => $user,
+                    'token' => $token,
+                    'status' => 200,
+                ];
+                return response()->json($response, 200);
+            }
+            
             return response()->json([
                 'message' => 'Wrong username or password',
                 'status' => 422,
