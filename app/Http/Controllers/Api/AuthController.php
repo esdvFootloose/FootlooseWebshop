@@ -7,6 +7,7 @@ use App\User;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Psr\Http\Message\ResponseInterface;
 use stdClass;
 
 class AuthController extends Controller
@@ -41,26 +42,30 @@ class AuthController extends Controller
                 $post_body->otp = $request->code;
             }
 
-            $response = $client->request('POST', 'login', [
+            $promise = $client->requestAsync('POST', 'login', [
                 'json' => $post_body,
             ]);
 
-            if ($response->getStatusCode() == 200) {
-                $user = $response->getBody()->getContents();
-                if ($user) {
-                    $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-                    $response = [
-                        'user' => $user,
-                        'token' => $token,
-                        'status' => 200,
-                    ];
-                    return response()->json($response, 200);
+            $promise->then(
+                function (ResponseInterface $response) {
+                    if ($response->getStatusCode() == 200) {
+                        $user = json_decode($response->getBody()->getContents());
+                        if ($user) {
+                            $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+                            $response = [
+                                'user' => $user,
+                                'token' => $token,
+                                'status' => 200,
+                            ];
+                            return response()->json($response, 200);
+                        }
+                    }
                 }
-            }
+            );
 
             return response()->json([
                 'message' => 'Wrong username or password',
-                'status' => 422
+                'status' => 422,
             ]);
         }
     }
