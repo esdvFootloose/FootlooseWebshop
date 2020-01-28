@@ -69,7 +69,7 @@ export default {
       if (this.code != "") {
         request = {
           // _token: this.csrf,
-          email: this.username,
+          username: this.username,
           password: this.password,
           code: this.code
         };
