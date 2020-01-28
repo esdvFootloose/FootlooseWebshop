@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\User;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+use App\User;
+use GuzzleHttp\Client;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
+use stdClass;
 
 class AuthController extends Controller
 {
@@ -22,24 +22,36 @@ class AuthController extends Controller
                 $response = [
                     'user' => $user,
                     'token' => $token,
-                    'status' => 200
+                    'status' => 200,
                 ];
                 return response()->json($response, 200);
-             } else {
+            } else {
                 return response()->json([
                     'message' => 'Wrong username or password',
-                    'status' => 422
+                    'status' => 422,
                 ]);
             }
         } else {
-            return response()->json([
-                'message' => 'Wrong username or password',
-                'status' => 422
+            $client = new Client(['base_uri' => 'http://10.3.3.11:5000/']);
+            $post_body = new stdClass;
+            $post_body->key = env('FOOTLOOSE_AUTH_KEY');
+            $post_body->username = $request->username;
+            $post_body->password = $request->password;
+            $post_body->otd = $request->code;       
+
+            $user = $client->request('POST', 'login', [
+                'json' => $post_body,
             ]);
+
+            // return response()->json([
+            //     'message' => 'Wrong username or password',
+            //     'status' => 422
+            // ]);
         }
     }
 
-    public function logout(Request $request) {
+    public function logout(Request $request)
+    {
         $token = $request->user()->token();
         $token->revoke();
 
