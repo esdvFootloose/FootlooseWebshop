@@ -37,16 +37,31 @@ class AuthController extends Controller
             $post_body->key = env('FOOTLOOSE_AUTH_KEY');
             $post_body->username = $request->username;
             $post_body->password = $request->password;
-            $post_body->otd = $request->code;       
+            if ($request->code) {
+                $post_body->otp = $request->code;
+            }
 
-            $user = $client->request('POST', 'login', [
+            $response = $client->request('POST', 'login', [
                 'json' => $post_body,
             ]);
 
-            // return response()->json([
-            //     'message' => 'Wrong username or password',
-            //     'status' => 422
-            // ]);
+            if ($response->getStatusCode() == 200) {
+                $user = $response->getBody()->getContents();
+                if ($user) {
+                    $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+                    $response = [
+                        'user' => $user,
+                        'token' => $token,
+                        'status' => 200,
+                    ];
+                    return response()->json($response, 200);
+                }
+            }
+
+            return response()->json([
+                'message' => 'Wrong username or password',
+                'status' => 422
+            ]);
         }
     }
 
