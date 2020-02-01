@@ -286,7 +286,7 @@ export default {
     width: auto;
   }
 
-  @media all and (min-width: $breakpoint--webP) {
+  @media all and (min-width: $breakpoint--web) {
     margin-left: 40px;
   }
 }
