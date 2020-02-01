@@ -67,8 +67,6 @@ class AuthController extends Controller
         } else {
 
             $fl_user = $this->getFLUser($request, true);
-            return response()->json(['data' => $fl_user], 200);
-
 
             if ($fl_user) {
                 $user = new User([
