@@ -94,8 +94,10 @@ export default {
         .then(() => this.$router.push({ name: "login" }));
     },
     reloadStore: function() {
-      this.$store.dispatch("fetchItems");
-      this.$store.dispatch("fetchCart");
+      if (!this.$route.name === "login") {
+        this.$store.dispatch("fetchItems");
+        this.$store.dispatch("fetchCart");
+      }
     }
   },
   computed: {
