@@ -33,7 +33,7 @@ class AuthController extends Controller
                 unset($post_body->otp);
                 return json_decode($client->request('GET', 'user/info', [
                     'query' => (array) $post_body,
-                ])->getBody()->getContents());
+                ])->getBody()->getContents())[0];
             }
         }
         return $fl_user;
@@ -67,6 +67,8 @@ class AuthController extends Controller
         } else {
 
             $fl_user = $this->getFLUser($request, true);
+            return response()->json(['data' => $fl_user], 200);
+
 
             if ($fl_user) {
                 $user = new User([
