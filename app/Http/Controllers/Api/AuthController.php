@@ -7,7 +7,6 @@ use App\User;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use PhpParser\Node\Expr\Cast\Bool_;
 use stdClass;
 
 class AuthController extends Controller
@@ -24,15 +23,20 @@ class AuthController extends Controller
             $post_body->otp = $request->code;
         }
 
+        $fl_user = json_decode($client->request('POST', 'login', [
+            'json' => $post_body,
+        ])->getBody()->getContents());
+
         if ($needs_attributes) {
-            return json_decode($client->request('GET', 'user/info', [
-                'query' => (array) $post_body,
-            ])->getBody()->getContents());
-        } else {
-            return json_decode($client->request('POST', 'login', [
-                'json' => $post_body,
-            ])->getBody()->getContents());
+            if ($fl_user) {
+                unset($post_body->password);
+                unset($post_body->otp);
+                return json_decode($client->request('GET', 'user/info', [
+                    'query' => (array) $post_body,
+                ])->getBody()->getContents());
+            }
         }
+        return $fl_user;
     }
 
     public function login(Request $request)
