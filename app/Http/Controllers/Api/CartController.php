@@ -79,6 +79,10 @@ class CartController extends Controller
      */
     public function destroy(Request $request)
     {
+        if (!$request->user()->hasRole('admin')) {
+            return response()->json(['Error' => "You don't have permission"], 403);
+        }
+
         $validated = $request->validate([
             'stock_id' => 'gte:0',
             'user_id' => 'gte:0',

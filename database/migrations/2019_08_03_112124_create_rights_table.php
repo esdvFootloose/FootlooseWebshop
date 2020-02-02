@@ -15,8 +15,8 @@ class CreateRightsTable extends Migration
     {
         Schema::create('rights', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->boolean('can_manage_items');
-            $table->boolean('can_manage_orders');
+            $table->string('name');
+            $table->string('description');
 //            $table->boolean('can_set_orders_paid');
             $table->timestamps();
         });

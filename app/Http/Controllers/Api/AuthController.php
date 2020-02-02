@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Right;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -75,6 +76,8 @@ class AuthController extends Controller
                     'password' => Hash::make($request->password),
                 ]);
                 $user->save();
+                $user->roles()->attach(Right::where('name', 'user')->first());
+
 
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
                 $response = [

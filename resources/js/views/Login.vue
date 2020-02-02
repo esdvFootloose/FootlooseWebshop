@@ -4,7 +4,7 @@
       text-button="Login"
       :action-button="login"
       :is-primary-button="true"
-      image="images/Logo_red_text.svg"
+      image="/images/Logo_red_text.svg"
     >
       <template v-slot:underneathImage>
         <input type="hidden" name="_token" :value="csrf" />
@@ -28,16 +28,18 @@
             @keyup.enter="login"
             required
           />
-          <label for="code">2FA</label>
-          <input
-            class="input-focus"
-            id="code"
-            type="number"
-            name="code"
-            v-model="code"
-            @keyup.enter="login"
-            required
-          />
+          <div v-if="codeRequired">
+            <label for="code">2FA</label>
+            <input
+              class="input-focus"
+              id="code"
+              type="number"
+              name="code"
+              v-model="code"
+              @keyup.enter="login"
+              required
+            />
+          </div>
         </div>
         <div v-if="error" class="card__error">{{ error }}</div>
       </template>
@@ -60,7 +62,8 @@ export default {
       username: "",
       password: "",
       code: "",
-      error: ""
+      error: "",
+      codeRequired: false,
     };
   },
   methods: {
@@ -86,6 +89,9 @@ export default {
   mounted: function() {
     if (this.$store.getters.isLoggedIn) {
       this.$router.push({ name: "home" });
+    }
+    if (this.$route.params.admin === 'admin') {
+      this.codeRequired = true;
     }
   }
 };

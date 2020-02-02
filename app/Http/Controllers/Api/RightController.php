@@ -14,10 +14,13 @@ class RightController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $rights = Right::all();
-        return response()->json(['data' => $rights], 200);
+        if ($request->user()->hasRole('admin')){
+            return response()->json(['data' => true], 200);
+        } else  {
+            return response()->json(['data' => false], 200);
+        }
     }
 
     /**
@@ -28,6 +31,9 @@ class RightController extends Controller
      */
     public function store(Request $request)
     {
+        if (!$request->user()->hasRole('admin')) {
+            return response()->json(['Error' => "You don't have permission"], 403);
+        }
         $validated = request()->validate([
             // TODO validate
         ]);
@@ -44,6 +50,9 @@ class RightController extends Controller
      */
     public function update(Request $request, Right $right)
     {
+        if (!$request->user()->hasRole('admin')) {
+            return response()->json(['Error' => "You don't have permission"], 403);
+        }
         $validated = request()->validate([
             // TODO validate
         ]);
@@ -57,8 +66,11 @@ class RightController extends Controller
      * @param  \App\Right  $right
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Right $right)
+    public function destroy(Request $request, Right $right)
     {
+        if (!$request->user()->hasRole('admin')) {
+            return response()->json(['Error' => "You don't have permission"], 403);
+        }
         $right->delete();
         return response()->json(['data' => ''], 200);
     }

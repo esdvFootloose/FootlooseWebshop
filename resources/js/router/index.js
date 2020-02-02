@@ -19,7 +19,7 @@ const router = new VueRouter({
     linkExactActiveClass: 'navbar__menu-item--active',
     routes: [
         {
-            path: '/login',
+            path: '/login/:admin?',
             component: Login,
             name: 'login'
         },

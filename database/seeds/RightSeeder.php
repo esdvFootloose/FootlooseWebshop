@@ -12,15 +12,14 @@ class RightSeeder extends Seeder
      */
     public function run()
     {
-        if (!Right::where('can_manage_items', true)
-            ->where('can_manage_orders', true)
-//            ->where('can_set_orders_paid', true)
-            ->first()) {
-            Right::create([
-                'can_manage_items' => true,
-                'can_manage_orders' => true,
-//                'can_set_orders_paid' => true
-            ]);
-        }
+        $right_regular_user = new Right;
+        $right_regular_user->name = 'user';
+        $right_regular_user->description = 'A regular user';
+        $right_regular_user->save();
+
+        $right_admin_user = new Right;
+        $right_admin_user->name = 'admin';
+        $right_admin_user->description = 'An admin user';
+        $right_admin_user->save();
     }
 }

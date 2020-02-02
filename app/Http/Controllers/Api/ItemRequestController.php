@@ -13,8 +13,11 @@ class ItemRequestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if (!$request->user()->hasRole('admin')) {
+            return response()->json(['Error' => "You don't have permission"], 403);
+        }
         $item_requests = ItemRequest::all();
         foreach($item_requests as $request)
         {
@@ -54,6 +57,9 @@ class ItemRequestController extends Controller
      */
     public function update(Request $request, ItemRequest $itemRequest)
     {
+        if (!$request->user()->hasRole('admin')) {
+            return response()->json(['Error' => "You don't have permission"], 403);
+        }
         $validated = request()->validate([
             // TODO validate
         ]);
@@ -67,8 +73,11 @@ class ItemRequestController extends Controller
      * @param \App\ItemRequest $itemRequest
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        if (!$request->user()->hasRole('admin')) {
+            return response()->json(['Error' => "You don't have permission"], 403);
+        }
         $itemRequest = ItemRequest::find($id);
         if ($itemRequest) $itemRequest->delete();
         return response()->json(['data' => ''], 200);

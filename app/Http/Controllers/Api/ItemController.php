@@ -30,8 +30,11 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexDashboard()
+    public function indexDashboard(Request $request)
     {
+        if (!$request->user()->hasRole('admin')) {
+            return response()->json(['Error' => "You don't have permission"], 403);
+        }
         $items = Item::all();
         foreach ($items as $item) {
             $item->Stock;
@@ -44,8 +47,12 @@ class ItemController extends Controller
         return response()->json(['data' => $items], 200);
     }
 
-    public function indexStocks()
+    public function indexStocks(Request $request)
     {
+        if (!$request->user()->hasRole('admin')) {
+            return response()->json(['Error' => "You don't have permission"], 403);
+        }
+
         $stocks = Stock::all();
         foreach ($stocks as $stock) {
             $nr_ordered = 0;
@@ -64,6 +71,9 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
+        if (!$request->user()->hasRole('admin')) {
+            return response()->json(['Error' => "You don't have permission"], 403);
+        }
 //        $validated = $request->validate([
 //            'name' => 'required|String',
 //            'description' => 'nullable|String',

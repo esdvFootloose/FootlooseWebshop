@@ -13,10 +13,10 @@ class CreateUserRightsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_rights', function (Blueprint $table) {
-            $table->unsignedBigInteger('right_id');
-            $table->unsignedBigInteger('user_id');
-            $table->timestamps();
+        Schema::create('right_user', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('right_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
         });
     }
 

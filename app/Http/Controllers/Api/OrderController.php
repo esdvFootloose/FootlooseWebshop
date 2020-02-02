@@ -11,8 +11,6 @@ use App\Order;
 use App\OrderedItem;
 use App\User;
 use Illuminate\Support\Carbon;
-use Barryvdh\Debugbar\Middleware\DebugbarEnabled;
-use DebugBar\DebugBar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -25,8 +23,11 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if (!$request->user()->hasRole('admin')) {
+            return response()->json(['Error' => "You don't have persmission"], 403);
+        }
         $orders = Order::all();
         foreach ($orders as $order) {
             foreach ($order->OrderedItem as $item) {
@@ -80,8 +81,11 @@ class OrderController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
+        if (!$request->user()->hasRole('admin')) {
+            return response()->json(['Error' => "You don't have persmission"], 403);
+        }
         $order = Order::where('id', $id)->first();
         if ($order->user_id != auth()->user()->id) {
             return response()->json(['Data' => 'Error, you are not allowed to view this order'], 401);
@@ -132,13 +136,15 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!$request->user()->hasRole('admin')) {
+            return response()->json(['Error' => "You don't have permission"], 403);
+        }
+
         $order = Order::where('id', $id)->first();
         $ordered_items = $order->OrderedItem;
         foreach (json_decode(request()->data) as $changed_item) {
             $item = OrderedItem::where('order_id', $changed_item->order_id)->where('stock_id', $changed_item->stock_id)->first();
 
-            \Debugbar::info('info', $item);
-            \DebugBar::info('changed', $changed_item);
             // Case where the ordered item is different from the pickup
             if (!$item) {
                 $cart = new Cart([
@@ -191,8 +197,11 @@ class OrderController extends Controller
      * @param \App\Order $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy(Request $request, Order $order)
     {
+        if (!$request->user()->hasRole('admin')) {
+            return response()->json(['Error' => "You don't have permission"], 403);
+        }
         $order->delete();
         return response()->json(['data' => ''], 200);
     }
@@ -216,7 +225,7 @@ class OrderController extends Controller
                 'value' => $order_total,
             ],
             'method' => 'ideal',
-            'description' => 'Footloose mechendise  order #: ' . $order_id,
+            'description' => 'Footloose merchandise  order #: ' . $order_id,
             'webhookUrl' => route('webhooks.mollie'),
             'redirectUrl' => route('spa', ['any' => 'order/' . $order_id]),
         ]);
