@@ -4,7 +4,7 @@ const state = {
     cart: [],
     items: [],
     itemsDashboard: [],
-    availableSizes: ["XS", "S", "M", "L", "XL", "XXL"],
+    availableSizes: ["XS", "S", "M", "L", "XL", "XXL", "XXXL"],
     nrItemsOutOfStock: 0
 };
 

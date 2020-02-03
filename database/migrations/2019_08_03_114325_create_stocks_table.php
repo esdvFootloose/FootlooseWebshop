@@ -16,7 +16,7 @@ class CreateStocksTable extends Migration
         Schema::create('stocks', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('item_id');
-            $table->enum('size', ['XS', 'S', 'M', 'L', 'XL', 'XXL']);
+            $table->enum('size', ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL']);
             $table->integer('stock');
             $table->timestamps();
         });
