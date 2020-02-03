@@ -12,7 +12,7 @@
     >
       <template v-slot:description>
         <div class="item__description">
-          <div v-if="item.description">{{ item.description }}</div>
+          <div v-if="item.description" v-html="item.description"></div>
           <div v-bind:class="{ item__options: item.description }">
             <label for="itemSize">Size</label>
             <select v-model="selectedSize" id="itemSize">

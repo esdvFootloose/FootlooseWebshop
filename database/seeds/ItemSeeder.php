@@ -99,22 +99,14 @@ EOT
             $item = Item::create([
                 'name' => 'Lustrum socks',
                 'gender' => 'Unisex',
-                'price' => 8,
-                'description' => <<<EOT
-EOT
-            ]);
-        }
-
-        if (!Item::where('name', 'Lustrum socks')->first()) {
-            $item = Item::create([
-                'name' => 'Lustrum socks',
-                'gender' => 'Unisex',
                 'price' => 15,
                 'description' => <<<EOT
 For the sizes, take into account that S refers to size 35-38, M refers to size 39-42, L refers to size 43-46.
 We will inform you when the lustrum items you have reserved via this webshop have been ordered. You can pay them with card or cash when you pick them up at Luna. Note that when you place an order, you agree to pay the items when we get them for you.
 EOT
             ]);
+            // $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-socks.png'))->preservingOriginal()->toMediaColletion('product');
+
         }
 
         if (!Item::where('name', 'Lustrum mug')->first()) {
@@ -129,6 +121,8 @@ Minimum reservation number: 3
 
 EOT
             ]);
+            // $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-mug.png'))->preservingOriginal()->toMediaColletion('product');
+
         }
 
         if (!Item::where('name', 'Lustrum t-shirt')->where('gender', 'Male')->first()) {
@@ -142,6 +136,8 @@ We will inform you when the lustrum items you have reserved via this webshop hav
 Minimum reservation amount: 11
 EOT
             ]);
+            // $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-t-shirt.png'))->preservingOriginal()->toMediaColletion('product');
+
         }
 
         if (!Item::where('name', 'Lustrum t-shirt')->where('gender', 'Female')->first()) {
@@ -155,6 +151,8 @@ We will inform you when the lustrum items you have reserved via this webshop hav
 Minimum reservation amount: 11
 EOT
             ]);
+            // $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-t-shirt.png'))->preservingOriginal()->toMediaColletion('product');
+
         }
         
         if (!Item::where('name', 'Lustrum canvas bag')->first()) {
@@ -167,6 +165,8 @@ Note: We are still perfecting this design, the placing of the little puppets wil
 We will inform you when the lustrum items you have reserved via this webshop have been ordered. You can pay them with card or cash when you pick them up at Luna. Note that when you place an order, you agree to pay the items when we get them for you.
 EOT
             ]);
+
+            // $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-bag.png'))->preservingOriginal()->toMediaColletion('product');
         }
 
     }
