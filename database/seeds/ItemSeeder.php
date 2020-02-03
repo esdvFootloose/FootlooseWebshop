@@ -115,10 +115,9 @@ EOT
                 'gender' => 'Unisex',
                 'price' => 6.5,
                 'description' => <<<EOT
-Please note: For the lustrum mugs and t-shirts, we can only order the items in bulk. Therefore, a minimum number of reservations needs to be placed for us to be able to get the items for you. If the minimum reservation number has not been reached when you reserve an item, we will inform you when we will order them! (Just to be clear: the minimum reservation number as noted down below is not per person, but for a whole batch of items. So, tell your friends they need to get a lustrum item as well! &#128513)
-We will inform you when the lustrum items you have reserved via this webshop have been ordered. You can pay them with card or cash when you pick them up at Luna. Note that when you place an order, you agree to pay the items when we get them for you.
-Minimum reservation number: 3
-
+<p>Please note: For the lustrum mugs and t-shirts, we can only order the items in bulk. Therefore, a minimum number of reservations needs to be placed for us to be able to get the items for you. If the minimum reservation number has not been reached when you reserve an item, we will inform you when we will order them! (Just to be clear: the minimum reservation number as noted down below is not per person, but for a whole batch of items. So, tell your friends they need to get a lustrum item as well! &#128513)</p><br>
+<p>We will inform you when the lustrum items you have reserved via this webshop have been ordered. You can pay them with card or cash when you pick them up at Luna. Note that when you place an order, you agree to pay the items when we get them for you.</p><br>
+<p>Minimum reservation number: 3</p>
 EOT
             ]);
             // $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-mug.png'))->preservingOriginal()->toMediaColletion('product');
@@ -131,9 +130,9 @@ EOT
                 'gender' => 'Male',
                 'price' => 16.5,
                 'description' => <<<EOT
-Please note: For the lustrum mugs and t-shirts, we can only order the items in bulk. Therefore, a minimum number of reservations needs to be placed for us to be able to get the items for you. If the minimum reservation number has not been reached when you reserve an item, we will inform you when we will order them! (Just to be clear: the minimum reservation number as noted down below is not per person, but for a whole batch of items. So, tell your friends they need to get a lustrum item as well! &#128513)
-We will inform you when the lustrum items you have reserved via this webshop have been ordered. You can pay them with card or cash when you pick them up at Luna. Note that when you place an order, you agree to pay the items when we get them for you.
-Minimum reservation amount: 11
+<p>Please note: For the lustrum mugs and t-shirts, we can only order the items in bulk. Therefore, a minimum number of reservations needs to be placed for us to be able to get the items for you. If the minimum reservation number has not been reached when you reserve an item, we will inform you when we will order them! (Just to be clear: the minimum reservation number as noted down below is not per person, but for a whole batch of items. So, tell your friends they need to get a lustrum item as well! &#128513)</p><br>
+<p>We will inform you when the lustrum items you have reserved via this webshop have been ordered. You can pay them with card or cash when you pick them up at Luna. Note that when you place an order, you agree to pay the items when we get them for you.</p><br>
+<p>Minimum reservation number: 11</p>
 EOT
             ]);
             // $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-t-shirt.png'))->preservingOriginal()->toMediaColletion('product');
@@ -146,9 +145,9 @@ EOT
                 'gender' => 'Female',
                 'price' => 16.5,
                 'description' => <<<EOT
-Please note: For the lustrum mugs and t-shirts, we can only order the items in bulk. Therefore, a minimum number of reservations needs to be placed for us to be able to get the items for you. If the minimum reservation number has not been reached when you reserve an item, we will inform you when we will order them! (Just to be clear: the minimum reservation number as noted down below is not per person, but for a whole batch of items. So, tell your friends they need to get a lustrum item as well! &#128513)
-We will inform you when the lustrum items you have reserved via this webshop have been ordered. You can pay them with card or cash when you pick them up at Luna. Note that when you place an order, you agree to pay the items when we get them for you.
-Minimum reservation amount: 11
+<p>Please note: For the lustrum mugs and t-shirts, we can only order the items in bulk. Therefore, a minimum number of reservations needs to be placed for us to be able to get the items for you. If the minimum reservation number has not been reached when you reserve an item, we will inform you when we will order them! (Just to be clear: the minimum reservation number as noted down below is not per person, but for a whole batch of items. So, tell your friends they need to get a lustrum item as well! &#128513)</p><br>
+<p>We will inform you when the lustrum items you have reserved via this webshop have been ordered. You can pay them with card or cash when you pick them up at Luna. Note that when you place an order, you agree to pay the items when we get them for you.</p><br>
+<p>Minimum reservation number: 11</p>
 EOT
             ]);
             // $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-t-shirt.png'))->preservingOriginal()->toMediaColletion('product');
@@ -161,8 +160,8 @@ EOT
                 'gender' => 'Unisex',
                 'price' => 7,
                 'description' => <<<EOT
-Note: We are still perfecting this design, the placing of the little puppets will differ a bit on the real bags.
-We will inform you when the lustrum items you have reserved via this webshop have been ordered. You can pay them with card or cash when you pick them up at Luna. Note that when you place an order, you agree to pay the items when we get them for you.
+<p>Note: We are still perfecting this design, the placing of the little puppets will differ a bit on the real bags.</p><br>
+<p>We will inform you when the lustrum items you have reserved via this webshop have been ordered. You can pay them with card or cash when you pick them up at Luna. Note that when you place an order, you agree to pay the items when we get them for you.</p>
 EOT
             ]);
 
