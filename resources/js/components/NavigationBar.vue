@@ -94,7 +94,6 @@ export default {
         .then(() => this.$router.push({ name: "login" }));
     },
     reloadStore: function() {
-      console.log(this.$route.name);
       if (!this.$route.name === "login") {
         this.$store.dispatch("fetchItems");
         this.$store.dispatch("fetchCart");
