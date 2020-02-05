@@ -33,12 +33,12 @@
           tag="div"
           v-on:click.native="closeMenu"
         >Store</router-link>
-        <router-link
+        <!-- <router-link
           :to="{name: 'orders'}"
           class="navigation-bar__menu-item"
           tag="div"
           v-on:click.native="closeMenu"
-        >Orders</router-link>
+        >Orders</router-link> -->
         <router-link
           :to="{name: 'cart'}"
           class="navigation-bar__dropdown"

@@ -51,12 +51,14 @@ const actions = {
                     dispatch("fetchUserRights");
                     window.location = "/";
                 } else {
-                    console.log(result.data);
+                    console.log('error 1', result.data);
+                    console.log('error 2', result.data.error);
                     commit("SET_ERROR", result.data.error);
                 }
             })
             .catch(error => {
-                commit("SET_ERROR", error.error);
+                console.log("error 3", error);
+                commit("SET_ERROR", error.data.error);
             });
     },
     logout({ commit }) {

@@ -47,10 +47,7 @@ class AuthController extends Controller
         try {
             $fl_user = $this->getFLUser($request);
         } catch (Exception $exception) {
-            return response()->json([
-                'error' => $exception->getMessage(),
-                'status' => 422,
-            ], 422);
+            $exception = $exception;
         }
 
         if ($user && !$fl_user) {
@@ -93,9 +90,10 @@ class AuthController extends Controller
 
         } else {
             return response()->json([
-                'error' => 'Wrong username or password',
+                'message' => 'Wrong username or password',
+                'error' => $exception,
                 'status' => 422,
-            ]);
+            ],422);
         }
 
     }
