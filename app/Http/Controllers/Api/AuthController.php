@@ -38,20 +38,19 @@ class AuthController extends Controller
             ])->getBody()->getContents())[0];
 
         }
-        return $fl_user;
     }
 
     public function login(Request $request)
     {
-
         $user = User::where('email', $request->email)->first();
+
         try {
             $fl_user = $this->getFLUser($request);
         } catch (Exception $exception) {
             return response()->json([
-                'error' => $exception,
+                'error' => $exception->getMessage(),
                 'status' => 422,
-            ]);
+            ], 422);
         }
 
         if ($user && !$fl_user) {
@@ -94,7 +93,7 @@ class AuthController extends Controller
 
         } else {
             return response()->json([
-                'message' => 'Wrong username or password',
+                'error' => 'Wrong username or password',
                 'status' => 422,
             ]);
         }

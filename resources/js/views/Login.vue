@@ -86,7 +86,7 @@ export default {
       } else {
         request = {
           // _token: this.csrf,
-          email: this.username,
+          username: this.username,
           password: this.password
         };
       }

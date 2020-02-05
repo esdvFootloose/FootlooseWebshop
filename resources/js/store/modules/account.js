@@ -50,10 +50,13 @@ const actions = {
                         "Bearer " + token;
                     dispatch("fetchUserRights");
                     window.location = "/";
+                } else {
+                    console.log(result.data);
+                    commit("SET_ERROR", result.data.error);
                 }
             })
             .catch(error => {
-                commit("SET_ERROR", error);
+                commit("SET_ERROR", error.error);
             });
     },
     logout({ commit }) {
