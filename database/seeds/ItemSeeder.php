@@ -23,7 +23,7 @@ For the sizes, take into account that S refers to size 35-38, M refers to size 3
 We will inform you when the lustrum items you have reserved via this webshop have been ordered. You can pay them with card or cash when you pick them up at Luna. Note that when you place an order, you agree to pay the items when we get them for you.
 EOT
             ]);
-            $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-socks.png'))->preservingOriginal()->toMediaCollection('product');
+            $item->addMediaFromUrl(storage_path('images/products/lustrum/lustrum-socks.png'))->preservingOriginal()->toMediaCollection('product');
 
         }
 
@@ -38,7 +38,7 @@ EOT
 <p>Minimum reservation number: 3</p>
 EOT
             ]);
-            $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-mug.png'))->preservingOriginal()->toMediaCollection('product');
+            $item->addMediaFromUrl(storage_path('images/products/lustrum/lustrum-mug.png'))->preservingOriginal()->toMediaCollection('product');
 
         }
 
@@ -53,7 +53,7 @@ EOT
 <p>Minimum reservation number: 11</p>
 EOT
             ]);
-            $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-t-shirt.png'))->preservingOriginal()->toMediaCollection('product');
+            $item->addMediaFromUrl(storage_path('images/products/lustrum/lustrum-t-shirt.png'))->preservingOriginal()->toMediaCollection('product');
 
         }
 
@@ -68,7 +68,7 @@ EOT
 <p>Minimum reservation number: 11</p>
 EOT
             ]);
-            $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-t-shirt.png'))->preservingOriginal()->toMediaCollection('product');
+            $item->addMediaFromUrl(storage_path('images/products/lustrum/lustrum-t-shirt.png'))->preservingOriginal()->toMediaCollection('product');
 
         }
 
@@ -83,7 +83,7 @@ EOT
 EOT
             ]);
 
-            $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-bag.png'))->preservingOriginal()->toMediaCollection('product');
+            $item->addMediaFromUrl(storage_path('images/products/lustrum/lustrum-bag.png'))->preservingOriginal()->toMediaCollection('product');
         }
 
         if (!Item::where('name', 'T-Shirt')->where('gender', 'Male')->first()) {
@@ -96,7 +96,7 @@ EOT
                 ,'gender'=>'Male',
             ]);
 
-            $item->addMediaFromUrl(storage_path('/images/products/t-shirt-male.png'))->preservingOriginal()->toMediaCollection('product');
+            $item->addMediaFromUrl(storage_path('images/products/t-shirt-male.png'))->preservingOriginal()->toMediaCollection('product');
 
         }
 
@@ -110,7 +110,7 @@ EOT
                 ,'gender'=>'Female',
             ]);
 
-            $item->addMediaFromUrl(storage_path('/images/products/t-shirt-female.png'))->preservingOriginal()->toMediaCollection('product');
+            $item->addMediaFromUrl(storage_path('images/products/t-shirt-female.png'))->preservingOriginal()->toMediaCollection('product');
 
         }
 
@@ -123,7 +123,7 @@ EOT
 A very comfortable footloose sweater to keep you warm during the colder periods of the year. Of course with the footloose logo on both the front and the back. Also, one of the pockets contains a phoneholder to keep your phone into place.
 EOT
             ]);
-            $item->addMediaFromUrl(storage_path('/images/products/sweater-male.png'))->preservingOriginal()->toMediaCollection('product');
+            $item->addMediaFromUrl(storage_path('images/products/sweater-male.png'))->preservingOriginal()->toMediaCollection('product');
 
 
         }
@@ -136,7 +136,7 @@ EOT
 A very comfortable footloose sweater to keep you warm during the colder periods of the year. Of course with the footloose logo on both the front and the back. Also, one of the pockets contains a phoneholder to keep your phone into place.
 EOT
             ]);
-            $item->addMediaFromUrl(storage_path('/images/products/sweater-female.png'))->preservingOriginal()->toMediaCollection('product');
+            $item->addMediaFromUrl(storage_path('images/products/sweater-female.png'))->preservingOriginal()->toMediaCollection('product');
 
         }
 
@@ -149,7 +149,7 @@ EOT
 A shoe bag printed with the Footloose logo to transport your dance shoes from and to the dance floor. This bag has place for two pairs as well as your shoe brush.
 EOT
             ]);
-            $item->addMediaFromUrl(storage_path('/images/products/shoebag.png'))->preservingOriginal()->toMediaCollection('product');
+            $item->addMediaFromUrl(storage_path('images/products/shoebag.png'))->preservingOriginal()->toMediaCollection('product');
 
         }
 
@@ -162,7 +162,7 @@ EOT
 Take your footloose gear even under the shower, with this comfortable 100x50 cm footloose towel. Or use it to get rid of the sweat from dancing.
 EOT
             ]);
-            $item->addMediaFromUrl(storage_path('/images/products/towel.png'))->preservingOriginal()->toMediaCollection('product');
+            $item->addMediaFromUrl(storage_path('images/products/towel.png'))->preservingOriginal()->toMediaCollection('product');
 
         }
 
