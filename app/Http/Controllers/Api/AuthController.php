@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\User;
 use App\Right;
+use App\User;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -42,9 +42,11 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $user = User::where('email', $request->email)->first();
 
-        if ($user) {
+        $user = User::where('email', $request->email)->first();
+        $fl_user = $this->getFLUser($request, false);
+
+        if ($user && !$fl_user) {
             if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
                 $response = [
@@ -65,11 +67,17 @@ class AuthController extends Controller
                     'status' => 422,
                 ]);
             }
-        } else {
-
-            $fl_user = $this->getFLUser($request, true);
-
-            if ($fl_user) {
+        } else if ($fl_user && $user) {
+            $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+            $response = [
+                'user' => $user,
+                'token' => $token,
+                'status' => 200,
+            ];
+            return response()->json($response, 200);
+        } else if ($fl_user && !$user) {
+            $user = User::where('email', $fl_user->email)->first();
+            if (!$user) {
                 $user = new User([
                     'email' => $fl_user->email,
                     'name' => $fl_user->first_name . " " . $fl_user->last_name,
@@ -77,22 +85,23 @@ class AuthController extends Controller
                 ]);
                 $user->save();
                 $user->roles()->attach(Right::where('name', 'user')->first());
-
-
-                $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-                $response = [
-                    'user' => $user,
-                    'token' => $token,
-                    'status' => 200,
-                ];
-                return response()->json($response, 200);
             }
 
+            $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+            $response = [
+                'user' => $user,
+                'token' => $token,
+                'status' => 200,
+            ];
+            return response()->json($response, 200);
+
+        } else {
             return response()->json([
                 'message' => 'Wrong username or password',
                 'status' => 422,
             ]);
         }
+
     }
 
     public function logout(Request $request)
