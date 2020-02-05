@@ -17,6 +17,7 @@ class CreateItemRequestsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('stock_id');
+            $table->integer('amount');
 //            $table->unsignedBigInteger('item_id');
             $table->timestamps();
         });

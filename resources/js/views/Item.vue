@@ -130,7 +130,8 @@ export default {
       let requestedItem = {
         user_id: this.$store.getters.getUser.id,
         item_id: this.item.id,
-        size_id: size.id
+        size_id: size.id,
+        amount: this.selectedAmount,
       };
       this.$store.dispatch("requestItem", requestedItem);
       this.textMessage = "Item has been requested";

@@ -43,7 +43,8 @@ class ItemRequestController extends Controller
     {
         $created_item_request = ItemRequest::create([
             'user_id' => $request->user_id,
-            'stock_id' => $request->size_id
+            'stock_id' => $request->size_id,
+            'amount' => $request->amount
         ]);
         return response()->json(['data' => $created_item_request], 200);
     }
