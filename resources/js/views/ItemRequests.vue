@@ -12,9 +12,10 @@
             </tr>
             <tr class="row" v-for="(request, index) in requests">
                 <td class="hidden--mobile hidden--tablet">{{ index }}</td>
-                <td class="hidden--mobile">{{ request.user.name }}</td>
+                <td class="hidden--mobile"><a :href="'mailto:' + request.user.email">{{ request.user.name }}</a></td>
                 <td class="hidden--mobile">{{ request.created_at }}</td>
                 <td>{{ request.item }}</td>
+                <td>{{ request.amount }}</td>
                 <td>{{ request.gender }}</td>
                 <td>{{ request.size }}</td>
                 <td>
@@ -47,6 +48,11 @@
                     },
                     {
                         header: 'Item',
+                        hideMobile: false,
+                        hideTablet: false
+                    },
+                    {
+                        header: 'Amount',
                         hideMobile: false,
                         hideTablet: false
                     },
