@@ -1,7 +1,7 @@
 <template>
   <div class="content content--login">
     <card
-      text-button="Login"
+      :text-button="buttonText"
       :action-button="login"
       :is-primary-button="true"
       image="/images/Logo_red_text.svg"
@@ -44,7 +44,6 @@
             <p class="login-error">Something went wrong, please try again</p>
           </div>
         </div>
-        <div v-if="loginError" class="card__error">{{ loginError }}</div>
       </template>
     </card>
   </div>
@@ -59,7 +58,9 @@ export default {
   },
   computed: {
     loginError: function() {
+      this.buttonText = "Login";
       return this.$store.getters.getError;
+    
     }
   },
   data() {
@@ -70,7 +71,8 @@ export default {
       username: "",
       password: "",
       code: "",
-      codeRequired: false
+      codeRequired: false,
+      buttonText: 'Login'
     };
   },
   methods: {
@@ -89,6 +91,7 @@ export default {
         };
       }
       this.$store.dispatch("login", request);
+      this.buttonText= "Logging in..."
     }
   },
   mounted: function() {
