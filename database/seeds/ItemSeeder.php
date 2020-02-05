@@ -96,7 +96,7 @@ EOT
                 ,'gender'=>'Male',
             ]);
 
-            $item->addMediaFromUrl(storage_path('images/products/t-shirt-male.png'))->preservingOriginal()->toMediaCollection('product');
+            $item->addMediaFromUrl(storage_path('images/products/t-shirt-male.jpg'))->preservingOriginal()->toMediaCollection('product');
 
         }
 
@@ -110,7 +110,7 @@ EOT
                 ,'gender'=>'Female',
             ]);
 
-            $item->addMediaFromUrl(storage_path('images/products/t-shirt-female.png'))->preservingOriginal()->toMediaCollection('product');
+            $item->addMediaFromUrl(storage_path('images/products/t-shirt-female.jpg'))->preservingOriginal()->toMediaCollection('product');
 
         }
 
@@ -123,7 +123,7 @@ EOT
 A very comfortable footloose sweater to keep you warm during the colder periods of the year. Of course with the footloose logo on both the front and the back. Also, one of the pockets contains a phoneholder to keep your phone into place.
 EOT
             ]);
-            $item->addMediaFromUrl(storage_path('images/products/sweater-male.png'))->preservingOriginal()->toMediaCollection('product');
+            $item->addMediaFromUrl(storage_path('images/products/sweater-male.jpg'))->preservingOriginal()->toMediaCollection('product');
 
 
         }
@@ -136,7 +136,7 @@ EOT
 A very comfortable footloose sweater to keep you warm during the colder periods of the year. Of course with the footloose logo on both the front and the back. Also, one of the pockets contains a phoneholder to keep your phone into place.
 EOT
             ]);
-            $item->addMediaFromUrl(storage_path('images/products/sweater-female.png'))->preservingOriginal()->toMediaCollection('product');
+            $item->addMediaFromUrl(storage_path('images/products/sweater-female.jpg'))->preservingOriginal()->toMediaCollection('product');
 
         }
 
@@ -149,7 +149,7 @@ EOT
 A shoe bag printed with the Footloose logo to transport your dance shoes from and to the dance floor. This bag has place for two pairs as well as your shoe brush.
 EOT
             ]);
-            $item->addMediaFromUrl(storage_path('images/products/shoebag.png'))->preservingOriginal()->toMediaCollection('product');
+            $item->addMediaFromUrl(storage_path('images/products/shoebag.jpg'))->preservingOriginal()->toMediaCollection('product');
 
         }
 
@@ -162,7 +162,7 @@ EOT
 Take your footloose gear even under the shower, with this comfortable 100x50 cm footloose towel. Or use it to get rid of the sweat from dancing.
 EOT
             ]);
-            $item->addMediaFromUrl(storage_path('images/products/towel.png'))->preservingOriginal()->toMediaCollection('product');
+            $item->addMediaFromUrl(storage_path('images/products/towel.jpg'))->preservingOriginal()->toMediaCollection('product');
 
         }
 
