@@ -61,18 +61,6 @@ class StockSeeder extends Seeder
             }
         }
 
-        $item = Item::where('name', 'Sweatpants')->first();
-        if (count($item->Stock) == 0) {
-            $sizes = ['S', 'M', 'L'];
-            foreach ($sizes as $size) {
-                Stock::create([
-                    'item_id' => $item->id,
-                    'size' => $size,
-                    'stock' => rand(0, 15),
-                ]);
-            }
-        }
-
         $item = Item::where('name', 'Footloose bag')->first();
         if (count($item->Stock) == 0) {
             $sizes = ['M'];
