@@ -105,7 +105,7 @@ For the sizes, take into account that S refers to size 35-38, M refers to size 3
 We will inform you when the lustrum items you have reserved via this webshop have been ordered. You can pay them with card or cash when you pick them up at Luna. Note that when you place an order, you agree to pay the items when we get them for you.
 EOT
             ]);
-            // $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-socks.png'))->preservingOriginal()->toMediaColletion('product');
+            // $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-socks.png'))->preservingOriginal()->toMediaCollection('product');
 
         }
 
@@ -120,7 +120,7 @@ EOT
 <p>Minimum reservation number: 3</p>
 EOT
             ]);
-            // $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-mug.png'))->preservingOriginal()->toMediaColletion('product');
+            // $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-mug.png'))->preservingOriginal()->toMediaCollection('product');
 
         }
 
@@ -135,7 +135,7 @@ EOT
 <p>Minimum reservation number: 11</p>
 EOT
             ]);
-            // $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-t-shirt.png'))->preservingOriginal()->toMediaColletion('product');
+            // $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-t-shirt.png'))->preservingOriginal()->toMediaCollection('product');
 
         }
 
@@ -150,7 +150,7 @@ EOT
 <p>Minimum reservation number: 11</p>
 EOT
             ]);
-            // $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-t-shirt.png'))->preservingOriginal()->toMediaColletion('product');
+            // $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-t-shirt.png'))->preservingOriginal()->toMediaCollection('product');
 
         }
         
@@ -165,7 +165,7 @@ EOT
 EOT
             ]);
 
-            // $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-bag.png'))->preservingOriginal()->toMediaColletion('product');
+            // $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-bag.png'))->preservingOriginal()->toMediaCollection('product');
         }
 
     }
