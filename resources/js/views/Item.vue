@@ -192,7 +192,7 @@ export default {
     }
 
     @media all and (min-width: $breakpoint--web) {
-      position: absolute;
+      /*position: absolute;*/
       bottom: 35px;
       width: auto;
       max-width: initial;

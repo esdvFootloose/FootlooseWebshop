@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Right;
 use App\User;
+use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -13,13 +14,14 @@ use stdClass;
 class AuthController extends Controller
 {
 
-    private function getFLUser(Request $request, $needs_attributes)
+    private function getFLUser(Request $request)
     {
         $client = new Client(['base_uri' => 'http://10.3.3.11:5000/']);
         $post_body = new stdClass;
         $post_body->key = env('FOOTLOOSE_AUTH_KEY');
         $post_body->username = $request->username;
         $post_body->password = $request->password;
+
         if ($request->code) {
             $post_body->otp = $request->code;
         }
@@ -28,14 +30,13 @@ class AuthController extends Controller
             'json' => $post_body,
         ])->getBody()->getContents());
 
-        if ($needs_attributes) {
-            if ($fl_user) {
-                unset($post_body->password);
-                unset($post_body->otp);
-                return json_decode($client->request('GET', 'user/info', [
-                    'query' => (array) $post_body,
-                ])->getBody()->getContents())[0];
-            }
+        if ($fl_user) {
+            unset($post_body->password);
+            unset($post_body->otp);
+            return json_decode($client->request('GET', 'user/info', [
+                'query' => (array) $post_body,
+            ])->getBody()->getContents())[0];
+
         }
         return $fl_user;
     }
@@ -44,7 +45,14 @@ class AuthController extends Controller
     {
 
         $user = User::where('email', $request->email)->first();
-        $fl_user = $this->getFLUser($request, false);
+        try {
+            $fl_user = $this->getFLUser($request);
+        } catch (Exception $exception) {
+            return response()->json([
+                'error' => $exception,
+                'status' => 422,
+            ]);
+        }
 
         if ($user && !$fl_user) {
             if (Hash::check($request->password, $user->password)) {
@@ -55,17 +63,6 @@ class AuthController extends Controller
                     'status' => 200,
                 ];
                 return response()->json($response, 200);
-            } else {
-                $fl_user = $this->getFLUser($request, false);
-
-                if ($fl_user) {
-                    $user->password = Hash::make($request->password);
-                }
-
-                return response()->json([
-                    'message' => 'Wrong username or password',
-                    'status' => 422,
-                ]);
             }
         } else if ($fl_user && $user) {
             $token = $user->createToken('Laravel Password Grant Client')->accessToken;

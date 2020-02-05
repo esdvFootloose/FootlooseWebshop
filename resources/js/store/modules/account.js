@@ -10,7 +10,8 @@ if (token) {
 const state = {
     user: {},
     token: token || "",
-    isAdmin: false
+    isAdmin: false,
+    error: ""
 };
 
 const mutations = {
@@ -28,6 +29,9 @@ const mutations = {
     },
     SET_ADMIN(state, isAdmin) {
         state.isAdmin = isAdmin;
+    },
+    SET_ERROR(state, error) {
+        state.error = error;
     }
 };
 
@@ -40,15 +44,16 @@ const actions = {
                     const token = result.data.token;
                     commit("SET_USER", result.data.user);
                     commit("SET_TOKEN", token);
+                    commit("SET_ERROR", "");
                     localStorage.setItem("token", token);
                     axios.defaults.headers.common["Authorization"] =
                         "Bearer " + token;
-                    dispatch('fetchUserRights');
+                    dispatch("fetchUserRights");
                     window.location = "/";
                 }
             })
             .catch(error => {
-                console.log(error);
+                commit("SET_ERROR", error);
             });
     },
     logout({ commit }) {
@@ -91,7 +96,8 @@ const getters = {
     getUser: state => state.user,
     isUserLoaded: state => state.user === {},
     isLoggedIn: state => !!state.token,
-    isAdmin: state => state.isAdmin
+    isAdmin: state => state.isAdmin,
+    getError: state => state.error
 };
 
 export default {

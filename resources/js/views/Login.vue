@@ -40,8 +40,11 @@
               required
             />
           </div>
+          <div v-if="loginError">
+            <p class="login-error">Something went wrong, please try again</p>
+          </div>
         </div>
-        <div v-if="error" class="card__error">{{ error }}</div>
+        <div v-if="loginError" class="card__error">{{ loginError }}</div>
       </template>
     </card>
   </div>
@@ -54,6 +57,11 @@ export default {
   components: {
     Card
   },
+  computed: {
+    loginError: function() {
+      return this.$store.getters.loginError;
+    }
+  },
   data() {
     return {
       csrf: document
@@ -62,8 +70,7 @@ export default {
       username: "",
       password: "",
       code: "",
-      error: "",
-      codeRequired: false,
+      codeRequired: false
     };
   },
   methods: {
@@ -90,7 +97,7 @@ export default {
     if (this.$store.getters.isLoggedIn) {
       this.$router.push({ name: "home" });
     }
-    if (this.$route.params.admin === 'admin') {
+    if (this.$route.params.admin === "admin") {
       this.codeRequired = true;
     }
   }
@@ -100,6 +107,10 @@ export default {
 <style lang="scss" scoped>
 @import "../../sass/app.scss";
 
+.login-error {
+  text-align: center;
+  color: $color--red;
+}
 .content {
   &--login {
     margin: auto;
