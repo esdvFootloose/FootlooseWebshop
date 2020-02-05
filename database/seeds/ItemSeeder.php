@@ -12,88 +12,6 @@ class ItemSeeder extends Seeder
      */
     public function run()
     {
-        if (!Item::where('name', 'T-Shirt')->where('gender', 'Male')->first()) {
-            $item = Item::create([
-                'name' => 'T-Shirt',
-                'price' => 15,
-                'description' => <<<EOT
-A basic black Footloose T-shirt with a regular fit, printed both front and back with the Footloose logo
-EOT
-                ,'gender'=>'Male',
-            ]);
-
-        }
-
-        if (!Item::where('name', 'T-Shirt')->where('gender', 'Female')->first()) {
-            $item = Item::create([
-                'name' => 'T-Shirt',
-                'price' => 15,
-                'description' => <<<EOT
-A basic black Footloose T-shirt with a slim fit, printed both front and back with the Footloose logo
-EOT
-                ,'gender'=>'Female',
-            ]);
-
-        }
-
-        if (!Item::where('name', 'Sweater')->where('gender', 'Male')->first()) {
-            $item = Item::create([
-                'name' => 'Sweater',
-                'gender' => 'Male',
-                'price' => 25,
-                'description' => <<<EOT
-A very comfortable footloose sweater to keep you warm during the colder periods of the year. Of course with the footloose logo on both the front and the back. Also, one of the pockets contains a phoneholder to keep your phone into place.
-EOT
-            ]);
-
-        }
-        if (!Item::where('name', 'Sweater')->where('gender', 'Female')->first()) {
-            $item = Item::create([
-                'name' => 'Sweater',
-                'gender' => 'Female',
-                'price' => 25,
-                'description' => <<<EOT
-A very comfortable footloose sweater to keep you warm during the colder periods of the year. Of course with the footloose logo on both the front and the back. Also, one of the pockets contains a phoneholder to keep your phone into place.
-EOT
-            ]);
-
-        }
-
-        if (!Item::where('name', 'Sweatpants')->first()) {
-            $item = Item::create([
-                'name' => 'Sweatpants',
-                'gender' => 'Unisex',
-                'price' => 15,
-                'description' => <<<EOT
-A very comfortable footloose sweatpants to keep you warm during the colder periods of the year. Both very suitable for both on and off the dance floor.
-EOT
-            ]);
-
-        }
-
-        if (!Item::where('name', 'Footloose bag')->first()) {
-            $item = Item::create([
-                'name' => 'Footloose bag',
-                'gender' => 'Unisex',
-                'price' => 5,
-                'description' => <<<EOT
-A shoe bag printed with the Footloose logo to transport your dance shoes from and to the dance floor. This bag has place for two pairs as well as your shoe brush.
-EOT
-            ]);
-
-        }
-
-        if (!Item::where('name', 'Towel')->first()) {
-            $item = Item::create([
-                'name' => 'Towel',
-                'gender' => 'Unisex',
-                'price' => 15,
-                'description' => <<<EOT
-Take your footloose gear even under the shower, with this comfortable 100x50 cm footloose towel. Or use it to get rid of the sweat from dancing.
-EOT
-            ]);
-
-        }
 
         if (!Item::where('name', 'Lustrum socks')->first()) {
             $item = Item::create([
@@ -105,7 +23,7 @@ For the sizes, take into account that S refers to size 35-38, M refers to size 3
 We will inform you when the lustrum items you have reserved via this webshop have been ordered. You can pay them with card or cash when you pick them up at Luna. Note that when you place an order, you agree to pay the items when we get them for you.
 EOT
             ]);
-            // $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-socks.png'))->preservingOriginal()->toMediaCollection('product');
+            $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-socks.png'))->preservingOriginal()->toMediaColletion('product');
 
         }
 
@@ -120,7 +38,7 @@ EOT
 <p>Minimum reservation number: 3</p>
 EOT
             ]);
-            // $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-mug.png'))->preservingOriginal()->toMediaCollection('product');
+            $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-mug.png'))->preservingOriginal()->toMediaColletion('product');
 
         }
 
@@ -135,7 +53,7 @@ EOT
 <p>Minimum reservation number: 11</p>
 EOT
             ]);
-            // $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-t-shirt.png'))->preservingOriginal()->toMediaCollection('product');
+            $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-t-shirt.png'))->preservingOriginal()->toMediaColletion('product');
 
         }
 
@@ -150,10 +68,10 @@ EOT
 <p>Minimum reservation number: 11</p>
 EOT
             ]);
-            // $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-t-shirt.png'))->preservingOriginal()->toMediaCollection('product');
+            $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-t-shirt.png'))->preservingOriginal()->toMediaColletion('product');
 
         }
-        
+
         if (!Item::where('name', 'Lustrum canvas bag')->first()) {
             $item = Item::create([
                 'name' => 'Lustrum canvas bag',
@@ -165,7 +83,87 @@ EOT
 EOT
             ]);
 
-            // $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-bag.png'))->preservingOriginal()->toMediaCollection('product');
+            $item->addMediaFromUrl(storage_path('/images/products/lustrum/lustrum-bag.png'))->preservingOriginal()->toMediaColletion('product');
+        }
+
+        if (!Item::where('name', 'T-Shirt')->where('gender', 'Male')->first()) {
+            $item = Item::create([
+                'name' => 'T-Shirt',
+                'price' => 15,
+                'description' => <<<EOT
+A basic black Footloose T-shirt with a regular fit, printed both front and back with the Footloose logo
+EOT
+                ,'gender'=>'Male',
+            ]);
+
+            $item->addMediaFromUrl(storage_path('/images/products/t-shirt-male.png'))->preservingOriginal()->toMediaColletion('product');
+
+        }
+
+        if (!Item::where('name', 'T-Shirt')->where('gender', 'Female')->first()) {
+            $item = Item::create([
+                'name' => 'T-Shirt',
+                'price' => 15,
+                'description' => <<<EOT
+A basic black Footloose T-shirt with a slim fit, printed both front and back with the Footloose logo
+EOT
+                ,'gender'=>'Female',
+            ]);
+
+            $item->addMediaFromUrl(storage_path('/images/products/t-shirt-female.png'))->preservingOriginal()->toMediaColletion('product');
+
+        }
+
+        if (!Item::where('name', 'Sweater')->where('gender', 'Male')->first()) {
+            $item = Item::create([
+                'name' => 'Sweater',
+                'gender' => 'Male',
+                'price' => 25,
+                'description' => <<<EOT
+A very comfortable footloose sweater to keep you warm during the colder periods of the year. Of course with the footloose logo on both the front and the back. Also, one of the pockets contains a phoneholder to keep your phone into place.
+EOT
+            ]);
+            $item->addMediaFromUrl(storage_path('/images/products/sweater-male.png'))->preservingOriginal()->toMediaColletion('product');
+
+
+        }
+        if (!Item::where('name', 'Sweater')->where('gender', 'Female')->first()) {
+            $item = Item::create([
+                'name' => 'Sweater',
+                'gender' => 'Female',
+                'price' => 25,
+                'description' => <<<EOT
+A very comfortable footloose sweater to keep you warm during the colder periods of the year. Of course with the footloose logo on both the front and the back. Also, one of the pockets contains a phoneholder to keep your phone into place.
+EOT
+            ]);
+            $item->addMediaFromUrl(storage_path('/images/products/sweater-female.png'))->preservingOriginal()->toMediaColletion('product');
+
+        }
+
+        if (!Item::where('name', 'Footloose bag')->first()) {
+            $item = Item::create([
+                'name' => 'Footloose bag',
+                'gender' => 'Unisex',
+                'price' => 5,
+                'description' => <<<EOT
+A shoe bag printed with the Footloose logo to transport your dance shoes from and to the dance floor. This bag has place for two pairs as well as your shoe brush.
+EOT
+            ]);
+            $item->addMediaFromUrl(storage_path('/images/products/shoebag.png'))->preservingOriginal()->toMediaColletion('product');
+
+        }
+
+        if (!Item::where('name', 'Towel')->first()) {
+            $item = Item::create([
+                'name' => 'Towel',
+                'gender' => 'Unisex',
+                'price' => 15,
+                'description' => <<<EOT
+Take your footloose gear even under the shower, with this comfortable 100x50 cm footloose towel. Or use it to get rid of the sweat from dancing.
+EOT
+            ]);
+            $item->addMediaFromUrl(storage_path('/images/products/towel.png'))->preservingOriginal()->toMediaColletion('product');
+
         }
 
     }
