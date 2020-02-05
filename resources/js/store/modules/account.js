@@ -56,7 +56,6 @@ const actions = {
             })
             .catch(error => {
                 commit("SET_ERROR", 'Check your credentials and try again');
-                console.error(error);
             });
     },
     logout({ commit }) {

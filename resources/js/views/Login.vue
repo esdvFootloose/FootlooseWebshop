@@ -59,7 +59,7 @@ export default {
   },
   computed: {
     loginError: function() {
-      return this.$store.getters.loginError;
+      return this.$store.getters.getError;
     }
   },
   data() {
@@ -78,14 +78,12 @@ export default {
       let request;
       if (this.code != "") {
         request = {
-          // _token: this.csrf,
           username: this.username,
           password: this.password,
           code: this.code
         };
       } else {
         request = {
-          // _token: this.csrf,
           username: this.username,
           password: this.password
         };
