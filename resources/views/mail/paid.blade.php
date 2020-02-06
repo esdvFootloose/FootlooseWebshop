@@ -1,3 +1,4 @@
+@component('mail::message')
 # Footloose merchendise order paid
 
 Hi {{ $name }}
