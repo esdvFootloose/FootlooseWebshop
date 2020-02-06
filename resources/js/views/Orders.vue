@@ -20,7 +20,7 @@
       <template v-for="order in filteredOrders">
         <tr class="row">
           <td>{{ order.id }}</td>
-          <td>{{ order.user.name }}</td>
+          <td><a :href="'mailto:' + order.user.email">{{ order.user.name }}</a></td>
           <td class="hidden--mobile hidden--tablet">{{ order.created_at }}</td>
           <td>€ {{ orderValue(order.ordered_item) }}</td>
           <td class="hidden--mobile">{{ order.is_paid ? 'Yes' : 'No'}}</td>
