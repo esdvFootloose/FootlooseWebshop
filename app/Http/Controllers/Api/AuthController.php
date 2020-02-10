@@ -77,7 +77,7 @@ class AuthController extends Controller
                     'password' => Hash::make($request->password),
                 ]);
                 $user->save();
-                $user->roles()->attach(Right::where('name', 'admin')->first());
+                $user->roles()->attach(Right::where('name', 'user')->first());
             }
 
             $token = $user->createToken('Laravel Password Grant Client')->accessToken;
