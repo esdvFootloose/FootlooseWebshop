@@ -43,7 +43,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $user = User::where('email', $request->email)->first();
-
+        
         try {
             $fl_user = $this->getFLUser($request);
         } catch (Exception $exception) {
