@@ -83,9 +83,6 @@ class OrderController extends Controller
      */
     public function show(Request $request, $id)
     {
-        if (!$request->user()->hasRole('admin')) {
-            return response()->json(['Error' => "You don't have persmission"], 403);
-        }
         $order = Order::where('id', $id)->first();
         if ($order->user_id != auth()->user()->id) {
             return response()->json(['Data' => 'Error, you are not allowed to view this order'], 401);
