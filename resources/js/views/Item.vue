@@ -14,6 +14,7 @@
         <div class="item__description">
           <div v-if="item.description" v-html="item.description"></div>
           <div v-bind:class="{ item__options: item.description }">
+            <div class="item__price">Price: €{{ item.price }}</div>
             <label for="itemSize">Size</label>
             <select v-model="selectedSize" id="itemSize">
               <option disabled value>Select a size</option>
@@ -205,6 +206,10 @@ export default {
 
   &__options {
     margin-top: 20px;
+  }
+
+  &__price {
+    margin-bottom: 1em;
   }
 }
 </style>
