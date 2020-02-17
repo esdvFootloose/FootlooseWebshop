@@ -14,7 +14,7 @@
         <div class="item__description">
           <div v-if="item.description" v-html="item.description"></div>
           <div v-bind:class="{ item__options: item.description }">
-            <div class="item__price">Price: €{{ item.price }}</div>
+            <div class="item__price">Price: €{{ itemPrice }}</div>
             <label for="itemSize">Size</label>
             <select v-model="selectedSize" id="itemSize">
               <option disabled value>Select a size</option>
@@ -87,6 +87,17 @@ export default {
           this.item.stock.filter(size => size.size === this.selectedSize)[0]
             .stock >= this.selectedAmount
         );
+      }
+    },
+    itemPrice: function() {
+      if (this.item.price.toString().indexOf('.') === -1) {
+        return this.item.price + ',-';
+      } else {
+        if (this.item.price.toString().substring(this.item.price.toString().indexOf('.') + 1).length !== 2){
+          return this.item.price + '0';
+        } else {
+          return this.item.price;
+        }
       }
     }
   },
