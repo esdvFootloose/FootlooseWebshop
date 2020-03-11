@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\ItemRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Mail\ItemRequested;
+use Illuminate\Support\Facades\Mail;
 
 class ItemRequestController extends Controller
 {
@@ -46,6 +48,9 @@ class ItemRequestController extends Controller
             'stock_id' => $request->size_id,
             'amount' => $request->amount
         ]);
+        Mail::to(auth()->user()->email)->send(
+            new ItemRequested(auth()->user()->name, $created_item_request->id)
+        );
         return response()->json(['data' => $created_item_request], 200);
     }
 
