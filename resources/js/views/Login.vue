@@ -7,9 +7,9 @@
       image="/images/Logo_red_text.svg"
     >
       <template v-slot:underneathImage>
-        <div class="login login-message">Login using your footloose website account</div>
         <input type="hidden" name="_token" :value="csrf" />
         <div class="card__login">
+        <div class="login login__message">Login using your footloose website account</div>
           <label for="email">Username</label>
           <input
             class="input-focus"
