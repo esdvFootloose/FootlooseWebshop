@@ -7,6 +7,7 @@
       image="/images/Logo_red_text.svg"
     >
       <template v-slot:underneathImage>
+        <div class="login login-message">Login using your footloose website account</div>
         <input type="hidden" name="_token" :value="csrf" />
         <div class="card__login">
           <label for="email">Username</label>
@@ -41,7 +42,7 @@
             />
           </div>
           <div v-if="loginError">
-            <p class="login-error">Something went wrong, please try again</p>
+            <p class="login login__error">Something went wrong, please try again</p>
           </div>
         </div>
       </template>
@@ -60,7 +61,6 @@ export default {
     loginError: function() {
       this.buttonText = "Login";
       return this.$store.getters.getError;
-    
     }
   },
   data() {
@@ -72,7 +72,7 @@ export default {
       password: "",
       code: "",
       codeRequired: false,
-      buttonText: 'Login'
+      buttonText: "Login"
     };
   },
   methods: {
@@ -91,7 +91,7 @@ export default {
         };
       }
       this.$store.dispatch("login", request);
-      this.buttonText= "Logging in..."
+      this.buttonText = "Logging in...";
     }
   },
   mounted: function() {
@@ -108,10 +108,17 @@ export default {
 <style lang="scss" scoped>
 @import "../../sass/app.scss";
 
-.login-error {
+.login {
   text-align: center;
-  color: $color--red;
+  &__error {
+    color: $color--red;
+  }
+
+  &__message {
+    margin-bottom: 30px;
+  }
 }
+
 .content {
   &--login {
     margin: auto;
