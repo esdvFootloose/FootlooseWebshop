@@ -214,7 +214,7 @@ class OrderController extends Controller
 
             $order_total += $item->amount * $item->Stock->Item->price;
         }
-        $order_total += floatval(env('MOLLIE_ADDED_COSTS')); // Add transaction costs
+        $order_total += env('MOLLIE_ADDED_COSTS', 0.36); // Add transaction costs
 
         $order_total = strval(number_format($order_total, 2, '.', ''));
 
